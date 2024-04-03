@@ -13,7 +13,7 @@ const AsignedTasksList = ({
   return (
     <div className="flex items-center  justify-center m-4 gap-4  flex-wrap">
       {!isLoading && Array.isArray(asignedTasksList) ? (
-        asignedTasksList.map((tarea, i) => (
+        asignedTasksList.map((tarea) => (
           <TaskCard
             tareaInfo={tarea}
             key={tarea.id}

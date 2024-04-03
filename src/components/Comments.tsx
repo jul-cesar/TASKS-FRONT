@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 
@@ -29,6 +28,10 @@ import { toast } from "sonner";
 import { MessageSquarePlus } from "lucide-react";
 import { task } from "@/types/Task";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { comment } from "@/types/comment";
+import { Textarea } from "./ui/textarea";
+import CommentsList from "./CommentsList";
+import LoadingSmall from './loaders/LoadingSmall';
 
 type CommentsProps = {
   namet: string;
@@ -62,7 +65,7 @@ export function Comments({ namet, tareaInfo }: CommentsProps) {
 function CommentsSection({ namet, tareaInfo }: CommentsProps) {
   const queryClient = useQueryClient();
 
-  const id = 1;
+  const id = "1";
   const idTarea = tareaInfo.id;
 
   const { data: listaComentarios, isLoading } = useQuery({
@@ -72,7 +75,7 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (newComentario) => {
+    mutationFn: async (newComentario: comment) => {
       console.log(newComentario, "new");
       await createComentario(newComentario);
     },
@@ -124,11 +127,11 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
           {!isPending ? (
             <Button type="submit"> Agregar</Button>
           ) : (
-            <MiniLoading />
+            <LoadingSmall />
           )}
         </form>
       </Form>
-      <ComentariosSection
+      <CommentsList
         listaComentarios={listaComentarios}
         isLoading={isLoading}
         currentUser={currentUser}

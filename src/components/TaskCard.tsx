@@ -10,10 +10,12 @@ import { Label } from "@radix-ui/react-label";
 import { task } from "@/types/Task";
 import { CardOptions } from "./CardOptions";
 import { formatCustomDate } from "@/utils/formatCustomDate";
-import { BadgeComponent} from "./BadgeComponent";
+import { BadgeComponent } from "./BadgeComponent";
 import { Comments } from "./Comments";
+import DialogAsignUser from "./DialogAsignUser";
+import EditTaskForm from "./forms/EditTaskForm";
 
-interface TaskCardProps extends task {
+interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
 }
 
@@ -37,7 +39,7 @@ const TaskCard = ({
             <CardOptions tareaInfo={tareaInfo} />
           </div>
         </CardTitle>
-        <CardDescription>Creada por: {owner.nombre}</CardDescription>
+        <CardDescription>Creada por: {owner?.nombre}</CardDescription>
         <CardDescription>
           Creada: hace {formatCustomDate(createdAt)}
         </CardDescription>
@@ -72,8 +74,8 @@ const TaskCard = ({
       </CardContent>
       <CardFooter className="flex justify-evenly">
         <Comments tareaInfo={tareaInfo} namet={titulo} />
-        <DialogAsignarUser name={tareaInfo} />
-        <DialogEditarTarea tareaInfo={tareaInfo} />
+        <DialogAsignUser taskInfo={tareaInfo} />
+        <EditTaskForm taskInfo={tareaInfo} />
       </CardFooter>
     </Card>
   );

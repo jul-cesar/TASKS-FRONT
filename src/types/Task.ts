@@ -1,15 +1,15 @@
 import { user } from "./User";
 
 export interface task {
-  id?: string;
+  id: string;
   titulo: string;
   descripcion: string;
   estado: string;
   prioridad: string;
-  fechaVencimiento: Date;
-  ownerId?: string;
+  fechaVencimiento: string;
+  ownerId: string;
   createdAt: Date;
   asignadoId?: string;
-  asignado: user;
-  owner: user;
+  asignado?: user;
+  owner?: user;
 }

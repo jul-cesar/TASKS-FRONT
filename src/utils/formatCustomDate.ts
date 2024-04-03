@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 
-export function formatCustomDate(date: Date) {
+export function formatCustomDate(date:  Date | string ) {
   let result = formatDistanceToNow(new Date(date), {
     locale: es,
   });
