@@ -2,24 +2,16 @@ import AsignedTasksList from "@/components/AsignedTasksList";
 import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
 import TasksList from "@/components/TasksList";
-import { task } from "@/types/Task";
-import { useQuery } from "@tanstack/react-query";
+import { useTasks } from "@/hooks/taskQueries";
+
+
 import { useState } from "react";
 
 const TasksPage = () => {
   const id = 1;
 
-  const { data: tasksList, isLoading } = useQuery<task[]>({
-    queryKey: ["listaTasks", id],
-    // queryFn: async () => getUserTareas(id),
-    enabled: !!id,
-  });
-
-  const { data: asignedList, isLoading: loadingAsign } = useQuery<task[]>({
-    queryKey: ["listaAsign", id],
-    // queryFn: async () => getTareasAsignadas(id),
-    enabled: !!id,
-  });
+  
+  const {data: tasksList, isLoading} = useTasks()
 
   const [showTareas, setShowTareas] = useState<boolean>(false);
   return (
@@ -34,8 +26,8 @@ const TasksPage = () => {
         <TasksList tasksList={tasksList} isLoading={isLoading} />
       ) : (
         <AsignedTasksList
-          isLoading={loadingAsign}
-          asignedTasksList={asignedList}
+          isLoading={isLoading}
+          asignedTasksList={tasksList}
         />
       )}
     </div>
