@@ -3,14 +3,13 @@ import TaskCard from "./TaskCard";
 import CardSkeleton from "./CardSkeleton";
 
 type TasksListProps = {
-  tasksList?: task[];
+  tasksList: task[];
   isLoading: boolean;
 };
 
-const TasksList = ({ tasksList, isLoading }: TasksListProps) => {
-  return (
+const TasksList = ({ tasksList, isLoading }: TasksListProps) => {  return (
     <div className="w-full flex justify-center">
-      <div className="flex justify-center m-4 gap-4  flex-wrap">
+      <div className="flex justify-center m-4 gap-4 flex-wrap">
         {!isLoading && Array.isArray(tasksList) ? (
           tasksList.map((tarea) => (
             <TaskCard

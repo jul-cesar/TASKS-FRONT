@@ -1,17 +1,39 @@
-import { axiosInstance } from "@/api/axios";
-import { createContext, ReactNode, useState, SetStateAction } from "react";
+import {
+  createContext,
+  ReactNode,
+  useState,
+  SetStateAction,
+  useEffect,
+} from "react";
+import axiosInstance from "@/api/axios";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+
+interface CustomJwtPayload extends JwtPayload {
+  nombre: string;
+  email: string;
+  id: string;
+}
 
 type AuthContextType = {
-  currentUser: {};
+  currentUser: {
+    nombre: string;
+    email: string;
+    id: string;
+  };
   LogIn: (email: string, password: string) => Promise<void>;
-  setAuthTok: React.Dispatch<SetStateAction<{token: string}>>;
+  setAuthTok: React.Dispatch<SetStateAction<{ token: string }>>;
   authTok: {
     token: string;
   };
 };
 
 export const Auth = createContext<AuthContextType>({
-  currentUser: {},
+  currentUser: {
+    nombre: "",
+    email: "",
+    id: "",
+  },
   LogIn: async (email: string, password: string) => {},
   setAuthTok: () => {},
   authTok: {
@@ -20,8 +42,13 @@ export const Auth = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({
+    nombre: "",
+    email: "",
+    id: "",
+  });
   const [authTok, setAuthTok] = useState<{ token: string }>({ token: "" });
+  const axiosInstance = useAxiosPrivate();
 
   const LogIn = async (email: string, password: string) => {
     try {
@@ -29,12 +56,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email,
         password,
       });
-      console.log(response.data.token);
+
       setAuthTok(response.data);
     } catch (error: any) {
       console.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (authTok.token) {
+      const decodedInfo = jwtDecode<CustomJwtPayload>(authTok.token);
+      setCurrentUser({ nombre: decodedInfo.nombre, email: decodedInfo.email, id: decodedInfo.id });
+    }
+  }, [authTok]);
 
   return (
     <Auth.Provider

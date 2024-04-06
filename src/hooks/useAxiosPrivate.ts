@@ -1,7 +1,7 @@
 import { Auth } from "@/context/auth";
 import React, { useContext, useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
-import { axiosInstance } from "@/api/axios";
+import axiosInstance from "@/api/axios";
 
 const useAxiosPrivate = () => {
   const { authTok } = useContext(Auth);
@@ -29,11 +29,12 @@ const useAxiosPrivate = () => {
         return axiosInstance(prevRequest);
       }
     );
-    () => {
+    return () => {
       axiosInstance.interceptors.response.eject(responseInterecept);
       axiosInstance.interceptors.request.eject(requestIntercept);
     };
   }, [authTok, refresh]);
+
   return axiosInstance;
 };
 

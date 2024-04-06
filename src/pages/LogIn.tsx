@@ -20,7 +20,7 @@ import { z } from "zod";
 
 const Login = () => {
   const navigate = useNavigate();
-  const refresh = useRefreshToken()
+  const refresh = useRefreshToken();
 
   const { LogIn } = useContext(Auth);
   const formScheme = z.object({
@@ -41,6 +41,7 @@ const Login = () => {
   const onSubmit = async (data: z.infer<typeof formScheme>) => {
     try {
       await LogIn(data.email, data.password);
+      navigate("/");
     } catch (err: any) {
       console.log(err.message);
     }

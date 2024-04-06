@@ -71,7 +71,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
   }, [open]);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (newTarea: task) => {
+    mutationFn: async (newTarea: Omit<task, "id" | "createdAt">) => {
       console.log(newTarea, "new");
       // await updateTarea(tareaInfo.id, newTarea);
     },

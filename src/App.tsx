@@ -6,12 +6,10 @@ import TasksPage from "./pages/TasksPage";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<TasksPage />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </AuthProvider>
+    <Routes>
+      <Route path="/" element={<TasksPage />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 }
 

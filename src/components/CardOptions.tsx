@@ -1,4 +1,4 @@
-import { CreditCard, EllipsisVertical, Trash, User } from "lucide-react";
+import { EllipsisVertical, Trash } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { task } from "@/types/Task";
+import { DeleteTareaDialog } from "./DeleteTareaDialog";
 
 type CardOptionsProps = {
   tareaInfo: task;
@@ -17,7 +18,7 @@ type CardOptionsProps = {
 export function CardOptions({ tareaInfo }: CardOptionsProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="cursor-pointer">
         <EllipsisVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -33,10 +34,7 @@ export function CardOptions({ tareaInfo }: CardOptionsProps) {
           </DropdownMenuItem> */}
           <div className="flex items-center m-2 cursor-pointer h-full">
             <Trash className="mr-2 h-4 w-4" />
-            <DeleteTareaDialog
-              tareaInfo={tareaInfo}
-              className="cursor-pointer"
-            />
+            <DeleteTareaDialog tareaInfo={tareaInfo} />
           </div>
         </DropdownMenuGroup>
       </DropdownMenuContent>
