@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -23,6 +23,7 @@ import {
 } from "../ui/select";
 import { task } from "@/types/Task";
 import { user } from "@/types/User";
+import { Auth } from "@/context/auth";
 
 type SelectUserProps = {
   setIsOpenDialog: React.Dispatch<SetStateAction<boolean>>;
@@ -40,6 +41,8 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
     queryKey: ["listaUsuarios"],
     queryFn: async () => await getAllUsers(),
   });
+
+  const { currentUser } = useContext(Auth);
 
   const [listaFiltrada, setListaFiltrada] = useState([]);
 

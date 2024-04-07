@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 
 const CardSkeleton = () => {
   return Array.from({ length: 3 }, (e, i) => (

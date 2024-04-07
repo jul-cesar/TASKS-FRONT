@@ -1,6 +1,6 @@
 import { task } from "@/types/Task";
-import TaskCard from "./TaskCard";
-import CardSkeleton from "./CardSkeleton";
+import TaskCard from "../components/TaskCard";
+import CardSkeleton from "../components/loaders/CardSkeleton";
 
 type AsignedTasksListProps = {
   asignedTasksList?: task[];

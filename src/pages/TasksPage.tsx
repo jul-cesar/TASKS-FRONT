@@ -1,18 +1,15 @@
-import AsignedTasksList from "@/components/AsignedTasksList";
+import AsignedTasksList from "@/pages/AsignedTasksList";
 import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
 import TasksList from "@/components/TasksList";
 import { Auth } from "@/context/auth";
 import { useTasks } from "@/hooks/taskQueries";
-import { jwtDecode } from "jwt-decode";
 
 import { useContext, useState } from "react";
 
 const TasksPage = () => {
-  const id = 1;
-
   const { currentUser } = useContext(Auth);
-  const { data, status, error, isError } = useTasks();
+  const { data, status, error} = useTasks();
 
   const taskList = data?.data;
 

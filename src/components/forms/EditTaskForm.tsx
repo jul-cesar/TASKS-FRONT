@@ -27,6 +27,9 @@ import { Textarea } from "../ui/textarea";
 import { LucideEdit } from "lucide-react";
 import LoadingSmall from "../loaders/LoadingSmall";
 import { Input } from "../ui/input";
+import { SelectPrioridad } from "../SelectPrioridad";
+import SelectEstado from "../SelectEstado";
+import { DatePicker } from "../DatePicker";
 
 type EditTaskFormProps = {
   taskInfo: task;
@@ -166,7 +169,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
                       <FormLabel>
                         Prioridad
                         <FormControl>
-                          <SelectDemo
+                          <SelectPrioridad
                             valuef={value}
                             onChangeFn={onChange}
                             onOpenChange={(isOpen: boolean) =>
@@ -207,9 +210,8 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <DatePickerDemo
+                      <DatePicker
                         {...field}
-                        id="fecha"
                         valuef={field.value}
                         onChangef={field.onChange}
                       />

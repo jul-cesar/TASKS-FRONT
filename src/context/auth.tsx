@@ -5,9 +5,9 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
-import axiosInstance from "@/api/axios";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { toast } from "sonner";
 
 interface CustomJwtPayload extends JwtPayload {
   nombre: string;
@@ -62,6 +62,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthTok(response.data);
     } catch (error: any) {
       console.error(error.message);
+      if (error.message.includes("403")) {
+        toast.error("Usuario o contraseña incorrecto", {
+          position: "top-center",
+        });
+      }
     }
   };
 

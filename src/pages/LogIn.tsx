@@ -13,16 +13,17 @@ import { Auth } from "@/context/auth";
 import { useLogIn } from "@/hooks/taskQueries";
 import useRefreshToken from "@/hooks/useRefreshToken";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, Toaster } from "sonner";
 import { z } from "zod";
 
 const Login = () => {
   const navigate = useNavigate();
   const refresh = useRefreshToken();
+  const { currentUser } = useContext(Auth);
   const { mutateAsync, status } = useLogIn();
   const formScheme = z.object({
     email: z
@@ -45,9 +46,11 @@ const Login = () => {
         email: data.email,
         password: data.password,
       });
+
       navigate("/");
     } catch (err: any) {
-      console.log(err.message);
+      console.log("error",err.message);
+     
     }
   };
 
@@ -126,7 +129,11 @@ const Login = () => {
                 Registrate
               </Link>
               <Button className="">
-                {status === "pending" ? <LoadingSmall/> : "Ingresar" }
+                {status === "pending" && currentUser.nombre === "" ? (
+                  <LoadingSmall />
+                ) : (
+                  "Ingresar"
+                )}
               </Button>
             </div>
           </form>

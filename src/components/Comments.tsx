@@ -23,15 +23,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+
 import { MessageSquarePlus } from "lucide-react";
 import { task } from "@/types/Task";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { comment } from "@/types/comment";
 import { Textarea } from "./ui/textarea";
 import CommentsList from "./CommentsList";
-import LoadingSmall from './loaders/LoadingSmall';
+import LoadingSmall from "./loaders/LoadingSmall";
+
+import { useGetComments } from "@/hooks/taskQueries";
 
 type CommentsProps = {
   namet: string;
@@ -63,27 +63,13 @@ export function Comments({ namet, tareaInfo }: CommentsProps) {
 }
 
 function CommentsSection({ namet, tareaInfo }: CommentsProps) {
-  const queryClient = useQueryClient();
+ 
 
-  const id = "1";
   const idTarea = tareaInfo.id;
 
-  const { data: listaComentarios, isLoading } = useQuery({
-    queryKey: ["listaComentarios", idTarea],
-    queryFn: async () => getTaskComentarios(idTarea),
-    enabled: !!idTarea,
-  });
+  const { data, isLoading, isPending } = useGetComments(idTarea);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (newComentario: comment) => {
-      console.log(newComentario, "new");
-      await createComentario(newComentario);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["listaComentarios"] }),
-        toast.success("Comentario agregado");
-    },
-  });
+  const listaComentarios = data?.data;
 
   const formScheme = z.object({
     contenido: z
@@ -98,8 +84,8 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
   });
 
   const OnSubmit = (data: z.infer<typeof formScheme>) => {
-    mutate({ tareaId: tareaInfo.id, authorId: id, contenido: data.contenido });
-    form.reset({ contenido: "" });
+    // mutate({ tareaId: tareaInfo.id, authorId: id, contenido: data.contenido });
+    // form.reset({ contenido: "" });
   };
   return (
     <div>
@@ -116,7 +102,7 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
                 <FormItem>
                   <FormLabel> Haz un comentario para "{namet}" </FormLabel>
                   <FormControl>
-                    <Textarea type="email" id="email" {...field} />
+                    <Textarea {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,9 +118,8 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
         </form>
       </Form>
       <CommentsList
-        listaComentarios={listaComentarios}
+        listaComentarios={listaComentarios || []}
         isLoading={isLoading}
-        currentUser={currentUser}
       />
     </div>
   );

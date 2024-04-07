@@ -1,8 +1,7 @@
 import { task } from "@/types/Task";
 import TaskCard from "./TaskCard";
-import CardSkeleton from "./CardSkeleton";
-import LoadingSmall from "./loaders/LoadingSmall";
-import { stat } from "fs";
+import CardSkeleton from "./loaders/CardSkeleton";
+
 
 type TasksListProps = {
   tasksList: task[];
@@ -10,7 +9,7 @@ type TasksListProps = {
   error?: Error | null;
 };
 
-const TasksList = ({ tasksList, status, error }: TasksListProps) => {
+const TasksList = ({ tasksList, status}: TasksListProps) => {
   if (status === "pending") {
     return (
       <div className="w-full flex justify-center">

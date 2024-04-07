@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
-  const {logOut} = useContext(Auth)
-  const navigate = useNavigate()
+  const { logOut } = useContext(Auth);
+  const navigate = useNavigate();
+  const { currentUser } = useContext(Auth);
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -75,7 +76,7 @@ const Navbar = () => {
               >
                 <div className="px-4 py-3" role="none">
                   <p className="text-sm text-gray-900" role="none">
-                    email
+                    {currentUser.email}
                   </p>
                   <p
                     className="text-sm font-medium text-gray-900 truncate"
@@ -86,7 +87,7 @@ const Navbar = () => {
                   <li>
                     <a
                       onClick={async () => {
-                       await logOut()
+                        await logOut();
                         navigate("/login");
                       }}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

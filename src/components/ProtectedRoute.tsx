@@ -1,14 +1,15 @@
 import { Auth } from "@/context/auth";
-import React, { ReactNode, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { currentUser } = useContext(Auth);
-
-  if (Object.values(currentUser).some((x) => x === "")) {
-    return <Navigate to="/login" />;
-  }
-  return children;
+const ProtectedRoute = () => {
+  const { authTok} = useContext(Auth);
+  const location = useLocation();
+  return authTok.token !== "" ? (
+    <Outlet />
+  ) : (
+    <Navigate to={"/login"} state={{from: location}} replace />
+  );
 };
 
 export default ProtectedRoute;
