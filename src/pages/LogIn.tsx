@@ -1,3 +1,4 @@
+import LoadingSmall from "@/components/loaders/LoadingSmall";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Auth } from "@/context/auth";
+import { useLogIn } from "@/hooks/taskQueries";
 import useRefreshToken from "@/hooks/useRefreshToken";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -21,8 +23,7 @@ import { z } from "zod";
 const Login = () => {
   const navigate = useNavigate();
   const refresh = useRefreshToken();
-
-  const { LogIn } = useContext(Auth);
+  const { mutateAsync, status } = useLogIn();
   const formScheme = z.object({
     email: z
       .string()
@@ -40,7 +41,10 @@ const Login = () => {
 
   const onSubmit = async (data: z.infer<typeof formScheme>) => {
     try {
-      await LogIn(data.email, data.password);
+      await mutateAsync({
+        email: data.email,
+        password: data.password,
+      });
       navigate("/");
     } catch (err: any) {
       console.log(err.message);
@@ -121,7 +125,9 @@ const Login = () => {
               >
                 Registrate
               </Link>
-              <Button className="">Ingresar</Button>
+              <Button className="">
+                {status === "pending" ? <LoadingSmall/> : "Ingresar" }
+              </Button>
             </div>
           </form>
         </Form>

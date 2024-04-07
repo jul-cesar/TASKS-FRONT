@@ -13,7 +13,7 @@ const Tabs = ({ setShowTareas, showTareas }: TabsProps) => {
           <li className="me-2" onClick={() => setShowTareas(true)}>
             <a
               className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg ${
-                showTareas && "text-gray-600"
+                showTareas && "text-gray-900"
               } ${showTareas && "border-gray-300"}}`}
             >
               Mis tareas
@@ -23,7 +23,7 @@ const Tabs = ({ setShowTareas, showTareas }: TabsProps) => {
           <li className="me-2" onClick={() => setShowTareas(false)}>
             <a
               className={`inline-block p-4 cursor-pointer border-b-2 border-transparent rounded-t-lg ${
-                !showTareas && "text-gray-600"
+                !showTareas && "text-gray-900"
               } ${!showTareas && "border-gray-300"}}`}
             >
               Tareas asignadas

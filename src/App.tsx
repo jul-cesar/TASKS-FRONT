@@ -1,13 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { AuthProvider } from "./context/auth";
 import Login from "./pages/LogIn";
 import TasksPage from "./pages/TasksPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<TasksPage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <TasksPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/login" element={<Login />} />
     </Routes>
   );

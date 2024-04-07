@@ -1,18 +1,37 @@
 import { task } from "@/types/Task";
 import TaskCard from "./TaskCard";
+import CardSkeleton from "./CardSkeleton";
 
 type AsignedTasksListProps = {
   asignedTasksList?: task[];
-  isLoading: boolean;
+  status: string;
 };
 
 const AsignedTasksList = ({
   asignedTasksList,
-  isLoading,
+  status,
 }: AsignedTasksListProps) => {
+  if (status === "pending") {
+    return (
+      <div className="w-full flex justify-center">
+        <div className="flex justify-center m-4 gap-4 flex-wrap">
+          <CardSkeleton />
+        </div>
+      </div>
+    );
+  }
+  if (status === "error") {
+    return (
+      <div className="w-full flex justify-center">
+        <div className="flex justify-center m-4 gap-4 flex-wrap">
+          <p>Hubo un error</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex items-center  justify-center m-4 gap-4  flex-wrap">
-      {!isLoading && Array.isArray(asignedTasksList) ? (
+      {Array.isArray(asignedTasksList) ? (
         asignedTasksList.map((tarea) => (
           <TaskCard
             tareaInfo={tarea}

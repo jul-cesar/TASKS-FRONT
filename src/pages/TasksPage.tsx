@@ -12,7 +12,7 @@ const TasksPage = () => {
   const id = 1;
 
   const { currentUser } = useContext(Auth);
-  const { data, isLoading } = useTasks();
+  const { data, status, error, isError } = useTasks();
 
   const taskList = data?.data;
 
@@ -23,12 +23,14 @@ const TasksPage = () => {
       <Tabs setShowTareas={setShowTareas} showTareas={showTareas} />
 
       <div className="text-center m-4">
-       {currentUser.nombre && <h2 className="font-bold">Bienvenido, {currentUser.id}.</h2>}
+        {currentUser.nombre && (
+          <h2 className="font-bold">Bienvenido, {currentUser.nombre}.</h2>
+        )}
       </div>
       {showTareas ? (
-        <TasksList tasksList={taskList || []} isLoading={isLoading} />
+        <TasksList tasksList={taskList || []} status={status} error={error} />
       ) : (
-        <AsignedTasksList isLoading={isLoading} asignedTasksList={taskList} />
+        <AsignedTasksList status={status} asignedTasksList={taskList} />
       )}
     </div>
   );

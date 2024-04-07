@@ -26,6 +26,7 @@ type AuthContextType = {
   authTok: {
     token: string;
   };
+  logOut: () => Promise<void>;
 };
 
 export const Auth = createContext<AuthContextType>({
@@ -39,6 +40,7 @@ export const Auth = createContext<AuthContextType>({
   authTok: {
     token: "",
   },
+  logOut: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -63,10 +65,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logOut = async () => {
+    try {
+      await axiosInstance.get("/logout", {
+        withCredentials: true,
+      });
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
   useEffect(() => {
     if (authTok.token) {
       const decodedInfo = jwtDecode<CustomJwtPayload>(authTok.token);
-      setCurrentUser({ nombre: decodedInfo.nombre, email: decodedInfo.email, id: decodedInfo.id });
+      setCurrentUser({
+        nombre: decodedInfo.nombre,
+        email: decodedInfo.email,
+        id: decodedInfo.id,
+      });
     }
   }, [authTok]);
 
@@ -77,6 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         LogIn,
         setAuthTok,
         authTok,
+        logOut,
       }}
     >
       {children}
