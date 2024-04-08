@@ -4,10 +4,10 @@ import { comment } from "@/types/comment";
 import { task } from "@/types/Task";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const KEY: string = "tasks";
-
 export const useGetComments = (idTarea: string) => {
   const { getTaskComments } = UseTasksReqs();
   type listaComments = {
@@ -20,14 +20,19 @@ export const useGetComments = (idTarea: string) => {
   });
 };
 
-export const useCreateComment = async () => {
+export const useCreateComment = () => {
   const queryClient = useQueryClient();
+  const { createComment } = UseTasksReqs();
 
   return useMutation({
     mutationFn: async (
       newComentario: Omit<comment, "id" | "user" | "tarea" | "fecha">
     ) => {
-      console.log(newComentario, "new");
+      await createComment({
+        contenido: newComentario.contenido,
+        tareaId: newComentario.tareaId,
+        authorId: newComentario.authorId,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] }),

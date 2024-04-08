@@ -1,6 +1,8 @@
 import { Auth } from "@/context/auth";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AvatarDemo } from "./Avatar";
+import { ModeToggle } from "./mode-toggle";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
@@ -52,7 +54,9 @@ const Navbar = () => {
           </div>
           <div className="flex items-center">
             <div className="flex items-center ms-3 gap-2">
-              <div>{/* <ModeToggle /> */}</div>
+              <div>
+                <ModeToggle />
+              </div>
               <div>
                 {
                   <button
@@ -63,7 +67,7 @@ const Navbar = () => {
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span className="sr-only">Open user menu</span>
-                    avatar
+                    <AvatarDemo src={""} />
                   </button>
                 }
               </div>

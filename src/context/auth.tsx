@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logOut = async () => {
     try {
+      setAuthTok({ token: "" });
       await axiosInstance.get("/logout", {
         withCredentials: true,
       });

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
@@ -31,7 +29,10 @@ import { Textarea } from "./ui/textarea";
 import CommentsList from "./CommentsList";
 import LoadingSmall from "./loaders/LoadingSmall";
 
-import { useGetComments } from "@/hooks/taskQueries";
+import { useCreateComment, useGetComments } from "@/hooks/taskQueries";
+import { Auth } from "@/context/auth";
+import React from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type CommentsProps = {
   namet: string;
@@ -49,7 +50,7 @@ export function Comments({ namet, tareaInfo }: CommentsProps) {
           <MessageSquarePlus />{" "}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-w-96 min-h-12 max-h-[600px] overflow-y-auto">
+      <DialogContent className="sm:max-w-[925px] max-w-96 min-h-12 max-h-[470px] overflow-y-auto flex flex-col">
         <DialogHeader>
           <DialogTitle>Comentarios</DialogTitle>
           <DialogDescription>
@@ -63,10 +64,9 @@ export function Comments({ namet, tareaInfo }: CommentsProps) {
 }
 
 function CommentsSection({ namet, tareaInfo }: CommentsProps) {
- 
-
   const idTarea = tareaInfo.id;
-
+  const { mutateAsync } = useCreateComment();
+  const { currentUser } = React.useContext(Auth);
   const { data, isLoading, isPending } = useGetComments(idTarea);
 
   const listaComentarios = data?.data;
@@ -84,8 +84,12 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
   });
 
   const OnSubmit = (data: z.infer<typeof formScheme>) => {
-    // mutate({ tareaId: tareaInfo.id, authorId: id, contenido: data.contenido });
-    // form.reset({ contenido: "" });
+    mutateAsync({
+      tareaId: tareaInfo.id,
+      authorId: currentUser.id,
+      contenido: data.contenido,
+    });
+    form.reset({ contenido: "" });
   };
   return (
     <div>

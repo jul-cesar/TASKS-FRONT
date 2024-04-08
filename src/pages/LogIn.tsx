@@ -21,9 +21,9 @@ import { toast, Toaster } from "sonner";
 import { z } from "zod";
 
 const Login = () => {
-  const navigate = useNavigate();
   const refresh = useRefreshToken();
   const { currentUser } = useContext(Auth);
+  const navigate = useNavigate();
   const { mutateAsync, status } = useLogIn();
   const formScheme = z.object({
     email: z
@@ -46,11 +46,9 @@ const Login = () => {
         email: data.email,
         password: data.password,
       });
-
       navigate("/");
     } catch (err: any) {
-      console.log("error",err.message);
-     
+      console.log("error", err.message);
     }
   };
 

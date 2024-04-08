@@ -1,5 +1,6 @@
 import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { comment } from "@/types/comment";
 import { useContext } from "react";
 
 const UseTasksReqs = () => {
@@ -33,10 +34,27 @@ const UseTasksReqs = () => {
       console.error(error.message);
     }
   };
+  const createComment = async ({
+    contenido,
+    authorId,
+    tareaId,
+  }: {
+    contenido: string;
+    authorId: string;
+    tareaId: string;
+  }) => {
+    const response = await axiosInstance.post("/comentario", {
+      contenido,
+      authorId,
+      tareaId,
+    });
+    return response;
+  };
   return {
     getTasks,
     getTaskComments,
     getUserTasks,
+    createComment,
   };
 };
 
