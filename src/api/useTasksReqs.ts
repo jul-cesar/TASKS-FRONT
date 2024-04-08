@@ -15,6 +15,15 @@ const UseTasksReqs = () => {
     }
   };
 
+  const deleteTask = async (idTask: string) => {
+    try {
+      const response = await axiosInstance.delete(`/tarea/${idTask}`);
+      return response;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
   const getUserTasks = async (id: string) => {
     try {
       const response = await axiosInstance.get(`/tarea/${id}`);
@@ -50,11 +59,22 @@ const UseTasksReqs = () => {
     });
     return response;
   };
+
+  const deleteComment = async (idTarea: string) => {
+    try {
+      const response = await axiosInstance.delete(`/comentario/${idTarea}`);
+      return response;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
   return {
     getTasks,
     getTaskComments,
     getUserTasks,
     createComment,
+    deleteComment,
+    deleteTask
   };
 };
 

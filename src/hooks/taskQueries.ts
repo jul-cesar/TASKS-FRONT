@@ -4,10 +4,10 @@ import { comment } from "@/types/comment";
 import { task } from "@/types/Task";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const KEY: string = "tasks";
+
 export const useGetComments = (idTarea: string) => {
   const { getTaskComments } = UseTasksReqs();
   type listaComments = {
@@ -41,6 +41,21 @@ export const useCreateComment = () => {
   });
 };
 
+export const useDeleteComment = (idComment: string) => {
+  const queryClient = useQueryClient();
+
+  const { deleteComment } = UseTasksReqs();
+  return useMutation({
+    mutationFn: async () => {
+      await deleteComment(idComment);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] }),
+        toast.success("Comentario eliminado");
+    },
+  });
+};
+
 export const useTasks = () => {
   type useTasks = {
     data: task[];
@@ -52,6 +67,21 @@ export const useTasks = () => {
     queryKey: [KEY, id],
     queryFn: (): any => getUserTasks(id),
     enabled: !!id,
+  });
+};
+
+export const useDeleteTask = (idTask: string) => {
+  const { deleteTask } = UseTasksReqs();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      await deleteTask(idTask);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.success("Tarea eliminada");
+    },
   });
 };
 

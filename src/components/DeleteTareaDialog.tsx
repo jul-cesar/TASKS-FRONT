@@ -8,29 +8,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { task } from "@/types/Task";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { toast } from "sonner";
 import LoadingSmall from "./loaders/LoadingSmall";
+import { useDeleteComment, useDeleteTask } from "@/hooks/taskQueries";
 
 export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const queryClient = useQueryClient();
-  const { mutate, isPending, isError, isSuccess } = useMutation({
-    mutationFn: async (newTarea: task) => {
-      console.log(newTarea, "new");
-      //   await deleteTarea(tareaInfo.id);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["task"] }),
-        setIsDialogOpen(false);
-      toast.success(`Tarea eliminada`);
-    },
-  });
+  const { mutate, isPending } = useDeleteTask(tareaInfo.id);
   return (
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
       <DialogTrigger asChild className="cursor-pointer">
@@ -50,7 +37,7 @@ export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
         <div className="grid gap-4 py-4"></div>
         <DialogFooter className={"gap-2"}>
           {!isPending ? (
-            <Button type="submit" onClick={() => mutate}>
+            <Button type="submit" onClick={() => mutate()}>
               Si
             </Button>
           ) : (
