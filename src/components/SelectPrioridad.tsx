@@ -24,7 +24,7 @@ export function SelectPrioridad({
   return (
     <Select onValueChange={onChangeFn} onOpenChange={onOpenChange}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Elige una prioridad" defaultValue={valuef} />
+        <SelectValue placeholder={valuef || "Elige una prioridad"} defaultValue={valuef} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

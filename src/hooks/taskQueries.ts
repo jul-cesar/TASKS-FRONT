@@ -38,24 +38,23 @@ export const useCreateComment = () => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] }),
-        toast.success("Comentario agregado");
+      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] });
     },
+    onMutate: () => toast.success("Comentario agregado"),
   });
 };
 
 export const useDeleteComment = (idComment: string) => {
   const queryClient = useQueryClient();
-
   const { deleteComment } = UseTasksReqs();
   return useMutation({
     mutationFn: async () => {
       await deleteComment(idComment);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] }),
-        toast.success("Comentario eliminado");
+      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] });
     },
+    onMutate: () => toast.info("Comentario eliminado"),
   });
 };
 
@@ -85,9 +84,9 @@ export const useCreateTask = () => {
       await createTask(newTarea);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEY] }),
-        toast.success("Tarea creada con exito!");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
     },
+    onMutate: () => toast.success("Tarea creada con exito!"),
   });
 };
 
@@ -100,9 +99,40 @@ export const useDeleteTask = (idTask: string) => {
       await deleteTask(idTask);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEY] }),
-        toast.success("Tarea eliminada");
+      queryClient.invalidateQueries({ queryKey: [KEY] });
     },
+    onMutate: () => toast.info("Tarea eliminada"),
+  });
+};
+
+export const useEditTask = (idTask: string) => {
+  const { editTask } = UseTasksReqs();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (
+      newTarea: Omit<task, "asignado" | "owner" | "id" | "createdAt">
+    ) => {
+      await editTask(idTask, newTarea);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [KEY] });
+    },
+    onMutate: () => toast.info(`Tarea editada`),
+  });
+};
+
+export const useAsignedTask = () => {
+  type useAsigns = {
+    data: task[];
+  };
+  const { currentUser } = useContext(Auth);
+  const id = currentUser.id;
+  const { getAsignedTasks } = UseTasksReqs();
+  return useQuery<useAsigns>({
+    queryKey: ["asigns", id],
+    queryFn: (): any => getAsignedTasks(id),
+    enabled: !!id,
   });
 };
 

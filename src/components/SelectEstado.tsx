@@ -15,17 +15,21 @@ type selectEstadoProps = {
   valuef: string;
 };
 
-const SelectEstado = ({ onChangeFn, onOpenChange, valuef }: selectEstadoProps) => {
+const SelectEstado = ({
+  onChangeFn,
+  onOpenChange,
+  valuef,
+}: selectEstadoProps) => {
   return (
     <Select onValueChange={onChangeFn} onOpenChange={onOpenChange}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Elige una prioridad" defaultValue={valuef} />
+        <SelectValue placeholder={valuef || "Elige un estado"} defaultValue={valuef} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Estado</SelectLabel>
           <SelectItem value="pendiente">Pendiente</SelectItem>
-          <SelectItem value="en progreso">En progreso</SelectItem>
+          <SelectItem value="progreso">En progreso</SelectItem>
           <SelectItem value="completada">Completada</SelectItem>
         </SelectGroup>
       </SelectContent>

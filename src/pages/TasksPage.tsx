@@ -3,15 +3,16 @@ import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
 import TasksList from "@/components/TasksList";
 import { Auth } from "@/context/auth";
-import { useTasks } from "@/hooks/taskQueries";
+import { useAsignedTask, useTasks } from "@/hooks/taskQueries";
 
 import { useContext, useState } from "react";
 
 const TasksPage = () => {
-  const { currentUser } = useContext(Auth);
   const { data, status, error } = useTasks();
+  const { data: Asigns, status: statusAsign } = useAsignedTask();
 
   const taskList = data?.data;
+  const AsignsList = Asigns?.data;
 
   const [showTareas, setShowTareas] = useState<boolean>(true);
   return (
@@ -19,13 +20,11 @@ const TasksPage = () => {
       <Navbar />
       <Tabs setShowTareas={setShowTareas} showTareas={showTareas} />
 
-      <div className="text-center m-3">
-        
-      </div>
+      <div className="text-center m-2"></div>
       {showTareas ? (
         <TasksList tasksList={taskList || []} status={status} error={error} />
       ) : (
-        <AsignedTasksList status={status} asignedTasksList={taskList} />
+        <AsignedTasksList status={statusAsign} asignedTasksList={AsignsList} />
       )}
     </div>
   );

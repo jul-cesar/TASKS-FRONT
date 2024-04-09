@@ -1,9 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { task } from "@/types/Task";
 import {
   Dialog,
@@ -30,6 +29,10 @@ import { Input } from "../ui/input";
 import { SelectPrioridad } from "../SelectPrioridad";
 import SelectEstado from "../SelectEstado";
 import { DatePicker } from "../DatePicker";
+import { useEditTask } from "@/hooks/taskQueries";
+import { Auth } from "@/context/auth";
+import axios from "axios";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 type EditTaskFormProps = {
   taskInfo: task;
@@ -38,8 +41,7 @@ type EditTaskFormProps = {
 const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
   const [open, setOpen] = useState(false);
   const [, setDropdownOpen] = useState(false);
-
-  const queryClient = useQueryClient();
+  const { currentUser } = useContext(Auth);
 
   const formScheme = z.object({
     titulo: z
@@ -57,32 +59,38 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
     estado: z.string({ required_error: "Fecha necesaria" }),
   });
 
+  const axiosInstance = useAxiosPrivate();
+
+  const { data: newTaskData } = useQuery<task, Error>({
+    queryKey: ["tasks", taskInfo.id, open],
+    queryFn: () =>
+      axiosInstance.get(`/tarea/byid/${taskInfo.id}`).then((res) => res.data),
+    enabled: !!open,
+  });
+
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
-    defaultValues: {
-      titulo: taskInfo.titulo,
-      descripcion: taskInfo.descripcion,
-      fechaVencimiento: taskInfo.fechaVencimiento,
-      prioridad: taskInfo.prioridad,
-      estado: taskInfo.estado,
-    },
+
     mode: "onChange",
   });
+
+  React.useEffect(() => {
+    if (newTaskData) {
+      form.reset({
+        titulo: newTaskData.titulo,
+        descripcion: newTaskData.descripcion,
+        fechaVencimiento: newTaskData.fechaVencimiento,
+        prioridad: newTaskData.prioridad,
+        estado: newTaskData.estado,
+      });
+    }
+  }, [newTaskData, form]);
 
   React.useEffect(() => {
     form.reset();
   }, [open]);
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (newTarea: Omit<task, "id" | "createdAt">) => {
-      console.log(newTarea, "new");
-      // await updateTarea(tareaInfo.id, newTarea);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["listaTasks"] }),
-        toast.success(`Tarea editada`);
-    },
-  });
+  const { mutateAsync, isPending } = useEditTask(taskInfo.id);
   const OnSubmit: SubmitHandler<z.infer<typeof formScheme>> = async (
     data: z.infer<typeof formScheme>
   ) => {
@@ -93,12 +101,11 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
         prioridad: data.prioridad,
         estado: data.estado,
         fechaVencimiento: data.fechaVencimiento,
-        ownerId: "1212",
+        ownerId: currentUser.id,
       });
       if (!isPending) {
         setOpen(!open);
       }
-      console.log(data);
     } catch (error: any) {
       console.error(error.message);
     }

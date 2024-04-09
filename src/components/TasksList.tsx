@@ -2,10 +2,9 @@ import { task } from "@/types/Task";
 import TaskCard from "./TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Skeleton } from "./ui/skeleton";
-import { Plus } from "lucide-react";
-import { Button } from "./ui/button";
+
 import { CreateTaskForm } from "./forms/CreateTaskForm";
+import { Label } from "@radix-ui/react-label";
 
 type TasksListProps = {
   tasksList: task[];
@@ -14,7 +13,7 @@ type TasksListProps = {
 };
 
 const TasksList = ({ tasksList, status }: TasksListProps) => {
-  const [parent, enableAnimations] = useAutoAnimate();
+  const [parent] = useAutoAnimate();
 
   if (status === "pending") {
     return (
@@ -36,9 +35,9 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
   }
   return (
     <div className="flex justify-center m-4 gap-4 flex-wrap" ref={parent}>
-      <div className="flex justify-center items-center  flex-wrap sm:w-[350px]  w-[320px] border-border">
-      <CreateTaskForm />
-
+      <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
+        <CreateTaskForm />
+        <Label>Crea una nueva tarea</Label>
       </div>
       {Array.isArray(tasksList) &&
         tasksList.map((tarea) => (

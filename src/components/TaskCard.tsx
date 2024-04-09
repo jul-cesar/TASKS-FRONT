@@ -14,6 +14,9 @@ import { BadgeComponent } from "./BadgeComponent";
 import { Comments } from "./Comments";
 import DialogAsignUser from "./DialogAsignUser";
 import EditTaskForm from "./forms/EditTaskForm";
+import { format } from "date-fns";
+import { Separator } from "./ui/separator";
+import { Clock, User } from "lucide-react";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -31,7 +34,7 @@ const TaskCard = ({
   tareaInfo,
 }: TaskCardProps) => {
   return (
-    <Card className="max-w-[350px]">
+    <Card className="max-w-[340px]">
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between">
@@ -39,10 +42,6 @@ const TaskCard = ({
             <CardOptions tareaInfo={tareaInfo} />
           </div>
         </CardTitle>
-        <CardDescription>Creada por: {owner?.nombre}</CardDescription>
-        <CardDescription>
-          Creada: hace {formatCustomDate(createdAt)}
-        </CardDescription>
 
         {asignado && (
           <CardDescription>Asignada a: {asignado.nombre}</CardDescription>
@@ -64,9 +63,10 @@ const TaskCard = ({
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col items-center space-y-2">
-              <Label htmlFor="name">Fecha de vencimiento: </Label>
+              <Label>Fecha de vencimiento: </Label>
               <BadgeComponent variant="secondary">
-                {formatCustomDate(fechaVencimiento)}
+                {format(fechaVencimiento, "yyyy-MM-dd")} (
+                {formatCustomDate(fechaVencimiento)})
               </BadgeComponent>
             </div>
           </div>
@@ -76,6 +76,18 @@ const TaskCard = ({
         <Comments tareaInfo={tareaInfo} namet={titulo} />
         <DialogAsignUser taskInfo={tareaInfo} />
         <EditTaskForm taskInfo={tareaInfo} />
+      </CardFooter>
+      <Separator className="my-3" />
+      <CardFooter className="flex justify-between ">
+        <div className="flex justify-center items-center gap-1 mt-1">
+          <User />
+          <p className="font-bold text-xs"> {owner?.nombre} </p>
+        </div>
+
+        <div className="flex justify-center items-center gap-1 mt-1">
+          <Clock />
+          <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
+        </div>
       </CardFooter>
     </Card>
   );

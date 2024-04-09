@@ -35,12 +35,14 @@ const CommentsList = ({
                   {formatCustomDate(comentario.fecha)}
                 </span>
               </div>
-              <p className="text-sm font-normal py-2.5 text-background max-w-[720px]  text-clip text-wrap">
+              <p className="text-sm font-normal py-2.5 text-background max-w-[720px]  truncate">
                 {comentario.contenido}
               </p>
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400"></span>
             </div>
-            <CommentsOptions comentarioData={comentario} />
+            <button className="inline-flex self-center items-center p-2 text-sm font-medium text-center">
+              <CommentsOptions comentarioData={comentario} />
+            </button>
           </div>
         ))
       ) : (

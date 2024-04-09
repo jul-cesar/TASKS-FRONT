@@ -2,6 +2,7 @@ import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { task } from "@/types/Task";
 import { useContext } from "react";
+import { toast } from "sonner";
 
 // COMMENTS HOOKS
 
@@ -70,10 +71,29 @@ const UseTasksReqs = () => {
 
   const getTaskComments = async (idTask: string) => {
     try {
-      if (currentUser.id !== "") {
-        const response = await axiosInstance.get(`/comentario/${idTask}`);
-        return response;
-      }
+      const response = await axiosInstance.get(`/comentario/${idTask}`);
+      return response;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  const editTask = async (
+    idTask: string,
+    data: Omit<task, "asignado" | "owner" | "id" | "createdAt">
+  ) => {
+    try {
+      const response = await axiosInstance.put(`/tarea/${idTask}`, data);
+      return response;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  const getAsignedTasks = async (idUser: string) => {
+    try {
+      const response = await axiosInstance.get(`/tarea/asigned/${idUser}`);
+      return response;
     } catch (error: any) {
       console.error(error.message);
     }
@@ -86,6 +106,8 @@ const UseTasksReqs = () => {
     deleteComment,
     deleteTask,
     createTask,
+    editTask,
+    getAsignedTasks
   };
 };
 

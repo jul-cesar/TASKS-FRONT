@@ -86,7 +86,9 @@ const Navbar = () => {
                 id="dropdown-user"
               >
                 <div className="px-4 py-3" role="none">
-                  <p className="text-sm text-gray-900" role="none">
+                <span className="block text-sm text-gray-900">{currentUser.nombre}</span>
+
+                  <p className="text-sm truncate text-gray-500" role="none">
                     {currentUser.email}
                   </p>
                   <p

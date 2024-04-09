@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { es } from "date-fns/locale";
 type DatePickerProps = {
   valuef: string;
   onChangef: (...event: any[]) => void;
@@ -33,9 +34,11 @@ export function DatePicker({ valuef, onChangef }: DatePickerProps) {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
+          locale={es}
+          fromDate={new Date()}
           mode="single"
           selected={valuef}
-          onSelect={(date: Date) => onChangef(formatISO(date))}
+          onSelect={( date: Date) => onChangef(formatISO(date))}
           initialFocus
         />
       </PopoverContent>
