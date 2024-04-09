@@ -3,6 +3,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AvatarDemo } from "./Avatar";
 import { ModeToggle } from "./mode-toggle";
+import { Bell} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
@@ -56,6 +58,11 @@ const Navbar = () => {
             <div className="flex items-center ms-3 gap-2">
               <div>
                 <ModeToggle />
+              </div>
+              <div>
+                <Button variant="outline" size="icon">
+                  <Bell />
+                </Button>
               </div>
               <div>
                 {

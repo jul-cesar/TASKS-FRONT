@@ -9,7 +9,7 @@ import { useContext, useState } from "react";
 
 const TasksPage = () => {
   const { currentUser } = useContext(Auth);
-  const { data, status, error} = useTasks();
+  const { data, status, error } = useTasks();
 
   const taskList = data?.data;
 
@@ -19,10 +19,8 @@ const TasksPage = () => {
       <Navbar />
       <Tabs setShowTareas={setShowTareas} showTareas={showTareas} />
 
-      <div className="text-center m-4">
-        {currentUser.nombre && (
-          <h2 className="font-bold">Bienvenido, {currentUser.nombre}.</h2>
-        )}
+      <div className="text-center m-3">
+        
       </div>
       {showTareas ? (
         <TasksList tasksList={taskList || []} status={status} error={error} />

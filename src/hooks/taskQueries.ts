@@ -7,6 +7,9 @@ import { useContext } from "react";
 import { toast } from "sonner";
 
 const KEY: string = "tasks";
+const KEYCOMMENT: string = "comments";
+
+// COMMENTS QUERIES
 
 export const useGetComments = (idTarea: string) => {
   const { getTaskComments } = UseTasksReqs();
@@ -14,7 +17,7 @@ export const useGetComments = (idTarea: string) => {
     data: comment[];
   };
   return useQuery<listaComments>({
-    queryKey: ["comments", idTarea],
+    queryKey: [KEYCOMMENT, idTarea],
     queryFn: (): any => getTaskComments(idTarea),
     enabled: !!idTarea,
   });
@@ -35,7 +38,7 @@ export const useCreateComment = () => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] }),
+      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] }),
         toast.success("Comentario agregado");
     },
   });
@@ -50,11 +53,13 @@ export const useDeleteComment = (idComment: string) => {
       await deleteComment(idComment);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] }),
+      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] }),
         toast.success("Comentario eliminado");
     },
   });
 };
+
+// TASKS QUERIES
 
 export const useTasks = () => {
   type useTasks = {
@@ -67,6 +72,22 @@ export const useTasks = () => {
     queryKey: [KEY, id],
     queryFn: (): any => getUserTasks(id),
     enabled: !!id,
+  });
+};
+
+export const useCreateTask = () => {
+  const { createTask } = UseTasksReqs();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (
+      newTarea: Omit<task, "asignado" | "owner" | "id" | "createdAt">
+    ) => {
+      await createTask(newTarea);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.success("Tarea creada con exito!");
+    },
   });
 };
 
@@ -84,6 +105,8 @@ export const useDeleteTask = (idTask: string) => {
     },
   });
 };
+
+//AUTH
 
 export const useLogIn = () => {
   const { LogIn } = useContext(Auth);

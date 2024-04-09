@@ -1,10 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import { task } from "@/types/Task";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -13,8 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -22,25 +19,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Textarea } from "../ui/textarea";
-import { LucideEdit } from "lucide-react";
-import LoadingSmall from "../loaders/LoadingSmall";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import React, { useContext, useState } from "react";
+import { useCreateTask } from "@/hooks/taskQueries";
 import { SelectPrioridad } from "../SelectPrioridad";
-import SelectEstado from "../SelectEstado";
 import { DatePicker } from "../DatePicker";
+import LoadingSmall from "../loaders/LoadingSmall";
+import { Auth } from "@/context/auth";
+import { Plus } from "lucide-react";
 
-type EditTaskFormProps = {
-  taskInfo: task;
-};
-
-const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
+export function CreateTaskForm() {
   const [open, setOpen] = useState(false);
   const [, setDropdownOpen] = useState(false);
-
-  const queryClient = useQueryClient();
-
+  const { currentUser } = useContext(Auth);
   const formScheme = z.object({
     titulo: z
       .string()
@@ -53,18 +46,18 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
     prioridad: z
       .string({ required_error: "Por favor, elige una prioridad" })
       .min(1, { message: "Por favor elige una prioridad" }),
-    fechaVencimiento: z.string({ required_error: "Fecha necesaria" }),
-    estado: z.string({ required_error: "Fecha necesaria" }),
+    fechaVencimiento: z
+      .string({ required_error: "Fecha necesaria" })
+      .min(1, { message: "Por favor selecciona una fecha" }),
   });
 
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
     defaultValues: {
-      titulo: taskInfo.titulo,
-      descripcion: taskInfo.descripcion,
-      fechaVencimiento: taskInfo.fechaVencimiento,
-      prioridad: taskInfo.prioridad,
-      estado: taskInfo.estado,
+      titulo: "",
+      descripcion: "",
+      fechaVencimiento: "",
+      prioridad: "",
     },
     mode: "onChange",
   });
@@ -73,27 +66,19 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
     form.reset();
   }, [open]);
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (newTarea: Omit<task, "id" | "createdAt">) => {
-      console.log(newTarea, "new");
-      // await updateTarea(tareaInfo.id, newTarea);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["listaTasks"] }),
-        toast.success(`Tarea editada`);
-    },
-  });
+  const { mutate, isPending } = useCreateTask();
+
   const OnSubmit: SubmitHandler<z.infer<typeof formScheme>> = async (
     data: z.infer<typeof formScheme>
   ) => {
     try {
-      await mutateAsync({
+      mutate({
         titulo: data.titulo,
         descripcion: data.descripcion,
-        prioridad: data.prioridad,
-        estado: data.estado,
         fechaVencimiento: data.fechaVencimiento,
-        ownerId: "1212",
+        prioridad: data.prioridad,
+        estado: "pendiente",
+        ownerId: currentUser.id,
       });
       if (!isPending) {
         setOpen(!open);
@@ -103,19 +88,20 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
       console.error(error.message);
     }
   };
-
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogTrigger asChild>
-        <Button>
-          {" "}
-          <LucideEdit />{" "}
+      <Button size={"sm"} variant={"outline"}>
+        <Plus />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Editar tarea</DialogTitle>
-          <DialogDescription>Edita los datos de tu tarea</DialogDescription>
+          <DialogTitle>Crea una tarea</DialogTitle>
+          <DialogDescription>
+            Llena la info de tu nueva tarea, una vez estes listo, presiona el
+            boton "Crear" y se agregara automaticamente a tu lista de tareas.
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form>
@@ -160,50 +146,29 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
                   )}
                 />
               </div>
-              <div className="">
-                <FormField
-                  control={form.control}
-                  name="prioridad"
-                  render={({ field: { value, onChange } }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Prioridad
-                        <FormControl>
-                          <SelectPrioridad
-                            valuef={value}
-                            onChangeFn={onChange}
-                            onOpenChange={(isOpen: boolean) =>
-                              setDropdownOpen(isOpen)
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormLabel>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="estado"
-                  render={({ field: { value, onChange } }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Estado
-                        <FormControl>
-                          <SelectEstado
-                            valuef={value}
-                            onChangeFn={onChange}
-                            onOpenChange={(isOpen: boolean) =>
-                              setDropdownOpen(isOpen)
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormLabel>
-                    </FormItem>
-                  )}
-                />
-              </div>
+
+              <FormField
+                control={form.control}
+                name="prioridad"
+                render={({ field: { value, onChange } }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Prioridad
+                      <FormControl>
+                        <SelectPrioridad
+                          valuef={value}
+                          onChangeFn={onChange}
+                          onOpenChange={(isOpen: boolean) =>
+                            setDropdownOpen(isOpen)
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 name="fechaVencimiento"
                 control={form.control}
@@ -218,6 +183,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
                           onChangef={field.onChange}
                         />
                       </FormControl>
+
                       <FormMessage />
                     </FormLabel>
                   </FormItem>
@@ -229,7 +195,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
         <DialogFooter>
           {!isPending ? (
             <Button type="submit" onClick={form.handleSubmit(OnSubmit)}>
-              Editar
+              Crear
             </Button>
           ) : (
             <LoadingSmall />
@@ -238,6 +204,4 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default EditTaskForm;
+}

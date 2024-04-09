@@ -1,7 +1,11 @@
 import { task } from "@/types/Task";
 import TaskCard from "./TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
-
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Skeleton } from "./ui/skeleton";
+import { Plus } from "lucide-react";
+import { Button } from "./ui/button";
+import { CreateTaskForm } from "./forms/CreateTaskForm";
 
 type TasksListProps = {
   tasksList: task[];
@@ -9,7 +13,9 @@ type TasksListProps = {
   error?: Error | null;
 };
 
-const TasksList = ({ tasksList, status}: TasksListProps) => {
+const TasksList = ({ tasksList, status }: TasksListProps) => {
+  const [parent, enableAnimations] = useAutoAnimate();
+
   if (status === "pending") {
     return (
       <div className="w-full flex justify-center">
@@ -29,7 +35,11 @@ const TasksList = ({ tasksList, status}: TasksListProps) => {
     );
   }
   return (
-    <div className="flex justify-center m-4 gap-4 flex-wrap">
+    <div className="flex justify-center m-4 gap-4 flex-wrap" ref={parent}>
+      <div className="flex justify-center items-center  flex-wrap sm:w-[350px]  w-[320px] border-border">
+      <CreateTaskForm />
+
+      </div>
       {Array.isArray(tasksList) &&
         tasksList.map((tarea) => (
           <TaskCard

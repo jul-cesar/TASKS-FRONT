@@ -1,17 +1,52 @@
 import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { comment } from "@/types/comment";
+import { task } from "@/types/Task";
 import { useContext } from "react";
+
+// COMMENTS HOOKS
 
 const UseTasksReqs = () => {
   const axiosInstance = useAxiosPrivate();
   const { currentUser } = useContext(Auth);
-  const getTasks = async () => {
+
+  // COMMENTS FNS
+
+  const createComment = async ({
+    contenido,
+    authorId,
+    tareaId,
+  }: {
+    contenido: string;
+    authorId: string;
+    tareaId: string;
+  }) => {
+    const response = await axiosInstance.post("/comentario", {
+      contenido,
+      authorId,
+      tareaId,
+    });
+    return response;
+  };
+
+  const deleteComment = async (idTarea: string) => {
     try {
-      const response = await axiosInstance.get("/tarea");
+      const response = await axiosInstance.delete(`/comentario/${idTarea}`);
       return response;
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  // TASKS COMMENTS
+
+  const createTask = async (
+    data: Omit<task, "asignado" | "owner" | "id" | "createdAt">
+  ) => {
+    try {
+      const response = await axiosInstance.post("/tarea", data);
+      return response;
+    } catch (error: any) {
+      console.error(error.message);
     }
   };
 
@@ -43,38 +78,14 @@ const UseTasksReqs = () => {
       console.error(error.message);
     }
   };
-  const createComment = async ({
-    contenido,
-    authorId,
-    tareaId,
-  }: {
-    contenido: string;
-    authorId: string;
-    tareaId: string;
-  }) => {
-    const response = await axiosInstance.post("/comentario", {
-      contenido,
-      authorId,
-      tareaId,
-    });
-    return response;
-  };
 
-  const deleteComment = async (idTarea: string) => {
-    try {
-      const response = await axiosInstance.delete(`/comentario/${idTarea}`);
-      return response;
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
   return {
-    getTasks,
     getTaskComments,
     getUserTasks,
     createComment,
     deleteComment,
-    deleteTask
+    deleteTask,
+    createTask,
   };
 };
 
