@@ -1,16 +1,10 @@
-import { task } from "@/types/Task";
-import TaskCard from "../components/TaskCard";
-import CardSkeleton from "../components/loaders/CardSkeleton";
+import TaskCard from "./TaskCard";
+import CardSkeleton from "./loaders/CardSkeleton";
+import { useAsignedTask } from "@/hooks/taskQueries";
 
-type AsignedTasksListProps = {
-  asignedTasksList?: task[];
-  status: string;
-};
-
-const AsignedTasksList = ({
-  asignedTasksList,
-  status,
-}: AsignedTasksListProps) => {
+const AsignedTasksList = () => {
+  const { data: Asigns, status } = useAsignedTask();
+  const AsignsList = Asigns?.data;
   if (status === "pending") {
     return (
       <div className="w-full flex justify-center">
@@ -31,8 +25,8 @@ const AsignedTasksList = ({
   }
   return (
     <div className="flex items-center  justify-center m-4 gap-4  flex-wrap">
-      {Array.isArray(asignedTasksList) &&
-        asignedTasksList.map((tarea) => (
+      {Array.isArray(AsignsList) &&
+        AsignsList.map((tarea) => (
           <TaskCard
             tareaInfo={tarea}
             key={tarea.id}

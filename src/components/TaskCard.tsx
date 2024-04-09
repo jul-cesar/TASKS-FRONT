@@ -34,7 +34,7 @@ const TaskCard = ({
   tareaInfo,
 }: TaskCardProps) => {
   return (
-    <Card className="max-w-[340px]">
+    <Card className="max-w-[350px]">
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between">

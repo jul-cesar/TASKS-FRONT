@@ -70,6 +70,8 @@ export const useTasks = () => {
   return useQuery<useTasks>({
     queryKey: [KEY, id],
     queryFn: (): any => getUserTasks(id),
+    staleTime: 1000 * 60 * 1,
+
     enabled: !!id,
   });
 };
@@ -132,6 +134,7 @@ export const useAsignedTask = () => {
   return useQuery<useAsigns>({
     queryKey: ["asigns", id],
     queryFn: (): any => getAsignedTasks(id),
+    staleTime: 1000 * 60 * 1,
     enabled: !!id,
   });
 };

@@ -17,10 +17,8 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
 
   if (status === "pending") {
     return (
-      <div className="w-full flex justify-center">
-        <div className="flex justify-center m-4 gap-4 flex-wrap">
-          <CardSkeleton />
-        </div>
+      <div className="flex gap-4 flex-wrap  m-4  sm:justify-end justify-center mt-20">
+        <CardSkeleton />
       </div>
     );
   }
@@ -34,7 +32,10 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
     );
   }
   return (
-    <div className="flex justify-center m-4 gap-4 flex-wrap" ref={parent}>
+    <div
+      className="flex gap-4 flex-wrap sm:justify-end m-4 justify-center mt-20"
+      ref={parent}
+    >
       <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
         <CreateTaskForm />
         <Label>Crea una nueva tarea</Label>

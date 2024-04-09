@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(Auth);
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:border-border dark:bg-background">
+    <nav className="fixed top-0 z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
@@ -39,19 +39,20 @@ const Navbar = () => {
               </svg>
             </button>
             <a href="" className="flex ms-2 md:me-24">
-              {/* <div className="flex items-center justify-center ">
+              <div className="flex items-center justify-center ">
               {" "}
-              <img
+              {/* <img
                 src={logo}
                 alt="Company Logo"
                 className="max-h-14 w-20 sm:h-16 md:h-20 lg:h-20 object-cover"
-              />
-              <img
+              /> */}
+               <p className="font-bold text-xl underline">Tasks</p>
+              {/* <img
                 src={textlogo}
                 alt="Company Text Logo"
                 className="h-12 w-56 sm:h-13.5 md:h-13 lg:h-13 object-cover"
-              />
-            </div> */}
+              /> */}
+            </div>
             </a>
           </div>
           <div className="flex items-center">
