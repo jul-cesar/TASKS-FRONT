@@ -111,6 +111,12 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
     }
   };
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogTrigger asChild>
@@ -125,7 +131,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
           <DialogDescription>Edita los datos de tu tarea</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form>
+          <form onKeyDown={handleKeyDown}>
             <div className="grid w-full items-center gap-4">
               <div className=" text-start space-y-1.5 space-x-1.5">
                 <FormField

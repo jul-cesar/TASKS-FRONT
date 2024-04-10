@@ -88,11 +88,17 @@ export function CreateTaskForm() {
       console.error(error.message);
     }
   };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogTrigger asChild>
-      <Button size={"sm"} variant={"outline"}>
-        <Plus />
+        <Button size={"sm"} variant={"outline"}>
+          <Plus />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -104,7 +110,7 @@ export function CreateTaskForm() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form>
+          <form onKeyDown={handleKeyDown}>
             <div className="grid w-full items-center gap-4">
               <div className=" text-start space-y-1.5 space-x-1.5">
                 <FormField
@@ -183,7 +189,6 @@ export function CreateTaskForm() {
                           onChangef={field.onChange}
                         />
                       </FormControl>
-
                       <FormMessage />
                     </FormLabel>
                   </FormItem>

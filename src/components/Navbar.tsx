@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AvatarDemo } from "./Avatar";
 import { ModeToggle } from "./mode-toggle";
-import { Bell} from "lucide-react";
+import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -38,21 +38,21 @@ const Navbar = () => {
                 ></path>
               </svg>
             </button>
-            <a href="" className="flex ms-2 md:me-24">
+            <a className="flex ms-2 md:me-24">
               <div className="flex items-center justify-center ">
-              {" "}
-              {/* <img
+                {" "}
+                {/* <img
                 src={logo}
                 alt="Company Logo"
                 className="max-h-14 w-20 sm:h-16 md:h-20 lg:h-20 object-cover"
               /> */}
-               <p className="font-bold text-xl underline">Tasks</p>
-              {/* <img
+                <p className="font-bold text-xl underline">Tasks</p>
+                {/* <img
                 src={textlogo}
                 alt="Company Text Logo"
                 className="h-12 w-56 sm:h-13.5 md:h-13 lg:h-13 object-cover"
               /> */}
-            </div>
+              </div>
             </a>
           </div>
           <div className="flex items-center">
@@ -87,7 +87,9 @@ const Navbar = () => {
                 id="dropdown-user"
               >
                 <div className="px-4 py-3" role="none">
-                <span className="block text-sm text-gray-900">{currentUser.nombre}</span>
+                  <span className="block text-sm text-gray-900">
+                    {currentUser.nombre}
+                  </span>
 
                   <p className="text-sm truncate text-gray-500" role="none">
                     {currentUser.email}

@@ -5,6 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { Label } from "@radix-ui/react-label";
+import { useLocation } from "react-router-dom";
 
 type TasksListProps = {
   tasksList: task[];
@@ -14,6 +15,9 @@ type TasksListProps = {
 
 const TasksList = ({ tasksList, status }: TasksListProps) => {
   const [parent] = useAutoAnimate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const titleFilter = queryParams.get("q");
 
   if (status === "pending") {
     return (
@@ -33,13 +37,15 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
   }
   return (
     <div
-      className="flex gap-4 flex-wrap sm:justify-end m-4 justify-center mt-20"
+      className="flex gap-4 flex-wrap sm:justify-end m-4 justify-center "
       ref={parent}
     >
-      <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
-        <CreateTaskForm />
-        <Label>Crea una nueva tarea</Label>
-      </div>
+      {!titleFilter && (
+        <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
+          <CreateTaskForm />
+          <Label>Crea una nueva tarea</Label>
+        </div>
+      )}
       {Array.isArray(tasksList) &&
         tasksList.map((tarea) => (
           <TaskCard
