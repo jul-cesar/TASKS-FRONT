@@ -12,14 +12,14 @@ import { Label } from "@/components/ui/label";
 import { task } from "@/models/Task";
 import { useState } from "react";
 import LoadingSmall from "../loaders/LoadingSmall";
-import { useDeleteComment, useDeleteTask } from "@/hooks/taskQueries";
+import { useDeleteTask } from "@/hooks/taskQueries";
 
 export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { mutate, isPending } = useDeleteTask(tareaInfo.id);
   return (
-    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
+    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)} >
       <DialogTrigger asChild className="cursor-pointer">
         <Label>Eliminar</Label>
       </DialogTrigger>

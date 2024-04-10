@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { Separator } from "../ui/separator";
 import { Clock, User } from "lucide-react";
 import { Label } from "../ui/label";
+import { TooltipDemo } from "./TooltipDemo";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -50,7 +51,7 @@ const TaskCard = ({
       </CardHeader>
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
-          <Label>Estado:  </Label>
+          <Label>Estado: </Label>
           <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
         </div>
         <div className="p-2">
@@ -73,21 +74,31 @@ const TaskCard = ({
         </form>
       </CardContent>
       <CardFooter className="flex justify-evenly">
-        <Comments tareaInfo={tareaInfo} namet={titulo} />
-        <DialogAsignUser taskInfo={tareaInfo} />
-        <EditTaskForm taskInfo={tareaInfo} />
+        <TooltipDemo text="Ver Comentarios">
+          <Comments tareaInfo={tareaInfo} namet={titulo} />
+        </TooltipDemo>
+
+        <TooltipDemo text="Asignar un usuario">
+          <DialogAsignUser taskInfo={tareaInfo} />
+        </TooltipDemo>
+        <TooltipDemo text="Editar tarea">
+          <EditTaskForm taskInfo={tareaInfo} />
+        </TooltipDemo>
       </CardFooter>
       <Separator className="my-3" />
       <CardFooter className="flex justify-between ">
+        <TooltipDemo text="Tarea creada por">
         <div className="flex justify-center items-center gap-1 mt-1">
           <User />
           <p className="font-bold text-xs"> {owner?.nombre} </p>
         </div>
-
+        </TooltipDemo>
+        <TooltipDemo text="Tarea creada hace">
         <div className="flex justify-center items-center gap-1 mt-1">
           <Clock />
           <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
         </div>
+        </TooltipDemo>
       </CardFooter>
     </Card>
   );
