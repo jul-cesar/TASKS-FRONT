@@ -1,4 +1,4 @@
-import TaskCard from "./TaskCard";
+import TaskCard from "./Card.tasks/TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAsignedTask } from "@/hooks/taskQueries";
 
@@ -24,7 +24,7 @@ const AsignedTasksList = () => {
     );
   }
   return (
-    <div className="flex gap-4 flex-wrap sm:justify-end m-4 justify-center ">
+    <div className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 ">
       {Array.isArray(AsignsList) &&
         AsignsList.map((tarea) => (
           <TaskCard

@@ -9,9 +9,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { task } from "@/types/Task";
+import { task } from "@/models/Task";
 import { useState } from "react";
-import LoadingSmall from "./loaders/LoadingSmall";
+import LoadingSmall from "../loaders/LoadingSmall";
 import { useDeleteComment, useDeleteTask } from "@/hooks/taskQueries";
 
 export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {

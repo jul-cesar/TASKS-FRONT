@@ -12,17 +12,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
+} from "../../ui/form";
+import { Button } from "../../ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { task } from "@/types/Task";
-import { user } from "@/types/User";
+} from "../../ui/select";
+import { task } from "@/models/Task";
+import { user } from "@/models/User";
 import { Auth } from "@/context/auth";
 
 type SelectUserProps = {
@@ -39,7 +39,7 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
 
   const { data: listaUsuarios } = useQuery({
     queryKey: ["listaUsuarios"],
-    queryFn: async () => await getAllUsers(),
+    // queryFn: async () => await getAllUsers(),
   });
 
   const { currentUser } = useContext(Auth);
@@ -51,33 +51,33 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
   });
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
-    mutationFn: async (newTarea: z.infer<typeof FormSchema>) => {
-      //   await updateTarea(currentTarea.id, newTarea);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["listaTasks"] }),
-        queryClient.invalidateQueries({ queryKey: ["listaAsign"] }),
-        toast.success(`Asignaste un usuario a la tarea ${currentTarea.titulo}`);
-      setIsOpenDialog(false);
-    },
-  });
+  // const { mutate } = useMutation({
+  //   mutationFn: async (newTarea: z.infer<typeof FormSchema>) => {
+  //     //   await updateTarea(currentTarea.id, newTarea);
+  //   },
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["listaTasks"] }),
+  //       queryClient.invalidateQueries({ queryKey: ["listaAsign"] }),
+  //       toast.success(`Asignaste un usuario a la tarea ${currentTarea.titulo}`);
+  //     setIsOpenDialog(false);
+  //   },
+  // });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate({ asignadoId: data.userAsignado });
-  }
+  // function onSubmit(data: z.infer<typeof FormSchema>) {
+  //   mutate({ asignadoId: data.userAsignado });
+  // }
 
-  useEffect(() => {
-    if (listaUsuarios && currentUser) {
-      console.log(currentUser, "xddddadasdasd");
-      const filtrados = listaUsuarios.filter(
-        (x: user) =>
-          x.email?.toLowerCase() !==
-          currentUser.currentUser.email?.toLowerCase()
-      );
-      setListaFiltrada(filtrados);
-    }
-  }, [listaUsuarios, currentUser]);
+  // useEffect(() => {
+  //   if (listaUsuarios && currentUser) {
+  //     console.log(currentUser, "xddddadasdasd");
+  //     const filtrados = listaUsuarios.filter(
+  //       (x: user) =>
+  //         x.email?.toLowerCase() !==
+  //         currentUser.currentUser.email?.toLowerCase()
+  //     );
+  //     setListaFiltrada(filtrados);
+  //   }
+  // }, [listaUsuarios, currentUser]);
 
   return (
     <Form {...form}>

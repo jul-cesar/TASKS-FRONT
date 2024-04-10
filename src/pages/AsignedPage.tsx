@@ -1,8 +1,5 @@
-import React from "react";
 import AsignedTasksList from "../components/AsignedTasksList";
-import Navbar from "@/components/Navbar";
-import Tabs from "@/components/Tabs";
-import TasksPagesLayout from "@/components/layout/TasksPagesLayout";
+import TasksPagesLayout from "@/layout/TasksPagesLayout";
 
 const AsignedPage = () => {
   return (

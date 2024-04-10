@@ -63,7 +63,7 @@ const Login = () => {
           <h2 className="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl">
             Ingresa 👋{" "}
           </h2>
-          <button
+          {/* <button
             type="button"
             onClick={() => refresh()}
             className="justify-self-center px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
@@ -75,12 +75,12 @@ const Login = () => {
               alt="google logo"
             />
             <span>Inicia con Google</span>
-          </button>
+          </button> */}
           <div className="inline-flex items-center justify-center w-full">
-            <hr className="w-full h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+            {/* <hr className="w-full h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">
               o
-            </span>
+            </span> */}
           </div>
         </div>
 

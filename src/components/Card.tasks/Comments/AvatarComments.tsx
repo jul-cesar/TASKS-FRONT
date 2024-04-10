@@ -3,7 +3,7 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
-import { user } from "@/types/User"
+import { user } from "@/models/User"
 
 type AvatarCommentsProps = {
     src: string | undefined

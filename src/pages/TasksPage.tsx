@@ -1,15 +1,14 @@
-import TasksPagesLayout from "@/components/layout/TasksPagesLayout";
+import TasksPagesLayout from "@/layout/TasksPagesLayout";
 import SearchTasks from "@/components/SearchTasks";
 
 import TasksList from "@/components/TasksList";
 import { useTasks } from "@/hooks/taskQueries";
 import { useLocation } from "react-router-dom";
-import { task } from "../types/Task";
+import { task } from "../models/Task";
 import { useEffect, useState } from "react";
-import { any } from "zod";
 
 const TasksPage = () => {
-  const { data, status, error } = useTasks();
+  const { data, status, error, isLoading } = useTasks();
 
   const taskList = data?.data;
 
@@ -29,8 +28,9 @@ const TasksPage = () => {
 
   return (
     <TasksPagesLayout>
-      <SearchTasks />
+     <SearchTasks/>
       <TasksList
+        isLoading={isLoading}
         tasksList={filteredTasks || []}
         status={status}
         error={error}

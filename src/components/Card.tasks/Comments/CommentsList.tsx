@@ -1,4 +1,4 @@
-import { comment } from "../types/comment";
+import { comment } from "../../../models/comment";
 import { formatCustomDate } from "@/utils/formatCustomDate";
 import CommentsOptions from "./CommentsOptions";
 import { AvatarComments } from "./AvatarComments";

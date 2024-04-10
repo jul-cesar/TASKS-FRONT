@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { task } from "@/types/Task";
+import { task } from "@/models/Task";
 import { DeleteTareaDialog } from "./DeleteTareaDialog";
 
 type CardOptionsProps = {

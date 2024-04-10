@@ -18,7 +18,7 @@ const SearchTasks = () => {
     setSearchParams(newSearchParams, { replace: true });
   };
   return (
-    <div className="p-4 m-4 gap-2 mt-16 flex flex-col sm:w-3/6  sm:self-end  ">
+    <div className="p-4 m-4 gap-2 sm:mt-16 mt-20 flex flex-col sm:w-3/6  sm:self-center  ">
       <Input
         value={q}
         type="search"

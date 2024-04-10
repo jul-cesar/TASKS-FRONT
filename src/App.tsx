@@ -1,22 +1,31 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Login from "./pages/LogIn";
-import TasksPage from "./pages/TasksPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import AsignedPage from "./pages/AsignedPage";
 import PersistLogin from "./utils/PersistLogin";
+import { privateRoutes, publicRoutes } from "./models/routes";
+import { lazy, Suspense } from "react";
 
 function App() {
+  const LogInLazy = lazy(() => import("./pages/LogIn"));
+  const TasksPageLazy = lazy(() => import("./pages/TasksPage"));
+  const AsignedPageLazy = lazy(() => import("./pages/AsignedPage"));
+
   return (
-    <Routes>
-      <Route element={<PersistLogin />}>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<TasksPage />} />
-          <Route path="/asigned-tasks" element={<AsignedPage />} />
+    <Suspense>
+      <Routes>
+        <Route element={<PersistLogin />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path={privateRoutes.TASKS} element={<TasksPageLazy />} />
+            <Route
+              path={privateRoutes.ASIGNEDTASKS}
+              element={<AsignedPageLazy />}
+            />
+          </Route>
         </Route>
-      </Route>
-      <Route path="/login" element={<Login />} />
-    </Routes>
+        <Route path={publicRoutes.LOGIN} element={<LogInLazy />} />
+        <Route path="*" element={<>Not Found</>} />
+      </Routes>
+    </Suspense>
   );
 }
 

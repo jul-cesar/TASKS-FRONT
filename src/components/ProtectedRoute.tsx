@@ -1,4 +1,5 @@
 import { Auth } from "@/context/auth";
+import { publicRoutes } from "@/models/routes";
 import { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
@@ -8,7 +9,7 @@ const ProtectedRoute = () => {
   return authTok.token !== "" ? (
     <Outlet />
   ) : (
-    <Navigate to={"/login"} state={{ from: location }} replace />
+    <Navigate to={publicRoutes.LOGIN} state={{ from: location }} replace />
   );
 };
 

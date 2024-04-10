@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
 import {
   Dialog,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { task } from "@/types/Task";
-import SelectUser from "./forms/SelectUser";
+} from "../ui/dialog";
+import { task } from "@/models/Task";
+import SelectUser from "../forms/forms.components/SelectUser";
 import { useState } from "react";
 
 type DialogAsignUserProps = {

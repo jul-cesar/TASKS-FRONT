@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <aside
       id="separator-sidebar"
-      className="fixed top-0 mt-14 left-0 z-40 w-[240px] h-screen transition-transform -translate-x-full sm:translate-x-0"
+      className="fixed top-0 mt-14 left-0 z-40 w-[17%] h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-background border-border border-r-2">

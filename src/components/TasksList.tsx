@@ -1,19 +1,20 @@
-import { task } from "@/types/Task";
-import TaskCard from "./TaskCard";
+import { task } from "@/models/Task";
+import TaskCard from "./Card.tasks/TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { CreateTaskForm } from "./forms/CreateTaskForm";
-import { Label } from "@radix-ui/react-label";
 import { useLocation } from "react-router-dom";
+import { Label } from "./ui/label";
 
 type TasksListProps = {
   tasksList: task[];
   status: string;
   error?: Error | null;
+  isLoading: boolean;
 };
 
-const TasksList = ({ tasksList, status }: TasksListProps) => {
+const TasksList = ({ tasksList, status, isLoading }: TasksListProps) => {
   const [parent] = useAutoAnimate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -21,7 +22,7 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
 
   if (status === "pending") {
     return (
-      <div className="flex gap-4 flex-wrap  m-4  sm:justify-end justify-center mt-20">
+      <div className="flex gap-4 flex-wrap  m-4  justify-center">
         <CardSkeleton />
       </div>
     );
@@ -37,7 +38,7 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
   }
   return (
     <div
-      className="flex gap-4 flex-wrap sm:justify-end m-4 justify-center "
+      className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 "
       ref={parent}
     >
       {!titleFilter && (

@@ -24,8 +24,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import React, { useContext, useState } from "react";
 import { useCreateTask } from "@/hooks/taskQueries";
-import { SelectPrioridad } from "../SelectPrioridad";
-import { DatePicker } from "../DatePicker";
+import { SelectPrioridad } from "./forms.components/SelectPrioridad";
+import { DatePicker } from "./forms.components/DatePicker";
 import LoadingSmall from "../loaders/LoadingSmall";
 import { Auth } from "@/context/auth";
 import { Plus } from "lucide-react";
@@ -83,7 +83,6 @@ export function CreateTaskForm() {
       if (!isPending) {
         setOpen(!open);
       }
-      console.log(data);
     } catch (error: any) {
       console.error(error.message);
     }

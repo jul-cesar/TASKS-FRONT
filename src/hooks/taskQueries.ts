@@ -1,7 +1,7 @@
 import UseTasksReqs from "@/api/useTasksReqs";
 import { Auth } from "@/context/auth";
-import { comment } from "@/types/comment";
-import { task } from "@/types/Task";
+import { comment } from "@/models/comment";
+import { task } from "@/models/Task";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { toast } from "sonner";

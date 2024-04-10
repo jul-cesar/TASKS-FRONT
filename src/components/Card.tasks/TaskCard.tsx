@@ -5,18 +5,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Label } from "@radix-ui/react-label";
-import { task } from "@/types/Task";
+} from "../ui/card";
+import { task } from "@/models/Task";
 import { CardOptions } from "./CardOptions";
 import { formatCustomDate } from "@/utils/formatCustomDate";
 import { BadgeComponent } from "./BadgeComponent";
-import { Comments } from "./Comments";
+import { Comments } from "./Comments/Comments";
 import DialogAsignUser from "./DialogAsignUser";
-import EditTaskForm from "./forms/EditTaskForm";
+import EditTaskForm from "../forms/EditTaskForm";
 import { format } from "date-fns";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { Clock, User } from "lucide-react";
+import { Label } from "../ui/label";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -50,7 +50,7 @@ const TaskCard = ({
       </CardHeader>
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
-          <Label>Estado: </Label>
+          <Label>Estado:  </Label>
           <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
         </div>
         <div className="p-2">

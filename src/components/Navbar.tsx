@@ -5,6 +5,7 @@ import { AvatarDemo } from "./Avatar";
 import { ModeToggle } from "./mode-toggle";
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { publicRoutes } from "../models/routes";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
@@ -12,7 +13,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(Auth);
   return (
-    <nav className="fixed top-0 z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
+    <nav className="fixed top-0 h-[10%] z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
@@ -46,7 +47,7 @@ const Navbar = () => {
                 alt="Company Logo"
                 className="max-h-14 w-20 sm:h-16 md:h-20 lg:h-20 object-cover"
               /> */}
-                <p className="font-bold text-xl underline">Tasks</p>
+                <p className="font-bold text-xl underline">tâche</p>
                 {/* <img
                 src={textlogo}
                 alt="Company Text Logo"
@@ -104,7 +105,7 @@ const Navbar = () => {
                     <a
                       onClick={async () => {
                         await logOut();
-                        navigate("/login");
+                        navigate(publicRoutes.LOGIN);
                       }}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"

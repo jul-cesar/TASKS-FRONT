@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, Trash } from "lucide-react";
-import { comment } from "@/types/comment";
+import { comment } from "@/models/comment";
 import { useDeleteComment } from "@/hooks/taskQueries";
 
 const CommentsOptions = ({ comentarioData }: { comentarioData: comment }) => {

@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { task } from "@/types/Task";
+import { task } from "@/models/Task";
 import {
   Dialog,
   DialogContent,
@@ -26,9 +26,9 @@ import { Textarea } from "../ui/textarea";
 import { LucideEdit } from "lucide-react";
 import LoadingSmall from "../loaders/LoadingSmall";
 import { Input } from "../ui/input";
-import { SelectPrioridad } from "../SelectPrioridad";
-import SelectEstado from "../SelectEstado";
-import { DatePicker } from "../DatePicker";
+import { SelectPrioridad } from "./forms.components/SelectPrioridad";
+import SelectEstado from "./forms.components/SelectEstado";
+import { DatePicker } from "./forms.components/DatePicker";
 import { useEditTask } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
 import axios from "axios";

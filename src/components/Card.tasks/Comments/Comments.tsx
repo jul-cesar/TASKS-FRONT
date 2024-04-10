@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/form";
 
 import { MessageSquarePlus } from "lucide-react";
-import { task } from "@/types/Task";
+import { task } from "@/models/Task";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import CommentsList from "./CommentsList";
-import LoadingSmall from "./loaders/LoadingSmall";
+import LoadingSmall from "../../loaders/LoadingSmall";
 
 import { useCreateComment, useGetComments } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";

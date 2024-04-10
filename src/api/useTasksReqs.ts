@@ -1,6 +1,6 @@
 import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { task } from "@/types/Task";
+import { task } from "@/models/Task";
 import { useContext } from "react";
 import { toast } from "sonner";
 
