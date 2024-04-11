@@ -28,7 +28,7 @@ const TasksPage = () => {
 
   return (
     <TasksPagesLayout>
-     <SearchTasks/>
+      <SearchTasks />
       <TasksList
         isLoading={isLoading}
         tasksList={filteredTasks || []}

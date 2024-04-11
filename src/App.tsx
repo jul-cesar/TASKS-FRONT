@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 
 function App() {
   const LogInLazy = lazy(() => import("./pages/LogIn"));
+  const RegisterLazy = lazy(() => import("./pages/Register"));
   const TasksPageLazy = lazy(() => import("./pages/TasksPage"));
   const AsignedPageLazy = lazy(() => import("./pages/AsignedPage"));
 
@@ -23,6 +24,7 @@ function App() {
           </Route>
         </Route>
         <Route path={publicRoutes.LOGIN} element={<LogInLazy />} />
+        <Route path={publicRoutes.REGISTER} element={<RegisterLazy />} />
         <Route path="*" element={<>Not Found</>} />
       </Routes>
     </Suspense>

@@ -107,7 +107,7 @@ const Navbar = () => {
                         await logOut();
                         navigate(publicRoutes.LOGIN);
                       }}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                       role="menuitem"
                     >
                       Cerrar Sesion

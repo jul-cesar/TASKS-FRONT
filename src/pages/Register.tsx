@@ -10,26 +10,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Auth } from "@/context/auth";
-import { useLogIn } from "@/hooks/taskQueries";
-import useRefreshToken from "@/hooks/useRefreshToken";
-import { privateRoutes } from "@/models/routes";
+import { useRegister } from "@/hooks/taskQueries";
+import { publicRoutes } from "@/models/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
-
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, Toaster } from "sonner";
 import { z } from "zod";
-import Lottie from "lottie-react";
-import hello from "@/assets/hello.json";
-import cat from "@/assets/cat.json";
 
-const Login = () => {
-  const refresh = useRefreshToken();
-  const { currentUser } = useContext(Auth);
-  const navigate = useNavigate();
-  const { mutateAsync, status, isPending } = useLogIn();
+const Register = () => {
   const formScheme = z.object({
+    name: z
+      .string()
+      .min(2, { message: "tu nombre debe contener al menos 2 caracteres" }),
     email: z
       .string()
       .min(1, { message: "Este campo es obligatorio" })
@@ -44,31 +37,54 @@ const Login = () => {
     mode: "onChange",
   });
 
+  const { mutateAsync, status, isPending } = useRegister();
+  const navigate = useNavigate();
+  const { currentUser } = useContext(Auth);
+
   const onSubmit = async (data: z.infer<typeof formScheme>) => {
     try {
       await mutateAsync({
+        nombre: data.name,
         email: data.email,
         password: data.password,
       });
-      navigate(privateRoutes.TASKS);
+      
     } catch (err: any) {
       console.log("error", err.message);
     }
   };
-
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2  xl:min-h-[800px]">
+    <div className="w-full  lg:grid lg:min-h-[600px] lg:grid-cols-2 ">
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold underline">tâche</h1>
-            <p className="text-balance text-muted-foreground">
-              Ingresa con tus credenciales
-            </p>
+            <p className="text-balance text-muted-foreground">Registrate</p>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nombre</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="nombre"
+                            type="text"
+                            placeholder="jul"
+                            required
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <div className="grid gap-2">
                   <FormField
                     control={form.control}
@@ -93,11 +109,11 @@ const Login = () => {
                 <div className="grid gap-2">
                   <div className="flex items-center">
                     {/* <Link
-                      to="/forgot-password"
-                      className="ml-auto inline-block text-sm underline"
-                    >
-                      Forgot your password?
-                    </Link> */}
+                  to="/forgot-password"
+                  className="ml-auto inline-block text-sm underline"
+                >
+                  Forgot your password?
+                </Link> */}
                   </div>
                   <FormField
                     control={form.control}
@@ -122,40 +138,34 @@ const Login = () => {
                   {isPending && currentUser.nombre === "" ? (
                     <LoadingSmall />
                   ) : (
-                    "Inicia"
+                    "Registrar"
                   )}
                 </Button>
                 {/* <Button variant="outline" className="w-full">
-                  Inicia con Google
-                  <img
-                    className="w-6 h-4 m-1"
-                    src="https://www.svgrepo.com/show/475656/google-color.svg"
-                    loading="lazy"
-                    alt="google logo"
-                  />
-                </Button> */}
+              Inicia con Google
+              <img
+                className="w-6 h-4 m-1"
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                loading="lazy"
+                alt="google logo"
+              />
+            </Button> */}
               </div>
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            No tienes una cuenta?{" "}
-            <Link to="/register" className="underline">
-              Registrate
+            Ya tienes una cuenta?{" "}
+            <Link to="/login" className="underline">
+              Inicia sesion
             </Link>
           </div>
         </div>
-        <div className="xl:hidden absolute bottom-0 ">
-          <Lottie
-          
-            animationData={cat}
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          />
-        </div>
       </div>
 
-      <div className="hidden xl:block ">
-        <Lottie
-          animationData={hello}
+      <div className="hidden bg-muted ">
+        <img
+          src="/placeholder.svg"
+          alt="Image"
           width="1920"
           height="1080"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
@@ -165,4 +175,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

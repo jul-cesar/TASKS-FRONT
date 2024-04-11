@@ -19,7 +19,7 @@ export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
 
   const { mutate, isPending } = useDeleteTask(tareaInfo.id);
   return (
-    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)} >
+    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
       <DialogTrigger asChild className="cursor-pointer">
         <Label>Eliminar</Label>
       </DialogTrigger>
