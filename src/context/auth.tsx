@@ -8,7 +8,6 @@ import {
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { toast } from "sonner";
-import { user } from "@/models/User";
 
 interface CustomJwtPayload extends JwtPayload {
   nombre: string;
@@ -41,13 +40,13 @@ export const Auth = createContext<AuthContextType>({
     email: "",
     id: "",
   },
-  LogIn: async (email: string, password: string) => {},
+  LogIn: async () => {},
   setAuthTok: () => {},
   authTok: {
     token: "",
   },
   logOut: async () => {},
-  registerUser: async (email: string, password: string, name: string) => {},
+  registerUser: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {

@@ -1,14 +1,10 @@
-import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { task } from "@/models/Task";
-import { useContext } from "react";
-import { toast } from "sonner";
 
 // COMMENTS HOOKS
 
 const UseTasksReqs = () => {
   const axiosInstance = useAxiosPrivate();
-  const { currentUser } = useContext(Auth);
 
   // COMMENTS FNS
 
@@ -107,7 +103,7 @@ const UseTasksReqs = () => {
     deleteTask,
     createTask,
     editTask,
-    getAsignedTasks
+    getAsignedTasks,
   };
 };
 

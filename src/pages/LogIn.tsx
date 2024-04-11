@@ -11,24 +11,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Auth } from "@/context/auth";
 import { useLogIn } from "@/hooks/taskQueries";
-import useRefreshToken from "@/hooks/useRefreshToken";
 import { privateRoutes } from "@/models/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, Toaster } from "sonner";
-import { z } from "zod";
 import Lottie from "lottie-react";
 import hello from "@/assets/hello.json";
 import cat from "@/assets/cat.json";
+import { z } from "zod";
 
 const Login = () => {
-  const refresh = useRefreshToken();
   const { currentUser } = useContext(Auth);
   const navigate = useNavigate();
-  const { mutateAsync, status, isPending } = useLogIn();
+  const { mutateAsync, isPending } = useLogIn();
   const formScheme = z.object({
     email: z
       .string()
@@ -146,7 +143,6 @@ const Login = () => {
         </div>
         <div className="xl:hidden absolute bottom-0 ">
           <Lottie
-          
             animationData={cat}
             className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
           />

@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 
 const SearchTasks = () => {
   const [searchParams, setSearchParams] = useSearchParams();

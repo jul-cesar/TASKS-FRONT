@@ -11,11 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Auth } from "@/context/auth";
 import { useRegister } from "@/hooks/taskQueries";
-import { publicRoutes } from "@/models/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 
 const Register = () => {
@@ -37,8 +36,7 @@ const Register = () => {
     mode: "onChange",
   });
 
-  const { mutateAsync, status, isPending } = useRegister();
-  const navigate = useNavigate();
+  const { mutateAsync, isPending } = useRegister();
   const { currentUser } = useContext(Auth);
 
   const onSubmit = async (data: z.infer<typeof formScheme>) => {
@@ -48,7 +46,6 @@ const Register = () => {
         email: data.email,
         password: data.password,
       });
-      
     } catch (err: any) {
       console.log("error", err.message);
     }

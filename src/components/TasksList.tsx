@@ -14,7 +14,7 @@ type TasksListProps = {
   isLoading: boolean;
 };
 
-const TasksList = ({ tasksList, status, isLoading }: TasksListProps) => {
+const TasksList = ({ tasksList, status }: TasksListProps) => {
   const [parent] = useAutoAnimate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);

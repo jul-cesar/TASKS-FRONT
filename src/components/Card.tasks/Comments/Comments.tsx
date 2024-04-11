@@ -32,7 +32,6 @@ import LoadingSmall from "../../loaders/LoadingSmall";
 import { useCreateComment, useGetComments } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
 import React from "react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type CommentsProps = {
   namet: string;

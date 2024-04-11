@@ -31,7 +31,6 @@ import SelectEstado from "./forms.components/SelectEstado";
 import { DatePicker } from "./forms.components/DatePicker";
 import { useEditTask } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
-import axios from "axios";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 type EditTaskFormProps = {

@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format, formatISO } from "date-fns";
 
@@ -14,7 +13,7 @@ import {
 } from "@/components/ui/popover";
 import { es } from "date-fns/locale";
 type DatePickerProps = {
-  valuef: string;
+  valuef: any;
   onChangef: (...event: any[]) => void;
 };
 export function DatePicker({ valuef, onChangef }: DatePickerProps) {
@@ -38,7 +37,7 @@ export function DatePicker({ valuef, onChangef }: DatePickerProps) {
           fromDate={new Date()}
           mode="single"
           selected={valuef}
-          onSelect={( date: Date) => onChangef(formatISO(date))}
+          onSelect={(date: any) => onChangef(formatISO(date))}
           initialFocus
         />
       </PopoverContent>

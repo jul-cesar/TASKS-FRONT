@@ -1,12 +1,8 @@
-import React from "react";
 import { Skeleton } from "../ui/skeleton";
 
 const CardSkeleton = () => {
-  return Array.from({ length: 10 }, (e, i) => (
-    <div
-      className="my-4 sm:w-[340px] w-[320px] "
-      key={i}
-    >
+  return Array.from({ length: 10 }, (_, i) => (
+    <div className="my-4 sm:w-[340px] w-[320px] " key={i}>
       <div className="grid w-full items-center gap-4 max-w-[350px]">
         <div className="flex  flex-col space-y-1.5 p-6">
           <div className="flex justify-between">

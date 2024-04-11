@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +12,7 @@ import { comment } from "@/models/comment";
 import { useDeleteComment } from "@/hooks/taskQueries";
 
 const CommentsOptions = ({ comentarioData }: { comentarioData: comment }) => {
-    const { mutate, isPending } = useDeleteComment(comentarioData.id);
+    const { mutate} = useDeleteComment(comentarioData.id);
 
   return (
     <DropdownMenu>
