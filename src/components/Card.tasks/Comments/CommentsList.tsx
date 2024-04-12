@@ -14,7 +14,7 @@ const CommentsList = ({
 
   isLoading,
 }: CommentsListProps) => {
-  const [parent, enableAnimations] = useAutoAnimate();
+  const [parent] = useAutoAnimate();
 
   return (
     <div className="m-3" ref={parent}>
