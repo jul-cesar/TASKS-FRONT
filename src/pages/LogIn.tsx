@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import hello from "@/assets/hello.json";
-import cat from "@/assets/cat.json";
 import { z } from "zod";
 
 const Login = () => {
