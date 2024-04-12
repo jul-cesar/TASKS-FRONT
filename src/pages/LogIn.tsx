@@ -141,12 +141,7 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <div className="xl:hidden absolute bottom-0 ">
-          <Lottie
-            animationData={cat}
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          />
-        </div>
+        
       </div>
 
       <div className="hidden xl:block ">
