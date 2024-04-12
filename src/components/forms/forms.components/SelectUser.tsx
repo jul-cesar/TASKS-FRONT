@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { SetStateAction, useContext, useEffect, useState } from "react";
+import React, { SetStateAction, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 import {
   Form,
@@ -23,6 +22,7 @@ import {
 import { task } from "@/models/Task";
 import { user } from "@/models/User";
 import { Auth } from "@/context/auth";
+import { useEditTask, useGetAllUsers } from "@/hooks/taskQueries";
 
 type SelectUserProps = {
   setIsOpenDialog: React.Dispatch<SetStateAction<boolean>>;
@@ -36,48 +36,28 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
     }),
   });
 
-  const { data: listaUsuarios } = useQuery({
-    queryKey: ["listaUsuarios"],
-    // queryFn: async () => await getAllUsers(),
-  });
-
+  const { data } = useGetAllUsers();
+  const { mutate } = useEditTask(currentTarea.id);
   const { currentUser } = useContext(Auth);
 
-  const [listaFiltrada, setListaFiltrada] = useState([]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-  const queryClient = useQueryClient();
 
-  // const { mutate } = useMutation({
-  //   mutationFn: async (newTarea: z.infer<typeof FormSchema>) => {
-  //     //   await updateTarea(currentTarea.id, newTarea);
-  //   },
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["listaTasks"] }),
-  //       queryClient.invalidateQueries({ queryKey: ["listaAsign"] }),
-  //       toast.success(`Asignaste un usuario a la tarea ${currentTarea.titulo}`);
-  //     setIsOpenDialog(false);
-  //   },
-  // });
-
-  // function onSubmit(data: z.infer<typeof FormSchema>) {
-  //   mutate({ asignadoId: data.userAsignado });
-  // }
-
-  // useEffect(() => {
-  //   if (listaUsuarios && currentUser) {
-  //     console.log(currentUser, "xddddadasdasd");
-  //     const filtrados = listaUsuarios.filter(
-  //       (x: user) =>
-  //         x.email?.toLowerCase() !==
-  //         currentUser.currentUser.email?.toLowerCase()
-  //     );
-  //     setListaFiltrada(filtrados);
-  //   }
-  // }, [listaUsuarios, currentUser]);
-
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    mutate({
+      ownerId: currentTarea.ownerId,
+      titulo: currentTarea.titulo,
+      fechaVencimiento: currentTarea.fechaVencimiento,
+      descripcion: currentTarea.descripcion,
+      estado: currentTarea.estado,
+      prioridad: currentTarea.prioridad,
+      asignadoId: data.userAsignado,
+    });
+    setIsOpenDialog(false);
+  }
+  const listaUsuarios = data?.data;
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -94,12 +74,18 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Array.isArray(listaFiltrada) &&
-                    listaFiltrada.map((user) => (
-                      <SelectItem key={user.id} value={user.id}>
-                        {user.nombre}
-                      </SelectItem>
-                    ))}
+                  {Array.isArray(listaUsuarios) &&
+                    listaUsuarios
+                      .filter(
+                        (x: user) =>
+                          x.email?.toLowerCase() !==
+                          currentUser.email?.toLowerCase()
+                      )
+                      .map((user) => (
+                        <SelectItem key={user.id} value={user.id || ""}>
+                          {user.email}
+                        </SelectItem>
+                      ))}
                 </SelectContent>
               </Select>
               <FormDescription>

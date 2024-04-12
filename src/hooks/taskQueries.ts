@@ -2,6 +2,7 @@ import UseTasksReqs from "@/api/useTasksReqs";
 import { Auth } from "@/context/auth";
 import { comment } from "@/models/comment";
 import { task } from "@/models/Task";
+import { user } from "@/models/User";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { toast } from "sonner";
@@ -112,9 +113,7 @@ export const useEditTask = (idTask: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (
-      newTarea: Omit<task, "asignado" | "owner" | "id" | "createdAt">
-    ) => {
+    mutationFn: async (newTarea: Omit<task, "owner" | "id" | "createdAt">) => {
       await editTask(idTask, newTarea);
     },
     onSuccess: () => {
@@ -136,6 +135,17 @@ export const useAsignedTask = () => {
     queryFn: (): any => getAsignedTasks(id),
     staleTime: 1000 * 60 * 1,
     enabled: !!id,
+  });
+};
+
+export const useGetAllUsers = () => {
+  type getAllUsers = {
+    data: user[];
+  };
+  const { getAllUsers } = UseTasksReqs();
+  return useQuery<getAllUsers>({
+    queryKey: ["users"],
+    queryFn: (): any => getAllUsers(),
   });
 };
 

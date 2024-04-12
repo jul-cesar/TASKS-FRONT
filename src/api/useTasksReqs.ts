@@ -95,6 +95,17 @@ const UseTasksReqs = () => {
     }
   };
 
+
+
+  const getAllUsers = async () => {
+    try {
+      const response = await axiosInstance.get("/user/all");
+      return response;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
   return {
     getTaskComments,
     getUserTasks,
@@ -104,6 +115,7 @@ const UseTasksReqs = () => {
     createTask,
     editTask,
     getAsignedTasks,
+    getAllUsers
   };
 };
 
