@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASEURL = "http://localhost:3001";
+const BASEURL = "https://tacheee-8x8oenokg-jul-cesars-projects.vercel.app";
 
 export const axiosIn = axios.create({
   baseURL: BASEURL,
@@ -10,7 +10,7 @@ export const axiosIn = axios.create({
   withCredentials: true,
 });
 
- const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: BASEURL,
   headers: {
     "Content-Type": "application/json",
@@ -18,4 +18,4 @@ export const axiosIn = axios.create({
   withCredentials: true,
 });
 
-export default axiosInstance
+export default axiosInstance;
