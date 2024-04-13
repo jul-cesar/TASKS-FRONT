@@ -26,7 +26,7 @@ const Profile = () => {
         {data?.email}
       </p>
 
-      <div className="flex flex-col sm:flex-row justify-center items-center grow gap-4">
+      <div className="flex flex-col sm:flex-row justify-center  grow m-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
@@ -57,8 +57,8 @@ const Profile = () => {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Comentarios</CardTitle>
-            <Speech className="h-5 w-5 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Comentarios hechos</CardTitle>
+            <Speech className="h-5 w-5 m-1 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{data?.nroComentarios}</div>

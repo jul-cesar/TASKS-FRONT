@@ -69,6 +69,7 @@ const Navbar = () => {
               </div>
               <div>
                 {
+                  currentUser.id !== "" ?
                   <button
                     onClick={() => setOpenMenuProfile(!openMenuProfile)}
                     type="button"
@@ -77,8 +78,9 @@ const Navbar = () => {
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <AvatarDemo src={""} />
+                    <AvatarDemo src={""} /> 
                   </button>
+                  : <Button onClick={()=>navigate('/login')}>Inicia sesion</Button>
                 }
               </div>
 

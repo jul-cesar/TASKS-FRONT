@@ -1,6 +1,7 @@
 import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
 import useGetLengths from "@/hooks/useGetLengths";
+import { publicRoutes } from "@/models/routes";
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
 import {
   BookOpenCheck,
@@ -14,9 +15,9 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { openSidebar } = useContext(UiContext);
+  const { openSidebar, setOpenSidebar } = useContext(UiContext);
   const tareasLength = useGetLengths();
-  const { currentUser } = useContext(Auth);
+  const { currentUser, logOut } = useContext(Auth);
   return (
     <aside
       id="logo-sidebar"
@@ -50,8 +51,11 @@ const Sidebar = () => {
           </li> */}
           <li>
             <a
-              onClick={() => navigate("/asigned-tasks")}
-              className="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              onClick={() => {
+                navigate("/asigned-tasks");
+                setOpenSidebar(!openSidebar);
+              }}
+              className="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-500 dark:hover:bg-gray-700 group"
             >
               <BookOpenCheck />
               <span className="flex-1 ms-3 whitespace-nowrap">
@@ -69,7 +73,10 @@ const Sidebar = () => {
           </li>
           <li>
             <a
-              onClick={() => navigate("/")}
+              onClick={() => {
+                navigate("/");
+                setOpenSidebar(!openSidebar);
+              }}
               className="flex items-center cursor-pointer p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <ListTodo />
@@ -107,7 +114,12 @@ const Sidebar = () => {
           </li> */}
         </ul>
         <ul className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
-          <li onClick={() => navigate(`/user/${currentUser.id}`)}>
+          <li
+            onClick={() => {
+              navigate(`/user/${currentUser.id}`);
+              setOpenSidebar(!openSidebar);
+            }}
+          >
             <a className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
               <UserCircle />
               <span className="ms-3">Perfil</span>
@@ -140,7 +152,12 @@ const Sidebar = () => {
               <span className="ms-3">Help</span>
             </a>
           </li> */}
-          <li>
+          <li
+            onClick={async () => {
+              await logOut();
+              navigate(publicRoutes.LOGIN);
+            }}
+          >
             <a
               href="#"
               className="flex  items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
