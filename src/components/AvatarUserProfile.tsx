@@ -10,7 +10,7 @@ const AvatarUserProfile = ({
   return (
     <Avatar className="h-28 w-28">
       <AvatarImage src={src} alt="userprofile" />
-      <AvatarFallback>{nombre.charAt(0).toUpperCase()}</AvatarFallback>
+      <AvatarFallback className="text-3xl">{nombre.charAt(0).toUpperCase()}</AvatarFallback>
     </Avatar>
   );
 };

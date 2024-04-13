@@ -154,7 +154,7 @@ export const useGetAllUsers = () => {
 export const useGetUserInfo = (id: string) => {
   const { getUserInfo } = UseTasksReqs();
 
-  return useQuery<user, AxiosError>({
+  return useQuery<userInfo, AxiosError>({
     queryKey: ["user", id],
     queryFn: async (): Promise<userInfo> => {
       const data = await getUserInfo(id);

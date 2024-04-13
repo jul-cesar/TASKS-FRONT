@@ -25,9 +25,9 @@ const Sidebar = () => {
       } bg-white border-r sm:translate-x-0`}
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 overflow-y-auto bg-background border-border border-r-2">
+      <div className="h-full px-3 sm:py-8 py-11 overflow-y-auto bg-background border-border border-r-2">
         <ul className="space-y-2 font-medium">
-          <li>
+          {/* <li>
             <a
               href="#"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -47,7 +47,7 @@ const Sidebar = () => {
                 Soon...
               </span>
             </a>
-          </li>
+          </li> */}
           <li>
             <a
               onClick={() => navigate("/asigned-tasks")}
