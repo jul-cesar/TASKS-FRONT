@@ -4,6 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLogin from "./utils/PersistLogin";
 import { privateRoutes, publicRoutes } from "./models/routes";
 import { lazy, Suspense } from "react";
+import { UiContextProvider } from "./context/ui";
 
 function App() {
   const LogInLazy = lazy(() => import("./pages/LogIn"));
@@ -12,22 +13,24 @@ function App() {
   const AsignedPageLazy = lazy(() => import("./pages/AsignedPage"));
 
   return (
-    <Suspense>
-      <Routes>
-        <Route element={<PersistLogin />}>
-          <Route element={<ProtectedRoute />}>
-            <Route path={privateRoutes.TASKS} element={<TasksPageLazy />} />
-            <Route
-              path={privateRoutes.ASIGNEDTASKS}
-              element={<AsignedPageLazy />}
-            />
+    <UiContextProvider>
+      <Suspense>
+        <Routes>
+          <Route element={<PersistLogin />}>
+            <Route element={<ProtectedRoute />}>
+              <Route path={privateRoutes.TASKS} element={<TasksPageLazy />} />
+              <Route
+                path={privateRoutes.ASIGNEDTASKS}
+                element={<AsignedPageLazy />}
+              />
+            </Route>
           </Route>
-        </Route>
-        <Route path={publicRoutes.LOGIN} element={<LogInLazy />} />
-        <Route path={publicRoutes.REGISTER} element={<RegisterLazy />} />
-        <Route path="*" element={<>Not Found</>} />
-      </Routes>
-    </Suspense>
+          <Route path={publicRoutes.LOGIN} element={<LogInLazy />} />
+          <Route path={publicRoutes.REGISTER} element={<RegisterLazy />} />
+          <Route path="*" element={<>Not Found</>} />
+        </Routes>
+      </Suspense>
+    </UiContextProvider>
   );
 }
 

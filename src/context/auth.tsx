@@ -89,6 +89,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       if (response.data) {
         toast.success("Te has registrado correctamente");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1000);
       }
     } catch (error: any) {
       console.error(error.message);

@@ -1,16 +1,26 @@
-import TaskCard from "./Card.tasks/TaskCard";
+import { useContext, useEffect } from "react";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAsignedTask } from "@/hooks/taskQueries";
+import { UiContext } from "@/context/ui";
+import AsignedCard from "./Card.tasks/AsignedCard";
 
 const AsignedTasksList = () => {
   const { data: Asigns, status } = useAsignedTask();
   const AsignsList = Asigns?.data;
+
+  const { setTareasLength } = useContext(UiContext);
+
+  useEffect(() => {
+    setTareasLength((prevState) => ({
+      ...prevState,
+      asignedTasks: AsignsList?.length ?? 0,
+    }));
+  }, [Asigns]);
+
   if (status === "pending") {
     return (
-      <div className="w-full flex justify-center">
-        <div className="flex gap-4 flex-wrap  m-4  sm:justify-end justify-center mt-20">
-          <CardSkeleton />
-        </div>
+      <div className="flex gap-4 flex-wrap  m-4  justify-center">
+        <CardSkeleton />
       </div>
     );
   }
@@ -27,7 +37,7 @@ const AsignedTasksList = () => {
     <div className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 ">
       {Array.isArray(AsignsList) &&
         AsignsList.map((tarea) => (
-          <TaskCard
+          <AsignedCard
             tareaInfo={tarea}
             key={tarea.id}
             createdAt={tarea.createdAt}

@@ -133,7 +133,7 @@ export const useAsignedTask = () => {
   return useQuery<useAsigns>({
     queryKey: ["asigns", id],
     queryFn: (): any => getAsignedTasks(id),
-    staleTime: 1000 * 60 * 1,
+
     enabled: !!id,
   });
 };

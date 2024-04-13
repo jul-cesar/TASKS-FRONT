@@ -21,7 +21,9 @@ const TasksPage = () => {
     const titleFilter = queryParams.get("q");
 
     const filtered = titleFilter
-      ? taskList?.filter((x) => x.titulo.includes(titleFilter))
+      ? taskList?.filter((x) =>
+          x.titulo.toLocaleLowerCase().includes(titleFilter.toLocaleLowerCase())
+        )
       : taskList;
     setFilteredTasks(filtered);
   }, [location.search, taskList]);

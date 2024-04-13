@@ -1,0 +1,95 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { task } from "@/models/Task";
+import { formatCustomDate } from "@/utils/formatCustomDate";
+import { BadgeComponent } from "./BadgeComponent";
+import { Comments } from "./Comments/Comments";
+
+import { format } from "date-fns";
+import { Separator } from "../ui/separator";
+import { Clock, User } from "lucide-react";
+import { Label } from "../ui/label";
+import { TooltipDemo } from "./TooltipDemo";
+
+interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
+  tareaInfo: task;
+}
+
+const AsignedCard = ({
+  titulo,
+  asignado,
+  descripcion,
+  estado,
+  prioridad,
+  createdAt,
+  owner,
+  fechaVencimiento,
+  tareaInfo,
+}: TaskCardProps) => {
+  return (
+    <Card className="max-w-[350px]">
+      <CardHeader>
+        <CardTitle>
+          <div className="flex justify-between">{titulo}</div>
+        </CardTitle>
+
+        {asignado && (
+          <CardDescription>Asignada a: {asignado.nombre}</CardDescription>
+        )}
+        <CardDescription>{descripcion}</CardDescription>
+      </CardHeader>
+      <div className="flex items-center justify-between gap-2 m-4">
+        <div className="p-2">
+          <Label>Estado: </Label>
+          <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
+        </div>
+        <div className="p-2">
+          <Label>Prioridad: </Label>
+          <BadgeComponent>{prioridad?.toUpperCase()}</BadgeComponent>
+        </div>
+      </div>
+
+      <CardContent>
+        <form>
+          <div className="grid w-full items-center gap-4">
+            <div className="flex flex-col items-center space-y-2">
+              <Label>Fecha de vencimiento: </Label>
+              <BadgeComponent variant="secondary">
+                {format(fechaVencimiento, "yyyy-MM-dd")} (
+                {formatCustomDate(fechaVencimiento)})
+              </BadgeComponent>
+            </div>
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter className="flex justify-center">
+        <TooltipDemo text="Ver Comentarios">
+          <Comments tareaInfo={tareaInfo} namet={titulo} />
+        </TooltipDemo>
+      </CardFooter>
+      <Separator className="my-3" />
+      <CardFooter className="flex justify-between ">
+        <TooltipDemo text="Tarea creada por">
+          <div className="flex justify-center items-center gap-1 mt-1">
+            <User />
+            <p className="font-bold text-xs"> {owner?.nombre} </p>
+          </div>
+        </TooltipDemo>
+        <TooltipDemo text="Tarea creada hace">
+          <div className="flex justify-center items-center gap-1 mt-1">
+            <Clock />
+            <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
+          </div>
+        </TooltipDemo>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default AsignedCard;

@@ -28,7 +28,7 @@ const DialogAsignUser = ({ taskInfo }: DialogAsignUserProps) => {
           <UserPlus />{" "}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-w-[300px]">
+      <DialogContent className="sm:max-w-[425px] max-w-[400px]">
         <DialogHeader>
           <DialogTitle>
             Asigna un usuario a la tarea "{taskInfo.titulo}"

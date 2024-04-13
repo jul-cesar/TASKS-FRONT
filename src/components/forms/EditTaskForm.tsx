@@ -32,6 +32,7 @@ import { DatePicker } from "./forms.components/DatePicker";
 import { useEditTask } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import LoaderMedium from "../loaders/LoaderMedium";
 
 type EditTaskFormProps = {
   taskInfo: task;
@@ -60,7 +61,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
 
   const axiosInstance = useAxiosPrivate();
 
-  const { data: newTaskData } = useQuery<task, Error>({
+  const { data: newTaskData, isLoading } = useQuery<task, Error>({
     queryKey: ["tasks", taskInfo.id, open],
     queryFn: () =>
       axiosInstance.get(`/tarea/byid/${taskInfo.id}`).then((res) => res.data),
@@ -129,41 +130,106 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
           <DialogTitle>Editar tarea</DialogTitle>
           <DialogDescription>Edita los datos de tu tarea</DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onKeyDown={handleKeyDown}>
-            <div className="grid w-full items-center gap-4">
-              <div className=" text-start space-y-1.5 space-x-1.5">
-                <FormField
-                  name="titulo"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Titulo</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          id="name"
-                          placeholder="Nombre de tu tarea"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className=" text-start space-x-1.5">
-                <FormField
-                  name="descripcion"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Descripcion
+        {!isLoading ? (
+          <Form {...form}>
+            <form onKeyDown={handleKeyDown}>
+              <div className="grid w-full items-center gap-4">
+                <div className=" text-start space-y-1.5 space-x-1.5">
+                  <FormField
+                    name="titulo"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Titulo</FormLabel>
                         <FormControl>
-                          <Textarea
-                            placeholder="Descripcion breve de tu tarea."
-                            id="message"
+                          <Input
                             {...field}
+                            id="name"
+                            placeholder="Nombre de tu tarea"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className=" text-start space-x-1.5">
+                  <FormField
+                    name="descripcion"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Descripcion
+                          <FormControl>
+                            <Textarea
+                              placeholder="Descripcion breve de tu tarea."
+                              id="message"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="">
+                  <FormField
+                    control={form.control}
+                    name="prioridad"
+                    render={({ field: { value, onChange } }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Prioridad
+                          <FormControl>
+                            <SelectPrioridad
+                              valuef={value}
+                              onChangeFn={onChange}
+                              onOpenChange={(isOpen: boolean) =>
+                                setDropdownOpen(isOpen)
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="estado"
+                    render={({ field: { value, onChange } }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Estado
+                          <FormControl>
+                            <SelectEstado
+                              valuef={value}
+                              onChangeFn={onChange}
+                              onOpenChange={(isOpen: boolean) =>
+                                setDropdownOpen(isOpen)
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  name="fechaVencimiento"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Fecha de vencimiento
+                        <FormControl>
+                          <DatePicker
+                            {...field}
+                            valuef={field.value}
+                            onChangef={field.onChange}
                           />
                         </FormControl>
                         <FormMessage />
@@ -172,72 +238,11 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
                   )}
                 />
               </div>
-              <div className="">
-                <FormField
-                  control={form.control}
-                  name="prioridad"
-                  render={({ field: { value, onChange } }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Prioridad
-                        <FormControl>
-                          <SelectPrioridad
-                            valuef={value}
-                            onChangeFn={onChange}
-                            onOpenChange={(isOpen: boolean) =>
-                              setDropdownOpen(isOpen)
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormLabel>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="estado"
-                  render={({ field: { value, onChange } }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Estado
-                        <FormControl>
-                          <SelectEstado
-                            valuef={value}
-                            onChangeFn={onChange}
-                            onOpenChange={(isOpen: boolean) =>
-                              setDropdownOpen(isOpen)
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormLabel>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                name="fechaVencimiento"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Fecha de vencimiento
-                      <FormControl>
-                        <DatePicker
-                          {...field}
-                          valuef={field.value}
-                          onChangef={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormLabel>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </form>
-        </Form>
+            </form>
+          </Form>
+        ) : (
+         <LoaderMedium/>
+        )}
         <DialogFooter>
           {!isPending ? (
             <Button type="submit" onClick={form.handleSubmit(OnSubmit)}>

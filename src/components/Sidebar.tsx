@@ -1,12 +1,26 @@
-import { BookOpenCheck, Handshake, ListTodo, LogOut } from "lucide-react";
+import { UiContext } from "@/context/ui";
+import useGetLengths from "@/hooks/useGetLengths";
+import { QuestionMarkIcon } from "@radix-ui/react-icons";
+import {
+  BookOpenCheck,
+  Handshake,
+  ListTodo,
+  LogOut,
+  UserCircle,
+} from "lucide-react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const { openSidebar } = useContext(UiContext);
+  const tareasLength = useGetLengths();
   return (
     <aside
-      id="separator-sidebar"
-      className="fixed top-0 mt-14 left-0 z-40 w-[17%] h-screen transition-transform -translate-x-full sm:translate-x-0"
+      id="logo-sidebar"
+      className={`fixed top-0 left-0 z-40 w-64 h-screen pt-12 transition-transform ${
+        !openSidebar && "-translate-x-full"
+      } bg-white border-r sm:translate-x-0`}
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-background border-border border-r-2">
@@ -27,6 +41,9 @@ const Sidebar = () => {
                 <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
               </svg>
               <span className="ms-3">Dashboard</span>
+              <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                Soon...
+              </span>
             </a>
           </li>
           <li>
@@ -38,9 +55,11 @@ const Sidebar = () => {
               <span className="flex-1 ms-3 whitespace-nowrap">
                 Tareas asignadas
               </span>
-              <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                3
-              </span>
+              {
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  {tareasLength.asignedTasks}
+                </span>
+              }
               {/* <span className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
                 Pro
               </span> */}
@@ -53,6 +72,9 @@ const Sidebar = () => {
             >
               <ListTodo />
               <span className="flex-1 ms-3 whitespace-nowrap">Mis tareas</span>
+              <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                {tareasLength.myTasks}
+              </span>
             </a>
           </li>
           <li>
@@ -88,16 +110,8 @@ const Sidebar = () => {
               href="#"
               className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
-              <svg
-                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 17 20"
-              >
-                <path d="M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z" />
-              </svg>
-              <span className="ms-3">Upgrade to Pro</span>
+              <UserCircle />
+              <span className="ms-3">Perfil</span>
             </a>
           </li>
           <li>
@@ -105,16 +119,8 @@ const Sidebar = () => {
               href="#"
               className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
-              <svg
-                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 16 20"
-              >
-                <path d="M16 14V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 0 0 0-2h-1v-2a2 2 0 0 0 2-2ZM4 2h2v12H4V2Zm8 16H3a1 1 0 0 1 0-2h9v2Z" />
-              </svg>
-              <span className="ms-3">Documentation</span>
+              <QuestionMarkIcon />
+              <span className="ms-3">Sobre esto</span>
             </a>
           </li>
           {/*          

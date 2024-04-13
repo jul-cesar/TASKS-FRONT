@@ -27,7 +27,6 @@ import { task } from "@/models/Task";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "../../ui/textarea";
 import CommentsList from "./CommentsList";
-import LoadingSmall from "../../loaders/LoadingSmall";
 
 import { useCreateComment, useGetComments } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
@@ -113,11 +112,7 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
             />
           </div>
 
-          {!isPending ? (
-            <Button type="submit"> Agregar</Button>
-          ) : (
-            <LoadingSmall />
-          )}
+          {!isPending && <Button type="submit"> Agregar</Button>}
         </form>
       </Form>
       <CommentsList

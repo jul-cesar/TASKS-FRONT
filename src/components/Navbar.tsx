@@ -6,20 +6,21 @@ import { ModeToggle } from "./mode-toggle";
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { publicRoutes } from "../models/routes";
+import { UiContext } from "@/context/ui";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
   const { logOut } = useContext(Auth);
   const navigate = useNavigate();
   const { currentUser } = useContext(Auth);
+  const { setOpenSidebar, openSidebar} = useContext(UiContext);
   return (
     <nav className="fixed top-0 h-[10%] z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
             <button
-              data-drawer-target="logo-sidebar"
-              data-drawer-toggle="logo-sidebar"
+              onClick={() => setOpenSidebar(!openSidebar)}
               aria-controls="logo-sidebar"
               type="button"
               className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
@@ -84,21 +85,16 @@ const Navbar = () => {
               <div
                 className={`absolute right-0 top-16 m-2 z-50 ${
                   !openMenuProfile ? "hidden" : "block"
-                } text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
+                } text-base list-none bg-background divide-y divide-gray-100 rounded shadow`}
                 id="dropdown-user"
               >
                 <div className="px-4 py-3" role="none">
-                  <span className="block text-sm text-gray-900">
-                    {currentUser.nombre}
-                  </span>
+                  <span className="block text-sm">{currentUser.nombre}</span>
 
-                  <p className="text-sm truncate text-gray-500" role="none">
+                  <p className="text-sm truncate" role="none">
                     {currentUser.email}
                   </p>
-                  <p
-                    className="text-sm font-medium text-gray-900 truncate"
-                    role="none"
-                  ></p>
+                  <p className="text-sm font-medium  truncate" role="none"></p>
                 </div>
                 <ul className="py-1" role="none">
                   <li>
