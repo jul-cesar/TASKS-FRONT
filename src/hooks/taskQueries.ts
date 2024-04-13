@@ -153,7 +153,6 @@ export const useGetAllUsers = () => {
 
 export const useGetUserInfo = (id: string) => {
   const { getUserInfo } = UseTasksReqs();
-
   return useQuery<userInfo, AxiosError>({
     queryKey: ["user", id],
     queryFn: async (): Promise<userInfo> => {
@@ -163,6 +162,7 @@ export const useGetUserInfo = (id: string) => {
       }
       return data;
     },
+    enabled: !!id,
   });
 };
 

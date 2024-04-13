@@ -1,15 +1,23 @@
 import AvatarUserProfile from "@/components/AvatarUserProfile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Auth } from "@/context/auth";
 import { useGetUserInfo } from "@/hooks/taskQueries";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
 
 import { Goal, GrabIcon, Speech } from "lucide-react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const Profile = () => {
   const location = useLocation();
   const idProfile = location.pathname.split("/").pop();
-  const { data } = useGetUserInfo(idProfile ?? "");
+  const { data, refetch } = useGetUserInfo(idProfile ?? "");
+  const { authTok } = useContext(Auth);
+
+  console.log(authTok.token);
+  useEffect(() => {
+    refetch();
+  }, [idProfile, refetch]); // D
 
   return (
     <TasksPagesLayout>
@@ -57,7 +65,9 @@ const Profile = () => {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Comentarios hechos</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Comentarios hechos
+            </CardTitle>
             <Speech className="h-5 w-5 m-1 text-muted-foreground" />
           </CardHeader>
           <CardContent>

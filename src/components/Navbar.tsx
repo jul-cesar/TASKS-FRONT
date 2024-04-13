@@ -12,8 +12,8 @@ const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
   const { logOut } = useContext(Auth);
   const navigate = useNavigate();
-  const { currentUser } = useContext(Auth);
-  const { setOpenSidebar, openSidebar} = useContext(UiContext);
+  const { currentUser, authTok } = useContext(Auth);
+  const { setOpenSidebar, openSidebar } = useContext(UiContext);
   return (
     <nav className="fixed top-0 h-[10%] z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -68,8 +68,7 @@ const Navbar = () => {
                 </Button>
               </div>
               <div>
-                {
-                  currentUser.id !== "" ?
+                {authTok.token !== "" ? (
                   <button
                     onClick={() => setOpenMenuProfile(!openMenuProfile)}
                     type="button"
@@ -78,10 +77,13 @@ const Navbar = () => {
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <AvatarDemo src={""} /> 
+                    <AvatarDemo src={""} />
                   </button>
-                  : <Button onClick={()=>navigate('/login')}>Inicia sesion</Button>
-                }
+                ) : (
+                  <Button onClick={() => navigate("/login")}>
+                    Inicia sesion
+                  </Button>
+                )}
               </div>
 
               <div

@@ -17,7 +17,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { openSidebar, setOpenSidebar } = useContext(UiContext);
   const tareasLength = useGetLengths();
-  const { currentUser, logOut } = useContext(Auth);
+  const { currentUser, logOut} = useContext(Auth);
   return (
     <aside
       id="logo-sidebar"
@@ -117,6 +117,7 @@ const Sidebar = () => {
           <li
             onClick={() => {
               navigate(`/user/${currentUser.id}`);
+              
               setOpenSidebar(!openSidebar);
             }}
           >

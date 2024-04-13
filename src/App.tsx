@@ -28,7 +28,6 @@ function App() {
           </Route>
           <Route path={publicRoutes.LOGIN} element={<LogInLazy />} />
           <Route path={publicRoutes.REGISTER} element={<RegisterLazy />} />
-          <Route path={publicRoutes.REGISTER} element={<RegisterLazy />} />
           <Route path={publicRoutes.PROFILE} element={<ProfileLazy />} />
           <Route path="*" element={<>Not Found</>} />
         </Routes>
