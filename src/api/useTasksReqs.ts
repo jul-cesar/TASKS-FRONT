@@ -1,6 +1,5 @@
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { task } from "@/models/Task";
-import { user } from "@/models/User";
 import { userInfo } from "@/models/user.info";
 import { AxiosResponse } from "axios";
 

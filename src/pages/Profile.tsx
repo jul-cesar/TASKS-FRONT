@@ -2,8 +2,8 @@ import AvatarUserProfile from "@/components/AvatarUserProfile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetUserInfo } from "@/hooks/taskQueries";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
-import { SpeakerLoudIcon } from "@radix-ui/react-icons";
-import { CreditCard, Goal, Grab, GrabIcon, Speech } from "lucide-react";
+
+import { Goal, GrabIcon, Speech } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const Profile = () => {
@@ -35,7 +35,7 @@ const Profile = () => {
             <Goal className="h-5 w-5 m-1 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data?.nroTareasCredas}</div>
+            <div className="text-2xl font-bold">{data?.nroTareasCreadas}</div>
             {/* <p className="text-xs text-muted-foreground">
               +19% from last month
             </p> */}

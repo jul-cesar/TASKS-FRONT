@@ -1,4 +1,3 @@
-"use client";
 
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format, formatISO } from "date-fns";
