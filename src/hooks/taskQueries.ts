@@ -3,7 +3,9 @@ import { Auth } from "@/context/auth";
 import { comment } from "@/models/comment";
 import { task } from "@/models/Task";
 import { user } from "@/models/User";
+import { userInfo } from "@/models/user.info";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useContext } from "react";
 import { toast } from "sonner";
 
@@ -146,6 +148,21 @@ export const useGetAllUsers = () => {
   return useQuery<getAllUsers>({
     queryKey: ["users"],
     queryFn: (): any => getAllUsers(),
+  });
+};
+
+export const useGetUserInfo = (id: string) => {
+  const { getUserInfo } = UseTasksReqs();
+
+  return useQuery<user, AxiosError>({
+    queryKey: ["user", id],
+    queryFn: async (): Promise<userInfo> => {
+      const data = await getUserInfo(id);
+      if (!data) {
+        throw new Error("User not found");
+      }
+      return data;
+    },
   });
 };
 

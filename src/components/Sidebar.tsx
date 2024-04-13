@@ -1,3 +1,4 @@
+import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
 import useGetLengths from "@/hooks/useGetLengths";
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
@@ -15,6 +16,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { openSidebar } = useContext(UiContext);
   const tareasLength = useGetLengths();
+  const { currentUser } = useContext(Auth);
   return (
     <aside
       id="logo-sidebar"
@@ -105,11 +107,8 @@ const Sidebar = () => {
           </li> */}
         </ul>
         <ul className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
-            >
+          <li onClick={() => navigate(`/user/${currentUser.id}`)}>
+            <a className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
               <UserCircle />
               <span className="ms-3">Perfil</span>
             </a>

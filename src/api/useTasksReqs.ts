@@ -1,5 +1,8 @@
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { task } from "@/models/Task";
+import { user } from "@/models/User";
+import { userInfo } from "@/models/user.info";
+import { AxiosResponse } from "axios";
 
 // COMMENTS HOOKS
 
@@ -95,7 +98,16 @@ const UseTasksReqs = () => {
     }
   };
 
-
+  const getUserInfo = async (id: string): Promise<userInfo | undefined> => {
+    try {
+      const response: AxiosResponse<userInfo> = await axiosInstance.get(
+        `/user/${id}`
+      );
+      return response.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
 
   const getAllUsers = async () => {
     try {
@@ -115,7 +127,8 @@ const UseTasksReqs = () => {
     createTask,
     editTask,
     getAsignedTasks,
-    getAllUsers
+    getAllUsers,
+    getUserInfo,
   };
 };
 

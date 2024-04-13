@@ -6,4 +6,5 @@ export const privateRoutes = {
 export const publicRoutes = {
   LOGIN: "/login",
   REGISTER: "/register",
+  PROFILE: "/user/:id"
 };
