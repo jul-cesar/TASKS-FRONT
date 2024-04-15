@@ -17,8 +17,7 @@ import { useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import Lottie from "lottie-react";
-import hello from "@/assets/hello.json";
+
 import { z } from "zod";
 
 const Login = () => {
@@ -53,7 +52,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2  xl:min-h-[800px]">
+    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 ">
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
@@ -140,17 +139,9 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        
       </div>
 
-      <div className="hidden xl:block ">
-        <Lottie
-          animationData={hello}
-          width="1920"
-          height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
+      <div className="hidden xl:block "></div>
     </div>
   );
 };
