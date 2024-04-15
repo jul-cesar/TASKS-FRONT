@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AvatarDemo } from "./Avatar";
 import { ModeToggle } from "./mode-toggle";
-import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { publicRoutes } from "../models/routes";
 import { UiContext } from "@/context/ui";
@@ -62,11 +61,11 @@ const Navbar = () => {
               <div>
                 <ModeToggle />
               </div>
-              <div>
+              {/* <div>
                 <Button variant="outline" size="icon">
                   <Bell />
                 </Button>
-              </div>
+              </div> */}
               <div>
                 {authTok.token !== "" ? (
                   <button

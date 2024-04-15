@@ -1,21 +1,16 @@
 import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
 import { publicRoutes } from "@/models/routes";
-import { QuestionMarkIcon } from "@radix-ui/react-icons";
-import {
-  BookOpenCheck,
-  Handshake,
-  ListTodo,
-  LogOut,
-  UserCircle,
-} from "lucide-react";
+import { BookOpenCheck, ListTodo, LogOut, UserCircle } from "lucide-react";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const { openSidebar, setOpenSidebar } = useContext(UiContext);
-  const { currentUser, logOut} = useContext(Auth);
+  const { currentUser, logOut } = useContext(Auth);
+  const location = useLocation();
+
   return (
     <aside
       id="logo-sidebar"
@@ -53,7 +48,10 @@ const Sidebar = () => {
                 navigate("/asigned-tasks");
                 setOpenSidebar(!openSidebar);
               }}
-              className="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              className={`flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white ${
+                location.pathname === "/asigned-tasks" &&
+                "bg-gray-100  dark:bg-gray-900"
+              } hover:bg-gray-100 dark:hover:bg-gray-800 group`}
             >
               <BookOpenCheck />
               <span className="flex-1 ms-3 whitespace-nowrap">
@@ -75,7 +73,9 @@ const Sidebar = () => {
                 navigate("/");
                 setOpenSidebar(!openSidebar);
               }}
-              className="flex items-center cursor-pointer p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              className={`flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white ${
+                location.pathname === "/" && "bg-gray-100  dark:bg-gray-900"
+              } hover:bg-gray-100 dark:hover:bg-gray-800 group`}
             >
               <ListTodo />
               <span className="flex-1 ms-3 whitespace-nowrap">Mis tareas</span>
@@ -85,13 +85,13 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a
+            {/* <a
               href="#"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <Handshake />
               <span className="flex-1 ms-3 whitespace-nowrap">Teams</span>
-            </a>
+            </a> */}
           </li>
           {/* <li>
             <a
@@ -115,23 +115,28 @@ const Sidebar = () => {
           <li
             onClick={() => {
               navigate(`/user/${currentUser.id}`);
-              
+
               setOpenSidebar(!openSidebar);
             }}
           >
-            <a className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+            <a
+              className={`flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white ${
+                location.pathname === `/user/${currentUser.id}` &&
+                "bg-gray-100  dark:bg-gray-900"
+              } hover:bg-gray-100 dark:hover:bg-gray-800 group`}
+            >
               <UserCircle />
               <span className="ms-3">Perfil</span>
             </a>
           </li>
           <li>
-            <a
+            {/* <a
               href="#"
               className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
               <QuestionMarkIcon />
               <span className="ms-3">Sobre esto</span>
-            </a>
+            </a> */}
           </li>
           {/*          
           <li>

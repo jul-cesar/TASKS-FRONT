@@ -1,20 +1,16 @@
 import AvatarUserProfile from "@/components/AvatarUserProfile";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Auth } from "@/context/auth";
+import InfoCard from "@/components/InfoCard";
 import { useGetUserInfo } from "@/hooks/taskQueries";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
 
-import { Goal, GrabIcon, Speech } from "lucide-react";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const Profile = () => {
   const location = useLocation();
   const idProfile = location.pathname.split("/").pop();
   const { data, refetch } = useGetUserInfo(idProfile ?? "");
-  const { authTok } = useContext(Auth);
 
-  console.log(authTok.token);
   useEffect(() => {
     refetch();
   }, [idProfile, refetch]); // D
@@ -35,48 +31,9 @@ const Profile = () => {
       </p>
 
       <div className="flex flex-col sm:flex-row justify-center  grow m-4 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Tareas creadas
-            </CardTitle>
-            <Goal className="h-5 w-5 m-1 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{data?.nroTareasCreadas}</div>
-            {/* <p className="text-xs text-muted-foreground">
-              +19% from last month
-            </p> */}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Tareas asignadas
-            </CardTitle>
-            <GrabIcon className="h-5 w-5 m-1 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{data?.nroTareasAsignadas}</div>
-            {/* <p className="text-xs text-muted-foreground">
-              +19% from last month
-            </p> */}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Comentarios hechos
-            </CardTitle>
-            <Speech className="h-5 w-5 m-1 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{data?.nroComentarios}</div>
-            {/* <p className="text-xs text-muted-foreground">
-              +19% from last month
-            </p> */}
-          </CardContent>
-        </Card>
+        <InfoCard text="Tareas creadas" nro={data?.nroTareasCreadas} />
+        <InfoCard text="Tareas asignadas" nro={data?.nroTareasAsignadas} />
+        <InfoCard text="Comentarios hechos" nro={data?.nroComentarios} />
       </div>
     </TasksPagesLayout>
   );
