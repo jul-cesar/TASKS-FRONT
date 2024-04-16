@@ -10,10 +10,12 @@ import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "sonner";
 import Login from "./pages/LogIn";
 import Register from "./pages/Register";
-import TasksPage from "./pages/TasksPage";
-import AsignedPage from "./pages/AsignedPage";
+import { lazy } from "react";
 
 function App() {
+  const LazyTaskPage = lazy(() => import("../src/pages/TasksPage"));
+  const LazyAsignsPage = lazy(() => import("../src/pages/AsignedPage"));
+
   return (
     <UiContextProvider>
       <AuthProvider>
@@ -23,10 +25,10 @@ function App() {
           <Routes>
             <Route element={<PersistLogin />}>
               <Route element={<ProtectedRoute />}>
-                <Route path={privateRoutes.TASKS} element={<TasksPage />} />
+                <Route path={privateRoutes.TASKS} element={<LazyTaskPage />} />
                 <Route
                   path={privateRoutes.ASIGNEDTASKS}
-                  element={<AsignedPage />}
+                  element={<LazyAsignsPage />}
                 />
               </Route>
             </Route>
