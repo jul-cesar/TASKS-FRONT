@@ -4,7 +4,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLogin from "./utils/PersistLogin";
 import { privateRoutes, publicRoutes } from "./models/routes";
 import { UiContextProvider } from "./context/ui";
-import Profile from "./pages/Profile";
 import { AuthProvider } from "./context/auth";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "sonner";
@@ -12,10 +11,11 @@ import Login from "./pages/LogIn";
 import Register from "./pages/Register";
 import { lazy, Suspense } from "react";
 import LoaderMedium from "./components/loaders/LoaderMedium";
+import TasksPage from "./pages/TasksPage";
 
 function App() {
-  const LazyTaskPage = lazy(() => import("../src/pages/TasksPage"));
   const LazyAsignsPage = lazy(() => import("../src/pages/AsignedPage"));
+  const LazyProfilePage = lazy(() => import("../src/pages/Profile"));
 
   return (
     <Suspense
@@ -35,7 +35,7 @@ function App() {
                 <Route element={<ProtectedRoute />}>
                   <Route
                     path={privateRoutes.TASKS}
-                    element={<LazyTaskPage />}
+                    element={<TasksPage />}
                   />
                   <Route
                     path={privateRoutes.ASIGNEDTASKS}
@@ -45,7 +45,10 @@ function App() {
               </Route>
               <Route path={publicRoutes.LOGIN} element={<Login />} />
               <Route path={publicRoutes.REGISTER} element={<Register />} />
-              <Route path={publicRoutes.PROFILE} element={<Profile />} />
+              <Route
+                path={publicRoutes.PROFILE}
+                element={<LazyProfilePage />}
+              />
               <Route path="*" element={<>Not Found</>} />
             </Routes>
           </ThemeProvider>
