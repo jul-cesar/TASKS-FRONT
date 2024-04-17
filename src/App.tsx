@@ -9,10 +9,10 @@ import LoaderMedium from "./components/loaders/LoaderMedium";
 import TasksPage from "./pages/TasksPage";
 
 function App() {
-  const LazyAsignsPage = lazy(() => import("../src/pages/AsignedPage"));
-  const LazyLoginPage = lazy(() => import("../src/pages/LogIn"));
-  const LazyRegisterPage = lazy(() => import("../src/pages/Register"));
-  const LazyProfilePage = lazy(() => import("../src/pages/Profile"));
+  const AsignedPage = lazy(() => import("../src/pages/AsignedPage"));
+  const Login = lazy(() => import("../src/pages/LogIn"));
+  const Register = lazy(() => import("../src/pages/Register"));
+  const Profile = lazy(() => import("../src/pages/Profile"));
 
   return (
     <Suspense
@@ -28,14 +28,14 @@ function App() {
             <Route path={privateRoutes.TASKS} element={<TasksPage />} />
             <Route
               path={privateRoutes.ASIGNEDTASKS}
-              element={<LazyAsignsPage />}
+              element={<AsignedPage />}
             />
           </Route>
         </Route>
 
-        <Route path={publicRoutes.LOGIN} element={<LazyLoginPage />} />
-        <Route path={publicRoutes.REGISTER} element={<LazyRegisterPage />} />
-        <Route path={publicRoutes.PROFILE} element={<LazyProfilePage />} />
+        <Route path={publicRoutes.LOGIN} element={<Login />} />
+        <Route path={publicRoutes.REGISTER} element={<Register />} />
+        <Route path={publicRoutes.PROFILE} element={<Profile />} />
         <Route path="*" element={<>Not Found</>} />
       </Routes>
     </Suspense>
