@@ -1,5 +1,7 @@
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { comment } from "@/models/comment";
 import { task } from "@/models/Task";
+import { user } from "@/models/User";
 import { userInfo } from "@/models/user.info";
 import { AxiosResponse } from "axios";
 
@@ -18,19 +20,29 @@ const UseTasksReqs = () => {
     contenido: string;
     authorId: string;
     tareaId: string;
-  }) => {
-    const response = await axiosInstance.post("/comentario", {
-      contenido,
-      authorId,
-      tareaId,
-    });
-    return response;
+  }): Promise<comment | undefined> => {
+    try {
+      const response: AxiosResponse<comment, Error> = await axiosInstance.post(
+        "/comentario",
+        {
+          contenido,
+          authorId,
+          tareaId,
+        }
+      );
+      return response.data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
 
-  const deleteComment = async (idTarea: string) => {
+  const deleteComment = async (
+    idTarea: string
+  ): Promise<comment | undefined> => {
     try {
-      const response = await axiosInstance.delete(`/comentario/${idTarea}`);
-      return response;
+      const response: AxiosResponse<comment, Error> =
+        await axiosInstance.delete(`/comentario/${idTarea}`);
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }
@@ -38,39 +50,48 @@ const UseTasksReqs = () => {
 
   // TASKS COMMENTS
 
-  const createTask = async (
-    data: Omit<task, "asignado" | "owner" | "id" | "createdAt">
-  ) => {
+  const createTask = async (data: Partial<task>): Promise<task | undefined> => {
     try {
-      const response = await axiosInstance.post("/tarea", data);
-      return response;
+      const response: AxiosResponse<task, Error> = await axiosInstance.post(
+        "/tarea",
+        data
+      );
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }
   };
 
-  const deleteTask = async (idTask: string) => {
+  const deleteTask = async (idTask: string): Promise<task | undefined> => {
     try {
-      const response = await axiosInstance.delete(`/tarea/${idTask}`);
-      return response;
+      const response: AxiosResponse<task> = await axiosInstance.delete(
+        `/tarea/${idTask}`
+      );
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }
   };
 
-  const getUserTasks = async (id: string) => {
+  const getUserTasks = async (id: string): Promise<task[] | undefined> => {
     try {
-      const response = await axiosInstance.get(`/tarea/${id}`);
-      return response;
+      const response: AxiosResponse<task[]> = await axiosInstance.get(
+        `/tarea/${id}`
+      );
+      return response.data;
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getTaskComments = async (idTask: string) => {
+  const getTaskComments = async (
+    idTask: string
+  ): Promise<comment[] | undefined> => {
     try {
-      const response = await axiosInstance.get(`/comentario/${idTask}`);
-      return response;
+      const response: AxiosResponse<comment[]> = await axiosInstance.get(
+        `/comentario/${idTask}`
+      );
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }
@@ -78,20 +99,27 @@ const UseTasksReqs = () => {
 
   const editTask = async (
     idTask: string,
-    data: Omit<task, "asignado" | "owner" | "id" | "createdAt">
-  ) => {
+    data: Partial<task>
+  ): Promise<task | undefined> => {
     try {
-      const response = await axiosInstance.put(`/tarea/${idTask}`, data);
-      return response;
+      const response: AxiosResponse<task> = await axiosInstance.put(
+        `/tarea/${idTask}`,
+        data
+      );
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }
   };
 
-  const getAsignedTasks = async (idUser: string) => {
+  const getAsignedTasks = async (
+    idUser: string
+  ): Promise<task[] | undefined> => {
     try {
-      const response = await axiosInstance.get(`/tarea/asigned/${idUser}`);
-      return response;
+      const response: AxiosResponse<task[]> = await axiosInstance.get(
+        `/tarea/asigned/${idUser}`
+      );
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }
@@ -108,10 +136,12 @@ const UseTasksReqs = () => {
     }
   };
 
-  const getAllUsers = async () => {
+  const getAllUsers = async (): Promise<user[] | undefined> => {
     try {
-      const response = await axiosInstance.get("/user/all");
-      return response;
+      const response: AxiosResponse<user[]> = await axiosInstance.get(
+        "/user/all"
+      );
+      return response.data;
     } catch (error: any) {
       console.error(error.message);
     }

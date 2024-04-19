@@ -8,6 +8,8 @@ import {
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { privateRoutes } from "@/models/routes";
 
 interface CustomJwtPayload extends JwtPayload {
   nombre: string;
@@ -64,14 +66,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email,
         password,
       });
-
+      if (response.data !== "INCORRECT PASSWORD") {
+        window.location.href = "/";
+      }
       setAuthTok(response.data);
     } catch (error: any) {
       console.error(error.message);
-      if (error.message.includes("403")) {
-        toast.error("Usuario o contraseña incorrecto", {
-          position: "top-center",
-        });
+      if (error.message.includes(403)) {
+        toast.error("Correo o contraseña incorrecta");
       }
     }
   };
@@ -91,7 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         toast.success("Te has registrado correctamente");
         setTimeout(() => {
           window.location.href = "/login";
-        }, 1000);
+        }, 700);
       }
     } catch (error: any) {
       console.error(error.message);

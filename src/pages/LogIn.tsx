@@ -22,7 +22,6 @@ import { z } from "zod";
 
 const Login = () => {
   const { currentUser } = useContext(Auth);
-  const navigate = useNavigate();
   const { mutateAsync, isPending } = useLogIn();
   const formScheme = z.object({
     email: z
@@ -45,7 +44,6 @@ const Login = () => {
         email: data.email,
         password: data.password,
       });
-      navigate(privateRoutes.TASKS);
     } catch (err: any) {
       console.log("error", err.message);
     }

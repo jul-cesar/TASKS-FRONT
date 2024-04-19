@@ -6,17 +6,29 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { useLocation } from "react-router-dom";
 import { Label } from "./ui/label";
+import { useEffect, useState } from "react";
+import { useTasks } from "@/hooks/taskQueries";
 
-type TasksListProps = {
-  tasksList: task[];
-  status: string;
-  error?: Error | null;
-  isLoading: boolean;
-};
+const TasksList = () => {
+  const { data: taskList, status } = useTasks();
 
-const TasksList = ({ tasksList, status }: TasksListProps) => {
-  const [parent] = useAutoAnimate();
   const location = useLocation();
+
+  const [filteredTasks, setFilteredTasks] = useState<task[] | undefined>([]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const titleFilter = queryParams.get("q");
+
+    const filtered = titleFilter
+      ? taskList?.filter((x) =>
+          x.titulo.toLocaleLowerCase().includes(titleFilter.toLocaleLowerCase())
+        )
+      : taskList;
+    setFilteredTasks(filtered);
+  }, [location.search, taskList]);
+
+  const [parent] = useAutoAnimate();
   const queryParams = new URLSearchParams(location.search);
   const titleFilter = queryParams.get("q");
 
@@ -47,8 +59,8 @@ const TasksList = ({ tasksList, status }: TasksListProps) => {
           <Label>Crea una nueva tarea</Label>
         </div>
       )}
-      {Array.isArray(tasksList) &&
-        tasksList.map((tarea) => (
+      {Array.isArray(filteredTasks) &&
+        filteredTasks.map((tarea) => (
           <TaskCard
             tareaInfo={tarea}
             key={tarea.id}

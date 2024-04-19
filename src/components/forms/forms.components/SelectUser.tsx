@@ -36,10 +36,9 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
     }),
   });
 
-  const { data } = useGetAllUsers();
+  const { data: listaUsuarios } = useGetAllUsers();
   const { mutate } = useEditTask(currentTarea.id);
   const { currentUser } = useContext(Auth);
-
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -57,7 +56,7 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
     });
     setIsOpenDialog(false);
   }
-  const listaUsuarios = data?.data;
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

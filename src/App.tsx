@@ -5,26 +5,42 @@ import PersistLogin from "./utils/PersistLogin";
 import { privateRoutes, publicRoutes } from "./models/routes";
 
 import TasksPage from "./pages/TasksPage";
-import AsignedPage from "./pages/AsignedPage";
-import Login from "./pages/LogIn";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
+
+import { lazy, Suspense } from "react";
+import LoaderMedium from "./components/loaders/LoaderMedium";
+
+const Login = lazy(() => import("./pages/LogIn"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Register = lazy(() => import("./pages/Register"));
+const AsignedPage = lazy(() => import("./pages/AsignedPage"));
 
 function App() {
   return (
-    <Routes>
-      <Route element={<PersistLogin />}>
-        <Route element={<ProtectedRoute />}>
-          <Route path={privateRoutes.TASKS} element={<TasksPage />} />
-          <Route path={privateRoutes.ASIGNEDTASKS} element={<AsignedPage />} />
+    <Suspense
+      fallback={
+        <div className="h-screen flex items-center justify-center">
+          {" "}
+          <LoaderMedium />{" "}
+        </div>
+      }
+    >
+      <Routes>
+        <Route element={<PersistLogin />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path={privateRoutes.TASKS} element={<TasksPage />} />
+            <Route
+              path={privateRoutes.ASIGNEDTASKS}
+              element={<AsignedPage />}
+            />
+          </Route>
         </Route>
-      </Route>
 
-      <Route path={publicRoutes.LOGIN} element={<Login />} />
-      <Route path={publicRoutes.REGISTER} element={<Register />} />
-      <Route path={publicRoutes.PROFILE} element={<Profile />} />
-      <Route path="*" element={<>Not Found</>} />
-    </Routes>
+        <Route path={publicRoutes.LOGIN} element={<Login />} />
+        <Route path={publicRoutes.REGISTER} element={<Register />} />
+        <Route path={publicRoutes.PROFILE} element={<Profile />} />
+        <Route path="*" element={<>Not Found</>} />
+      </Routes>
+    </Suspense>
   );
 }
 

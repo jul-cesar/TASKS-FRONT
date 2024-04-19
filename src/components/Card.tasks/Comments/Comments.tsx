@@ -37,7 +37,7 @@ type CommentsProps = {
   tareaInfo: task;
 };
 
-export function Comments({ namet, tareaInfo }: CommentsProps) {
+function Comments({ namet, tareaInfo }: CommentsProps) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -65,9 +65,11 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
   const idTarea = tareaInfo.id;
   const { mutateAsync } = useCreateComment();
   const { currentUser } = React.useContext(Auth);
-  const { data, isLoading, isPending } = useGetComments(idTarea);
-
-  const listaComentarios = data?.data;
+  const {
+    data: listaComentarios,
+    isLoading,
+    isPending,
+  } = useGetComments(idTarea);
 
   const formScheme = z.object({
     contenido: z
@@ -122,3 +124,5 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
     </div>
   );
 }
+
+export default Comments;

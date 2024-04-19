@@ -1,21 +1,9 @@
-import { useContext, useEffect } from "react";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAsignedTask } from "@/hooks/taskQueries";
-import { UiContext } from "@/context/ui";
 import AsignedCard from "./Card.tasks/AsignedCard";
 
 const AsignedTasksList = () => {
-  const { data: Asigns, status } = useAsignedTask();
-  const AsignsList = Asigns?.data;
-
-  const { setTareasLength } = useContext(UiContext);
-
-  useEffect(() => {
-    setTareasLength((prevState) => ({
-      ...prevState,
-      asignedTasks: AsignsList?.length ?? 0,
-    }));
-  }, [Asigns]);
+  const { data: AsignsList, status } = useAsignedTask();
 
   if (status === "pending") {
     return (

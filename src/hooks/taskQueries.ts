@@ -16,12 +16,16 @@ const KEYCOMMENT: string = "comments";
 
 export const useGetComments = (idTarea: string) => {
   const { getTaskComments } = UseTasksReqs();
-  type listaComments = {
-    data: comment[];
-  };
-  return useQuery<listaComments>({
+
+  return useQuery<comment[], AxiosError>({
     queryKey: [KEYCOMMENT, idTarea],
-    queryFn: (): any => getTaskComments(idTarea),
+    queryFn: async (): Promise<comment[]> => {
+      const data = await getTaskComments(idTarea);
+      if (!data) {
+        throw new Error("Error al traer comentarios");
+      }
+      return data;
+    },
     enabled: !!idTarea,
   });
 };
@@ -50,31 +54,39 @@ export const useCreateComment = () => {
 export const useDeleteComment = (idComment: string) => {
   const queryClient = useQueryClient();
   const { deleteComment } = UseTasksReqs();
-  return useMutation({
+  return useMutation<void, Error, task>({
     mutationFn: async () => {
       await deleteComment(idComment);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] });
+      queryClient.invalidateQueries({ queryKey: [KEYCOMMENT] }),
+        toast.info("Comentario eliminado");
     },
-    onMutate: () => toast.info("Comentario eliminado"),
+    onError: (error) => {
+      toast.error(`Hubo un error al eliminar el comentario ${error.message}`);
+    },
+    onMutate: () => {
+      toast.info("Eliminando comentario...");
+    },
   });
 };
 
 // TASKS QUERIES
 
 export const useTasks = () => {
-  type useTasks = {
-    data: task[];
-  };
   const { getUserTasks } = UseTasksReqs();
   const { currentUser } = useContext(Auth);
   const id = currentUser.id;
-  return useQuery<useTasks>({
+  return useQuery<task[], AxiosError>({
     queryKey: [KEY, id],
-    queryFn: (): any => getUserTasks(id),
+    queryFn: async (): Promise<task[]> => {
+      const data = await getUserTasks(id);
+      if (!data) {
+        throw new Error("Hubo un error al traer las tareas");
+      }
+      return data;
+    },
     staleTime: 1000 * 60 * 1,
-
     enabled: !!id,
   });
 };
@@ -82,16 +94,20 @@ export const useTasks = () => {
 export const useCreateTask = () => {
   const { createTask } = UseTasksReqs();
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (
-      newTarea: Omit<task, "asignado" | "owner" | "id" | "createdAt">
-    ) => {
+  return useMutation<void, Error, Partial<task>>({
+    mutationFn: async (newTarea) => {
       await createTask(newTarea);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEY] });
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.success("Tarea creada con exito!");
     },
-    onMutate: () => toast.success("Tarea creada con exito!"),
+    onError: (error) => {
+      toast.error(`Hubo un error al crear la tarea: ${error.message}`);
+    },
+    onMutate: () => {
+      toast.info("Creando tarea...");
+    },
   });
 };
 
@@ -99,14 +115,20 @@ export const useDeleteTask = (idTask: string) => {
   const { deleteTask } = UseTasksReqs();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<void, Error, task>({
     mutationFn: async () => {
       await deleteTask(idTask);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEY] });
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.info("Tarea eliminada");
     },
-    onMutate: () => toast.info("Tarea eliminada"),
+    onError: (error) => {
+      toast.error(`Hubo un error al eliminar la tarea: ${error.message}`);
+    },
+    onMutate: () => {
+      toast.info("Eliminando tarea...");
+    },
   });
 };
 
@@ -114,28 +136,36 @@ export const useEditTask = (idTask: string) => {
   const { editTask } = UseTasksReqs();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (newTarea: Omit<task, "owner" | "id" | "createdAt">) => {
+  return useMutation<void, Error, Partial<task>>({
+    mutationFn: async (newTarea) => {
       await editTask(idTask, newTarea);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [KEY] });
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.info(`Tarea editada`);
     },
-    onMutate: () => toast.info(`Tarea editada`),
+    onError: (error) => {
+      toast.error(`Fallo al editar la tarea: ${error.message}`);
+    },
+    onMutate: () => {
+      toast.info("Editando la tarea...");
+    },
   });
 };
 
 export const useAsignedTask = () => {
-  type useAsigns = {
-    data: task[];
-  };
   const { currentUser } = useContext(Auth);
   const id = currentUser.id;
   const { getAsignedTasks } = UseTasksReqs();
-  return useQuery<useAsigns>({
+  return useQuery<task[], AxiosError>({
     queryKey: ["asigns", id],
-    queryFn: (): any => getAsignedTasks(id),
-
+    queryFn: async (): Promise<task[]> => {
+      const data = await getAsignedTasks(id);
+      if (!data) {
+        throw new Error("Error to bring asigned tasks");
+      }
+      return data;
+    },
     enabled: !!id,
   });
 };
@@ -145,9 +175,15 @@ export const useGetAllUsers = () => {
     data: user[];
   };
   const { getAllUsers } = UseTasksReqs();
-  return useQuery<getAllUsers>({
+  return useQuery<user[], AxiosError>({
     queryKey: ["users"],
-    queryFn: (): any => getAllUsers(),
+    queryFn: async (): Promise<user[]> => {
+      const data = await getAllUsers();
+      if (!data) {
+        throw new Error("Error to bring all users");
+      }
+      return data;
+    },
   });
 };
 

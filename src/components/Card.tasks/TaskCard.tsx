@@ -10,14 +10,13 @@ import { task } from "@/models/Task";
 import { CardOptions } from "./CardOptions";
 import { formatCustomDate } from "@/utils/formatCustomDate";
 import { BadgeComponent } from "./BadgeComponent";
-import { Comments } from "./Comments/Comments";
-import DialogAsignUser from "./DialogAsignUser";
-import EditTaskForm from "../forms/EditTaskForm";
 import { format } from "date-fns";
 import { Separator } from "../ui/separator";
 import { Clock, User } from "lucide-react";
 import { Label } from "../ui/label";
 import { TooltipDemo } from "./TooltipDemo";
+import { lazy, Suspense } from "react";
+import LoaderMedium from "../loaders/LoaderMedium";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -34,6 +33,10 @@ const TaskCard = ({
   fechaVencimiento,
   tareaInfo,
 }: TaskCardProps) => {
+  const Comments = lazy(() => import("./Comments/Comments"));
+  const DialogAsignUser = lazy(() => import("./DialogAsignUser"));
+  const EditTaskForm = lazy(() => import("../forms/EditTaskForm"));
+
   return (
     <Card className="max-w-[350px]">
       <CardHeader>
@@ -74,30 +77,32 @@ const TaskCard = ({
         </form>
       </CardContent>
       <CardFooter className="flex justify-evenly">
-        <TooltipDemo text="Ver Comentarios">
-          <Comments tareaInfo={tareaInfo} namet={titulo} />
-        </TooltipDemo>
+        <Suspense fallback={<LoaderMedium />}>
+          <TooltipDemo text="Ver Comentarios">
+            <Comments tareaInfo={tareaInfo} namet={titulo} />
+          </TooltipDemo>
 
-        <TooltipDemo text="Asignar un usuario">
-          <DialogAsignUser taskInfo={tareaInfo} />
-        </TooltipDemo>
-        <TooltipDemo text="Editar tarea">
-          <EditTaskForm taskInfo={tareaInfo} />
-        </TooltipDemo>
+          <TooltipDemo text="Asignar un usuario">
+            <DialogAsignUser taskInfo={tareaInfo} />
+          </TooltipDemo>
+          <TooltipDemo text="Editar tarea">
+            <EditTaskForm taskInfo={tareaInfo} />
+          </TooltipDemo>
+        </Suspense>
       </CardFooter>
       <Separator className="my-3" />
       <CardFooter className="flex justify-between ">
         <TooltipDemo text="Tarea creada por">
-        <div className="flex justify-center items-center gap-1 mt-1">
-          <User />
-          <p className="font-bold text-xs"> {owner?.nombre} </p>
-        </div>
+          <div className="flex justify-center items-center gap-1 mt-1">
+            <User />
+            <p className="font-bold text-xs"> {owner?.nombre} </p>
+          </div>
         </TooltipDemo>
         <TooltipDemo text="Tarea creada hace">
-        <div className="flex justify-center items-center gap-1 mt-1">
-          <Clock />
-          <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
-        </div>
+          <div className="flex justify-center items-center gap-1 mt-1">
+            <Clock />
+            <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
+          </div>
         </TooltipDemo>
       </CardFooter>
     </Card>

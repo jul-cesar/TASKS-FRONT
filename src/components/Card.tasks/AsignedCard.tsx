@@ -9,7 +9,7 @@ import {
 import { task } from "@/models/Task";
 import { formatCustomDate } from "@/utils/formatCustomDate";
 import { BadgeComponent } from "./BadgeComponent";
-import { Comments } from "./Comments/Comments";
+import Comments from "./Comments/Comments";
 
 import { format } from "date-fns";
 import { Separator } from "../ui/separator";
