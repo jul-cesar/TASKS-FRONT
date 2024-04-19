@@ -17,6 +17,7 @@ import { Label } from "../ui/label";
 import { TooltipDemo } from "./TooltipDemo";
 import { lazy, Suspense } from "react";
 import LoaderMedium from "../loaders/LoaderMedium";
+import LoadingSmall from "../loaders/LoadingSmall";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -38,46 +39,46 @@ const TaskCard = ({
   const EditTaskForm = lazy(() => import("../forms/EditTaskForm"));
 
   return (
-    <Card className="max-w-[350px]">
-      <CardHeader>
-        <CardTitle>
-          <div className="flex justify-between">
-            {titulo}
-            <CardOptions tareaInfo={tareaInfo} />
-          </div>
-        </CardTitle>
-
-        {asignado && (
-          <CardDescription>Asignada a: {asignado.nombre}</CardDescription>
-        )}
-        <CardDescription>{descripcion}</CardDescription>
-      </CardHeader>
-      <div className="flex items-center justify-between gap-2 m-4">
-        <div className="p-2">
-          <Label>Estado: </Label>
-          <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
-        </div>
-        <div className="p-2">
-          <Label>Prioridad: </Label>
-          <BadgeComponent>{prioridad?.toUpperCase()}</BadgeComponent>
-        </div>
-      </div>
-
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col items-center space-y-2">
-              <Label>Fecha de vencimiento: </Label>
-              <BadgeComponent variant="secondary">
-                {format(fechaVencimiento, "yyyy-MM-dd")} (
-                {formatCustomDate(fechaVencimiento)})
-              </BadgeComponent>
+    <Suspense fallback={<span></span>}>
+      <Card className="max-w-[350px]">
+        <CardHeader>
+          <CardTitle>
+            <div className="flex justify-between">
+              {titulo}
+              <CardOptions tareaInfo={tareaInfo} />
             </div>
+          </CardTitle>
+
+          {asignado && (
+            <CardDescription>Asignada a: {asignado.nombre}</CardDescription>
+          )}
+          <CardDescription>{descripcion}</CardDescription>
+        </CardHeader>
+        <div className="flex items-center justify-between gap-2 m-4">
+          <div className="p-2">
+            <Label>Estado: </Label>
+            <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-evenly">
-        <Suspense fallback={<LoaderMedium />}>
+          <div className="p-2">
+            <Label>Prioridad: </Label>
+            <BadgeComponent>{prioridad?.toUpperCase()}</BadgeComponent>
+          </div>
+        </div>
+
+        <CardContent>
+          <form>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col items-center space-y-2">
+                <Label>Fecha de vencimiento: </Label>
+                <BadgeComponent variant="secondary">
+                  {format(fechaVencimiento, "yyyy-MM-dd")} (
+                  {formatCustomDate(fechaVencimiento)})
+                </BadgeComponent>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-evenly">
           <TooltipDemo text="Ver Comentarios">
             <Comments tareaInfo={tareaInfo} namet={titulo} />
           </TooltipDemo>
@@ -88,24 +89,26 @@ const TaskCard = ({
           <TooltipDemo text="Editar tarea">
             <EditTaskForm taskInfo={tareaInfo} />
           </TooltipDemo>
-        </Suspense>
-      </CardFooter>
-      <Separator className="my-3" />
-      <CardFooter className="flex justify-between ">
-        <TooltipDemo text="Tarea creada por">
-          <div className="flex justify-center items-center gap-1 mt-1">
-            <User />
-            <p className="font-bold text-xs"> {owner?.nombre} </p>
-          </div>
-        </TooltipDemo>
-        <TooltipDemo text="Tarea creada hace">
-          <div className="flex justify-center items-center gap-1 mt-1">
-            <Clock />
-            <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
-          </div>
-        </TooltipDemo>
-      </CardFooter>
-    </Card>
+        </CardFooter>
+        <Separator className="my-3" />
+        <CardFooter className="flex justify-between ">
+          <TooltipDemo text="Tarea creada por">
+            <div className="flex justify-center items-center gap-1 mt-1">
+              <User />
+              <p className="font-bold text-xs"> {owner?.nombre} </p>
+            </div>
+          </TooltipDemo>
+          <TooltipDemo text="Tarea creada hace">
+            <div className="flex justify-center items-center gap-1 mt-1">
+              <Clock />
+              <p className="font-bold text-xs">
+                {formatCustomDate(createdAt)}{" "}
+              </p>
+            </div>
+          </TooltipDemo>
+        </CardFooter>
+      </Card>
+    </Suspense>
   );
 };
 

@@ -6,7 +6,6 @@ import TasksList from "@/components/TasksList";
 const TasksPage = () => {
   return (
     <TasksPagesLayout>
-      <SearchTasks />
       <TasksList />
     </TasksPagesLayout>
   );

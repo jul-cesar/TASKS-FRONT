@@ -5,7 +5,6 @@ import TasksPagesLayout from "@/layout/TasksPagesLayout";
 const AsignedPage = () => {
   return (
     <TasksPagesLayout>
-      <SearchTasks/>
       <AsignedTasksList />
     </TasksPagesLayout>
   );
