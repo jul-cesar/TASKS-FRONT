@@ -1,4 +1,3 @@
-import { task } from "@/models/Task";
 import TaskCard from "./Card.tasks/TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -6,7 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { useLocation } from "react-router-dom";
 import { Label } from "./ui/label";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useTasks } from "@/hooks/taskQueries";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -15,19 +14,19 @@ const TasksList = () => {
 
   const location = useLocation();
 
-  const [filteredTasks, setFilteredTasks] = useState<task[] | undefined>([]);
   const queryParams = new URLSearchParams(location.search);
   const titleFilter = queryParams.get("q");
   const debounceValue = useDebounce(titleFilter);
 
-  // useEffect(() => {
-  //   const filtered = titleFilter
-  //     ? taskList?.filter((x) =>
-  //         x.titulo.toLocaleLowerCase().includes(titleFilter.toLocaleLowerCase())
-  //       )
-  //     : taskList;
-  //   setFilteredTasks(filtered);
-  // }, [titleFilter, taskList]);
+  const filtered = useMemo(() => {
+    return debounceValue
+      ? taskList?.filter((x) =>
+          x.titulo
+            .toLocaleLowerCase()
+            .includes(debounceValue.toLocaleLowerCase())
+        )
+      : taskList;
+  }, [debounceValue, taskList]);
 
   const [parent] = useAutoAnimate();
 
@@ -57,21 +56,20 @@ const TasksList = () => {
         <Label>Crea una nueva tarea</Label>
       </div>
 
-      {Array.isArray(taskList) &&
-        taskList.map((tarea) => (
-          <TaskCard
-            tareaInfo={tarea}
-            key={tarea.id}
-            createdAt={tarea.createdAt}
-            titulo={tarea.titulo}
-            descripcion={tarea.descripcion}
-            prioridad={tarea.prioridad}
-            fechaVencimiento={tarea.fechaVencimiento}
-            estado={tarea.estado}
-            owner={tarea.owner}
-            asignado={tarea.asignado}
-          />
-        ))}
+      {filtered?.map((tarea) => (
+        <TaskCard
+          tareaInfo={tarea}
+          key={tarea.id}
+          createdAt={tarea.createdAt}
+          titulo={tarea.titulo}
+          descripcion={tarea.descripcion}
+          prioridad={tarea.prioridad}
+          fechaVencimiento={tarea.fechaVencimiento}
+          estado={tarea.estado}
+          owner={tarea.owner}
+          asignado={tarea.asignado}
+        />
+      ))}
     </div>
   );
 };
