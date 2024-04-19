@@ -54,7 +54,7 @@ export const useCreateComment = () => {
 export const useDeleteComment = (idComment: string) => {
   const queryClient = useQueryClient();
   const { deleteComment } = UseTasksReqs();
-  return useMutation<void, Error, task>({
+  return useMutation<void, Error>({
     mutationFn: async () => {
       await deleteComment(idComment);
     },
@@ -115,7 +115,7 @@ export const useDeleteTask = (idTask: string) => {
   const { deleteTask } = UseTasksReqs();
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, task>({
+  return useMutation<void, Error>({
     mutationFn: async () => {
       await deleteTask(idTask);
     },

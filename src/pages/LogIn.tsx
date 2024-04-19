@@ -11,12 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Auth } from "@/context/auth";
 import { useLogIn } from "@/hooks/taskQueries";
-import { privateRoutes } from "@/models/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 import { z } from "zod";
 

@@ -12,7 +12,7 @@ import { comment } from "@/models/comment";
 import { useDeleteComment } from "@/hooks/taskQueries";
 
 const CommentsOptions = ({ comentarioData }: { comentarioData: comment }) => {
-    const { mutate} = useDeleteComment(comentarioData.id);
+  const { mutate } = useDeleteComment(comentarioData.id);
 
   return (
     <DropdownMenu>
@@ -31,7 +31,7 @@ const CommentsOptions = ({ comentarioData }: { comentarioData: comment }) => {
                         </Link>
                     </DropdownMenuItem> */}
 
-          <DropdownMenuItem onClick={()=>mutate()}>
+          <DropdownMenuItem onClick={() => mutate()}>
             <Trash className="mr-2 h-4 w-4" />
 
             <span>Eliminar</span>

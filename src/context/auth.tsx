@@ -8,8 +8,6 @@ import {
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { privateRoutes } from "@/models/routes";
 
 interface CustomJwtPayload extends JwtPayload {
   nombre: string;
