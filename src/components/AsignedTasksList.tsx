@@ -7,7 +7,7 @@ const AsignedTasksList = () => {
 
   if (status === "pending") {
     return (
-      <div className="flex gap-4 flex-wrap  m-4  justify-center">
+      <div className="flex gap-4 flex-wrap  m-4  justify-center mt-20">
         <CardSkeleton />
       </div>
     );
@@ -22,7 +22,7 @@ const AsignedTasksList = () => {
     );
   }
   return (
-    <div className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 ">
+    <div className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 mt-20 ">
       {Array.isArray(AsignsList) &&
         AsignsList.map((tarea) => (
           <AsignedCard

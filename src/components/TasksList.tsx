@@ -1,4 +1,3 @@
-import { task } from "@/models/Task";
 import TaskCard from "./Card.tasks/TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -6,31 +5,30 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { useLocation } from "react-router-dom";
 import { Label } from "./ui/label";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useTasks } from "@/hooks/taskQueries";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const TasksList = () => {
   const { data: taskList, status } = useTasks();
 
   const location = useLocation();
 
-  const [filteredTasks, setFilteredTasks] = useState<task[] | undefined>([]);
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const titleFilter = queryParams.get("q");
-
-    const filtered = titleFilter
-      ? taskList?.filter((x) =>
-          x.titulo.toLocaleLowerCase().includes(titleFilter.toLocaleLowerCase())
-        )
-      : taskList;
-    setFilteredTasks(filtered);
-  }, [location.search, taskList]);
-
-  const [parent] = useAutoAnimate();
   const queryParams = new URLSearchParams(location.search);
   const titleFilter = queryParams.get("q");
+  const debounceValue = useDebounce(titleFilter);
+
+  const filtered = useMemo(() => {
+    return debounceValue
+      ? taskList?.filter((x) =>
+          x.titulo
+            .toLocaleLowerCase()
+            .includes(debounceValue.toLocaleLowerCase())
+        )
+      : taskList;
+  }, [debounceValue, taskList]);
+
+  const [parent] = useAutoAnimate();
 
   if (status === "pending") {
     return (
@@ -53,27 +51,25 @@ const TasksList = () => {
       className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 "
       ref={parent}
     >
-      {!titleFilter && (
-        <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
-          <CreateTaskForm />
-          <Label>Crea una nueva tarea</Label>
-        </div>
-      )}
-      {Array.isArray(filteredTasks) &&
-        filteredTasks.map((tarea) => (
-          <TaskCard
-            tareaInfo={tarea}
-            key={tarea.id}
-            createdAt={tarea.createdAt}
-            titulo={tarea.titulo}
-            descripcion={tarea.descripcion}
-            prioridad={tarea.prioridad}
-            fechaVencimiento={tarea.fechaVencimiento}
-            estado={tarea.estado}
-            owner={tarea.owner}
-            asignado={tarea.asignado}
-          />
-        ))}
+      <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
+        <CreateTaskForm />
+        <Label>Crea una nueva tarea</Label>
+      </div>
+
+      {filtered?.map((tarea) => (
+        <TaskCard
+          tareaInfo={tarea}
+          key={tarea.id}
+          createdAt={tarea.createdAt}
+          titulo={tarea.titulo}
+          descripcion={tarea.descripcion}
+          prioridad={tarea.prioridad}
+          fechaVencimiento={tarea.fechaVencimiento}
+          estado={tarea.estado}
+          owner={tarea.owner}
+          asignado={tarea.asignado}
+        />
+      ))}
     </div>
   );
 };

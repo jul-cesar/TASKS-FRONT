@@ -15,8 +15,10 @@ import { Separator } from "../ui/separator";
 import { Clock, User } from "lucide-react";
 import { Label } from "../ui/label";
 import { TooltipDemo } from "./TooltipDemo";
-import { lazy, Suspense } from "react";
-import LoaderMedium from "../loaders/LoaderMedium";
+
+import Comments from "./Comments/Comments";
+import DialogAsignUser from "./DialogAsignUser";
+import EditTaskForm from "../forms/EditTaskForm";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -33,10 +35,6 @@ const TaskCard = ({
   fechaVencimiento,
   tareaInfo,
 }: TaskCardProps) => {
-  const Comments = lazy(() => import("./Comments/Comments"));
-  const DialogAsignUser = lazy(() => import("./DialogAsignUser"));
-  const EditTaskForm = lazy(() => import("../forms/EditTaskForm"));
-
   return (
     <Card className="max-w-[350px]">
       <CardHeader>
@@ -77,18 +75,16 @@ const TaskCard = ({
         </form>
       </CardContent>
       <CardFooter className="flex justify-evenly">
-        <Suspense fallback={<LoaderMedium />}>
-          <TooltipDemo text="Ver Comentarios">
-            <Comments tareaInfo={tareaInfo} namet={titulo} />
-          </TooltipDemo>
+        <TooltipDemo text="Ver Comentarios">
+          <Comments tareaInfo={tareaInfo} namet={titulo} />
+        </TooltipDemo>
 
-          <TooltipDemo text="Asignar un usuario">
-            <DialogAsignUser taskInfo={tareaInfo} />
-          </TooltipDemo>
-          <TooltipDemo text="Editar tarea">
-            <EditTaskForm taskInfo={tareaInfo} />
-          </TooltipDemo>
-        </Suspense>
+        <TooltipDemo text="Asignar un usuario">
+          <DialogAsignUser taskInfo={tareaInfo} />
+        </TooltipDemo>
+        <TooltipDemo text="Editar tarea">
+          <EditTaskForm taskInfo={tareaInfo} />
+        </TooltipDemo>
       </CardFooter>
       <Separator className="my-3" />
       <CardFooter className="flex justify-between ">
