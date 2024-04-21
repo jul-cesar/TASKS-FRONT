@@ -1,4 +1,3 @@
-import LoaderMedium from "@/components/loaders/LoaderMedium";
 import { lazy, ReactNode, Suspense } from "react";
 
 const TasksPagesLayout = ({ children }: { children: ReactNode }) => {
