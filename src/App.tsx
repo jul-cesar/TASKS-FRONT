@@ -13,6 +13,7 @@ const Register = lazy(() => import("./pages/Register"));
 const AsignedPage = lazy(() => import("./pages/AsignedPage"));
 const TasksPage = lazy(() => import("./pages/TasksPage"));
 
+
 function App() {
   return (
     <Suspense
@@ -31,12 +32,12 @@ function App() {
               path={privateRoutes.ASIGNEDTASKS}
               element={<AsignedPage />}
             />
+            <Route path={publicRoutes.PROFILE} element={<Profile />} />
           </Route>
         </Route>
 
         <Route path={publicRoutes.LOGIN} element={<Login />} />
         <Route path={publicRoutes.REGISTER} element={<Register />} />
-        <Route path={publicRoutes.PROFILE} element={<Profile />} />
         <Route path="*" element={<>Not Found</>} />
       </Routes>
     </Suspense>
