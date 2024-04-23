@@ -1,6 +1,6 @@
 import AvatarUserProfile from "@/components/AvatarUserProfile";
 import InfoCard from "@/components/InfoCard";
-import { useGetUserInfo } from "@/hooks/taskQueries";
+import { useGetUserInfo } from "@/hooks/queries/userQueries/queries";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
 
 import { useEffect } from "react";

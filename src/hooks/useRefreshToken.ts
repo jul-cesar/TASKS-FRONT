@@ -1,4 +1,4 @@
-import { axiosIn } from "@/api/axios";
+import { axiosIn } from "@/api/axios/axios";
 import { Auth } from "@/context/auth";
 import { useContext } from "react";
 

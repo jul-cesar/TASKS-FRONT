@@ -13,7 +13,6 @@ const Register = lazy(() => import("./pages/Register"));
 const AsignedPage = lazy(() => import("./pages/AsignedPage"));
 const TasksPage = lazy(() => import("./pages/TasksPage"));
 
-
 function App() {
   return (
     <Suspense

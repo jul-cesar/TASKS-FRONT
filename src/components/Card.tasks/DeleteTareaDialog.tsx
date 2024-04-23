@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { task } from "@/models/Task";
 import { useState } from "react";
 import LoadingSmall from "../loaders/LoadingSmall";
-import { useDeleteTask } from "@/hooks/taskQueries";
+import { useDeleteTask } from "@/hooks/queries/taskQueries/queries";
 
 export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

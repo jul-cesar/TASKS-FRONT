@@ -1,6 +1,6 @@
 import CardSkeleton from "./loaders/CardSkeleton";
-import { useAsignedTask } from "@/hooks/taskQueries";
 import AsignedCard from "./Card.tasks/AsignedCard";
+import { useAsignedTask } from "@/hooks/queries/asignedTaskQueries/queries";
 
 const AsignedTasksList = () => {
   const { data: AsignsList, status } = useAsignedTask();
