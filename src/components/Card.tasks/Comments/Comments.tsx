@@ -28,9 +28,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "../../ui/textarea";
 import CommentsList from "./CommentsList";
 
-import { useCreateComment, useGetComments } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
 import React from "react";
+import {
+  useCreateComment,
+  useGetComments,
+} from "@/hooks/queries/commentsQueries/queries";
 
 type CommentsProps = {
   namet: string;
@@ -72,10 +75,7 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
   } = useGetComments(idTarea);
 
   const formScheme = z.object({
-    contenido: z
-      .string()
-      .min(4, { message: "minimo 4 caracteres" })
-      .max(200, { message: "Maximo 44 caracteres" }),
+    contenido: z.string().max(200, { message: "Maximo 44 caracteres" }),
   });
 
   const form = useForm<z.infer<typeof formScheme>>({

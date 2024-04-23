@@ -29,10 +29,10 @@ import { Input } from "../ui/input";
 import { SelectPrioridad } from "./forms.components/SelectPrioridad";
 import SelectEstado from "./forms.components/SelectEstado";
 import { DatePicker } from "./forms.components/DatePicker";
-import { useEditTask } from "@/hooks/taskQueries";
 import { Auth } from "@/context/auth";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import LoaderMedium from "../loaders/LoaderMedium";
+import { useEditTask } from "@/hooks/queries/taskQueries/queries";
 
 type EditTaskFormProps = {
   taskInfo: task;
@@ -241,7 +241,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
             </form>
           </Form>
         ) : (
-         <LoaderMedium/>
+          <LoaderMedium />
         )}
         <DialogFooter>
           {!isPending ? (

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Auth } from "@/context/auth";
-import { useLogIn } from "@/hooks/taskQueries";
+import { useLogIn } from "@/hooks/queries/authQueries/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 

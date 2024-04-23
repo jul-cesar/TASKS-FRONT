@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, Trash } from "lucide-react";
 import { comment } from "@/models/comment";
-import { useDeleteComment } from "@/hooks/taskQueries";
+import { useDeleteComment } from "@/hooks/queries/commentsQueries/queries";
 
 const CommentsOptions = ({ comentarioData }: { comentarioData: comment }) => {
   const { mutate } = useDeleteComment(comentarioData.id);

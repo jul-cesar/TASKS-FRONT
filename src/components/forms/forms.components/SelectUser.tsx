@@ -22,7 +22,8 @@ import {
 import { task } from "@/models/Task";
 import { user } from "@/models/User";
 import { Auth } from "@/context/auth";
-import { useEditTask, useGetAllUsers } from "@/hooks/taskQueries";
+import { useGetAllUsers } from "@/hooks/queries/userQueries/queries";
+import { useEditTask } from "@/hooks/queries/taskQueries/queries";
 
 type SelectUserProps = {
   setIsOpenDialog: React.Dispatch<SetStateAction<boolean>>;

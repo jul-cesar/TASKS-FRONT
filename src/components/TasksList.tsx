@@ -1,17 +1,17 @@
-import TaskCard from "./Card.tasks/TaskCard";
 import CardSkeleton from "./loaders/CardSkeleton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { useLocation } from "react-router-dom";
 import { Label } from "./ui/label";
-import { useMemo } from "react";
-import { useTasks } from "@/hooks/taskQueries";
+import { lazy, Suspense, useMemo } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useTasks } from "@/hooks/queries/taskQueries/queries";
+import LoaderMedium from "./loaders/LoaderMedium";
+
+const TaskCard = lazy(() => import("./Card.tasks/TaskCard"));
 
 const TasksList = () => {
   const { data: taskList, status } = useTasks();
-
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
@@ -56,20 +56,22 @@ const TasksList = () => {
         <Label>Crea una nueva tarea</Label>
       </div>
 
-      {filtered?.map((tarea) => (
-        <TaskCard
-          tareaInfo={tarea}
-          key={tarea.id}
-          createdAt={tarea.createdAt}
-          titulo={tarea.titulo}
-          descripcion={tarea.descripcion}
-          prioridad={tarea.prioridad}
-          fechaVencimiento={tarea.fechaVencimiento}
-          estado={tarea.estado}
-          owner={tarea.owner}
-          asignado={tarea.asignado}
-        />
-      ))}
+      <Suspense fallback={<span></span>}>
+        {filtered?.map((tarea) => (
+          <TaskCard
+            tareaInfo={tarea}
+            key={tarea.id}
+            createdAt={tarea.createdAt}
+            titulo={tarea.titulo}
+            descripcion={tarea.descripcion}
+            prioridad={tarea.prioridad}
+            fechaVencimiento={tarea.fechaVencimiento}
+            estado={tarea.estado}
+            owner={tarea.owner}
+            asignado={tarea.asignado}
+          />
+        ))}
+      </Suspense>
     </div>
   );
 };
