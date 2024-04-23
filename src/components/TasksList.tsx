@@ -6,7 +6,6 @@ import { Label } from "./ui/label";
 import { lazy, Suspense, useMemo } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useTasks } from "@/hooks/queries/taskQueries/queries";
-import LoaderMedium from "./loaders/LoaderMedium";
 
 const TaskCard = lazy(() => import("./Card.tasks/TaskCard"));
 
