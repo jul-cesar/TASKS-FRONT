@@ -6,6 +6,7 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "@/components/ui/button";
 import { publicRoutes } from "../models/routes";
 import { UiContext } from "@/context/ui";
+import { ProjectsMenu } from "./ProjectsMenu";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
@@ -39,7 +40,7 @@ const Navbar = () => {
                 ></path>
               </svg>
             </button>
-            <a className="flex ms-2 md:me-24">
+            <a className="flex ms-2 md:me-10">
               <div className="flex items-center justify-center ">
                 {" "}
                 {/* <img
@@ -55,6 +56,9 @@ const Navbar = () => {
               /> */}
               </div>
             </a>
+            <div>
+              <ProjectsMenu />
+            </div>
           </div>
           <div className="flex items-center">
             <div className="flex items-center ms-3 gap-2">

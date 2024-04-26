@@ -9,8 +9,8 @@ import { useTasks } from "@/hooks/queries/taskQueries/queries";
 
 const TaskCard = lazy(() => import("./Card.tasks/TaskCard"));
 
-const TasksList = () => {
-  const { data: taskList, status } = useTasks();
+const TasksList = ({ idTeam }: { idTeam: string }) => {
+  const { data: taskList, status } = useTasks(idTeam);
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
@@ -50,11 +50,12 @@ const TasksList = () => {
       className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 "
       ref={parent}
     >
-      <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
-        <CreateTaskForm />
-        <Label>Crea una nueva tarea</Label>
-      </div>
-
+      {!titleFilter && (
+        <div className="flex flex-col justify-center gap-y-8 items-center  flex-wrap sm:w-[340px]  w-[320px] ">
+          <CreateTaskForm />
+          <Label>Crea una nueva tarea</Label>
+        </div>
+      )}
       <Suspense fallback={<span></span>}>
         {filtered?.map((tarea) => (
           <TaskCard

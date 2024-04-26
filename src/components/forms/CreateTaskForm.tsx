@@ -29,11 +29,13 @@ import LoadingSmall from "../loaders/LoadingSmall";
 import { Auth } from "@/context/auth";
 import { Plus } from "lucide-react";
 import { useCreateTask } from "@/hooks/queries/taskQueries/queries";
+import { UiContext } from "@/context/ui";
 
 export function CreateTaskForm() {
   const [open, setOpen] = useState(false);
   const [, setDropdownOpen] = useState(false);
   const { currentUser } = useContext(Auth);
+  const { currentTeam } = useContext(UiContext);
   const formScheme = z.object({
     titulo: z
       .string()
@@ -79,6 +81,7 @@ export function CreateTaskForm() {
         prioridad: data.prioridad,
         estado: "pendiente",
         ownerId: currentUser.id,
+        teamId: currentTeam.id,
       });
       if (!isPending) {
         setOpen(!open);

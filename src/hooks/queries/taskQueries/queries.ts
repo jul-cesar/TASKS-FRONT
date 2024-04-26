@@ -1,17 +1,14 @@
 import useTaskRequest from "@/api/tasksRequests/tasks";
-import { Auth } from "@/context/auth";
 import { task } from "@/models/Task";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useContext } from "react";
 import { toast } from "sonner";
 
 const KEY: string = "tasks";
 
-export const useTasks = () => {
+export const useTasks = (id: string) => {
   const { getUserTasks } = useTaskRequest();
-  const { currentUser } = useContext(Auth);
-  const id = currentUser.id;
+
   return useQuery<task[], AxiosError>({
     queryKey: [KEY, id],
     queryFn: async (): Promise<task[]> => {

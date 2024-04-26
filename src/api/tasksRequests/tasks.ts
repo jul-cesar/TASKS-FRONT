@@ -30,7 +30,7 @@ const useTaskRequest = () => {
   const getUserTasks = async (id: string): Promise<task[] | undefined> => {
     try {
       const response: AxiosResponse<task[]> = await axiosInstance.get(
-        `/tarea/${id}`
+        `/tarea/team/${id}`
       );
       return response.data;
     } catch (error) {

@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         password,
       });
       if (response.data !== "INCORRECT PASSWORD") {
-        window.location.href = "/";
+        window.location.href = "/select";
       }
       setAuthTok(response.data);
     } catch (error: any) {
