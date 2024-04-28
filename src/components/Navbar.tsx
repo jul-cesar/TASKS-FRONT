@@ -6,13 +6,14 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "@/components/ui/button";
 import { publicRoutes } from "../models/routes";
 import { UiContext } from "@/context/ui";
+import { ProjectsMenu } from "./ProjectsMenu";
 
 const Navbar = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
   const { logOut } = useContext(Auth);
   const navigate = useNavigate();
   const { currentUser, authTok } = useContext(Auth);
-  const { setOpenSidebar, openSidebar } = useContext(UiContext);
+  const { setOpenSidebar, openSidebar} = useContext(UiContext);
   return (
     <nav className="fixed top-0 h-[10%] z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -39,7 +40,7 @@ const Navbar = () => {
                 ></path>
               </svg>
             </button>
-            <a className="flex ms-2 md:me-24">
+            <a className="flex ms-2 md:me-10">
               <div className="flex items-center justify-center ">
                 {" "}
                 {/* <img
@@ -55,6 +56,9 @@ const Navbar = () => {
               /> */}
               </div>
             </a>
+            <div>
+              <ProjectsMenu />
+            </div>
           </div>
           <div className="flex items-center">
             <div className="flex items-center ms-3 gap-2">

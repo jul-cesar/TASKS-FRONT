@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASEURL = "https://tasks-api-bxyq.onrender.com/";
+const BASEURL = "https://tasks-api-bxyq.onrender.com";
 
 export const axiosIn = axios.create({
   baseURL: BASEURL,

@@ -12,4 +12,5 @@ export interface task {
   asignadoId?: string;
   asignado?: user;
   owner?: user;
+  teamId?: string;
 }
