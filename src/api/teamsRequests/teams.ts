@@ -15,7 +15,20 @@ export const useTeamsRequest = () => {
       console.error(error);
     }
   };
+
+  const createTeam = async (data: Team): Promise<Team | undefined> => {
+    try {
+      const response: AxiosResponse<Team, Error> = await axiosInstance.post(
+        "/team",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return {
     getUserTeams,
+    createTeam,
   };
 };

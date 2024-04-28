@@ -20,24 +20,26 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckIcon, Search, TargetIcon } from "lucide-react";
+import { ArrowDown, CheckIcon, Search} from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useUserTeams } from "@/hooks/queries/teamsQueries/queries";
+import { UiContext } from "@/context/ui";
 
 export function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const { data } = useUserTeams();
+  const { currentTeam } = React.useContext(UiContext);
 
   if (isDesktop) {
     return (
       <Popover>
         <div className="flex gap-2 items-center justify-center ">
-          <Label className="text-center">Julio Cesar</Label>
+          <Label className="text-center text-base">{currentTeam.nombre}</Label>
           <PopoverTrigger asChild>
-            <Button variant={"outline"}>
-              <TargetIcon size={"20px"} />
+            <Button variant={"outline"} className="p-1 m-1">
+              <ArrowDown size={"20px"} />
             </Button>
           </PopoverTrigger>
         </div>
@@ -59,7 +61,7 @@ export function ProjectsMenu() {
               {data?.map((t) => (
                 <div className="flex justify-between items-center hover:bg-neutral-800 cursor-pointer rounded-md p-1 ">
                   <p className="">{t.nombre}</p>
-                  <CheckIcon size={19} />
+                 {currentTeam.nombre === t.nombre && <CheckIcon size={19} />}
                 </div>
               ))}
             </div>

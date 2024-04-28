@@ -70,7 +70,7 @@ const Sidebar = () => {
           <li>
             <a
               onClick={() => {
-                navigate("/");
+                navigate(`/${currentUser.nombre}/${localStorage.getItem("currentTeam")}`);
                 setOpenSidebar(!openSidebar);
               }}
               className={`flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white ${

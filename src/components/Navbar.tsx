@@ -13,7 +13,7 @@ const Navbar = () => {
   const { logOut } = useContext(Auth);
   const navigate = useNavigate();
   const { currentUser, authTok } = useContext(Auth);
-  const { setOpenSidebar, openSidebar } = useContext(UiContext);
+  const { setOpenSidebar, openSidebar} = useContext(UiContext);
   return (
     <nav className="fixed top-0 h-[10%] z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
+import CreateTeam from "@/components/forms/CreateTeam";
 
 export function SelectTeam() {
   const { data } = useUserTeams();
@@ -23,10 +24,9 @@ export function SelectTeam() {
   const navigate = useNavigate();
 
   return (
-    <section className="flex flex-col justify-center items-center space-y-10 p-4 my-auto ">
-      <h1 className="font-bold text-3xl">Select a team</h1>
-      <Command className="rounded-lg border shadow-md w-4/5">
-        <CommandInput placeholder="Search a team " />
+    <section className="flex flex-col justify-center items-center p-4 h-full ">
+      <Command className="rounded-lg border shadow-md w-4/5  ">
+        <CommandInput placeholder="Busca un team " />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Your teams">
@@ -34,6 +34,7 @@ export function SelectTeam() {
               <div
                 className="cursor-pointer"
                 onClick={() => {
+                  localStorage.setItem("currentTeam", t.id ?? "");
                   setCurrentTeam({
                     id: t.id ?? "",
                     nombre: t.nombre,
@@ -50,13 +51,16 @@ export function SelectTeam() {
               </div>
             ))}
           </CommandGroup>
+
           <CommandSeparator />
           <CommandGroup heading="Configuraciones">
-            <CommandItem>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              <span>Create new team</span>
-              <CommandShortcut>⌘P</CommandShortcut>
-            </CommandItem>
+            <CreateTeam>
+              <CommandItem>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                <span>Crear team</span>
+                <CommandShortcut>⌘P</CommandShortcut>
+              </CommandItem>
+            </CreateTeam>
           </CommandGroup>
         </CommandList>
       </Command>
