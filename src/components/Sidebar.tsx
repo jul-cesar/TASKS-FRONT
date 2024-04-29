@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { openSidebar, setOpenSidebar } = useContext(UiContext);
+  const { openSidebar, setOpenSidebar, currentTeam } = useContext(UiContext);
   const { currentUser, logOut } = useContext(Auth);
   const location = useLocation();
 
@@ -70,7 +70,7 @@ const Sidebar = () => {
           <li>
             <a
               onClick={() => {
-                navigate(`/${currentUser.nombre}/${localStorage.getItem("currentTeam")}`);
+                navigate(`/${currentUser.nombre}/${currentTeam.id}`);
                 setOpenSidebar(!openSidebar);
               }}
               className={`flex cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white ${

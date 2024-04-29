@@ -32,14 +32,15 @@ export function SelectTeam() {
           <CommandGroup heading="Your teams">
             {data?.map((t) => (
               <div
-                className="cursor-pointer"
+                className="cursor-pointer hover:bg-accent"
                 onClick={() => {
-                  localStorage.setItem("currentTeam", t.id ?? "");
+                  const teamData = JSON.stringify(t);
+                  localStorage.setItem("currentTeam", teamData);
                   setCurrentTeam({
-                    id: t.id ?? "",
+                    id: t.id || "",
                     nombre: t.nombre,
                     ownerId: t.ownerId,
-                    createdAt: t.createdAt ?? new Date(),
+                    createdAt: t.createdAt || new Date(),
                   });
                   navigate(`/${currentUser.nombre}/${t.id}`);
                 }}
@@ -58,7 +59,6 @@ export function SelectTeam() {
               <CommandItem>
                 <PlusCircle className="mr-2 h-4 w-4" />
                 <span>Crear team</span>
-                <CommandShortcut>⌘P</CommandShortcut>
               </CommandItem>
             </CreateTeam>
           </CommandGroup>

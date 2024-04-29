@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLogin from "./utils/PersistLogin";
 import { privateRoutes, publicRoutes } from "./models/routes";
 
-import { lazy, Suspense} from "react";
+import { lazy, Suspense } from "react";
 import LoaderMedium from "./components/loaders/LoaderMedium";
 import { SelectTeam } from "./pages/TeamSelectPage";
 

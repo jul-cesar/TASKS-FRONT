@@ -9,9 +9,10 @@ import { useTasks } from "@/hooks/queries/taskQueries/queries";
 
 const TaskCard = lazy(() => import("./Card.tasks/TaskCard"));
 
-const TasksList = ({ idTeam }: { idTeam: string }) => {
-  const { data: taskList, status } = useTasks(idTeam);
+const TasksList = () => {
   const location = useLocation();
+  const idTeam = location.pathname.split("/").pop();
+  const { data: taskList, status } = useTasks(idTeam ?? "");
 
   const queryParams = new URLSearchParams(location.search);
   const titleFilter = queryParams.get("q");

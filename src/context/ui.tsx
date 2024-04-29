@@ -3,6 +3,7 @@ import React, {
   createContext,
   ReactNode,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
 
@@ -50,6 +51,15 @@ export const UiContextProvider = ({ children }: { children: ReactNode }) => {
     myTasks: 0,
     asignedTasks: 0,
   });
+
+  useEffect(() => {
+    const storedTeam = localStorage.getItem("currentTeam");
+    if (storedTeam) {
+      const teamData = JSON.parse(storedTeam);
+      setCurrentTeam(teamData);
+    }
+  }, []);
+
   return (
     <UiContext.Provider
       value={{

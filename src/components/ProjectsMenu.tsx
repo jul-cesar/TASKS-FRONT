@@ -20,21 +20,23 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowDown, CheckIcon, Search} from "lucide-react";
+import { ArrowDown, CheckIcon, Search } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useUserTeams } from "@/hooks/queries/teamsQueries/queries";
 import { UiContext } from "@/context/ui";
+import { Link } from "react-router-dom";
 
 export function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+ 
 
   const { data } = useUserTeams();
-  const { currentTeam } = React.useContext(UiContext);
+  const { currentTeam, setCurrentTeam } = React.useContext(UiContext);
 
   if (isDesktop) {
     return (
-      <Popover>
+      <Popover open={open} onOpenChange={(open) => setOpen(open)}>
         <div className="flex gap-2 items-center justify-center ">
           <Label className="text-center text-base">{currentTeam.nombre}</Label>
           <PopoverTrigger asChild>
@@ -59,10 +61,26 @@ export function ProjectsMenu() {
             <div className="grid gap-2">
               <p className="text-neutral-500 text-sm">Teams</p>
               {data?.map((t) => (
-                <div className="flex justify-between items-center hover:bg-neutral-800 cursor-pointer rounded-md p-1 ">
-                  <p className="">{t.nombre}</p>
-                 {currentTeam.nombre === t.nombre && <CheckIcon size={19} />}
-                </div>
+                <Link to={`/${location.pathname.split("/")[1]}/${t.id}`}>
+                  <div
+                    onClick={() => {
+                      const teamData = JSON.stringify(t);
+                      localStorage.setItem("currentTeam", teamData);
+                      setCurrentTeam({
+                        id: t.id || "",
+                        nombre: t.nombre,
+                        ownerId: t.ownerId,
+                        createdAt: t.createdAt || new Date(),
+                      });
+                      setOpen(!open);
+                    }}
+                    key={t.id}
+                    className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                  >
+                    <p className="">{t.nombre}</p>
+                    {currentTeam.id === t.id && <CheckIcon size={19} />}
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
