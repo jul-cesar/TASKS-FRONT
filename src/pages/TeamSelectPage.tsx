@@ -36,7 +36,7 @@ export default function SelectTeam() {
                 className="cursor-pointer hover:bg-accent"
                 onClick={() => {
                   const teamData = JSON.stringify(t);
-                  localStorage.setItem("currentTeam", teamData);
+                  localStorage.setItem("currentTeamInfo", teamData);
                   setCurrentTeam({
                     id: t.id || "",
                     nombre: t.nombre,
