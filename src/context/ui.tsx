@@ -53,6 +53,7 @@ export const UiContextProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
+    localStorage.removeItem("currentTeam");
     const storedTeam = localStorage.getItem("currentTeamInfo");
     if (storedTeam) {
       const teamData = JSON.parse(storedTeam);

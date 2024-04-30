@@ -24,11 +24,12 @@ import { useUserTeams } from "@/hooks/queries/teamsQueries/queries";
 import { UiContext } from "@/context/ui";
 import { Link } from "react-router-dom";
 import { Team } from "@/models/teams";
+import { Auth } from "@/context/auth";
 
 export default function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-
+  const {currentUser} = React.useContext(Auth)
   const { data } = useUserTeams();
   const { currentTeam, setCurrentTeam } = React.useContext(UiContext);
 
@@ -59,7 +60,7 @@ export default function ProjectsMenu() {
             <div className="grid gap-2">
               <p className="text-neutral-500 text-sm">Teams</p>
               {data?.map((t) => (
-                <Link to={`/${location.pathname.split("/")[1]}/${t.id}`}>
+                <Link to={`/${currentUser.nombre}/${t.id}`}>
                   <div
                     onClick={() => {
                       const teamData = JSON.stringify(t);
