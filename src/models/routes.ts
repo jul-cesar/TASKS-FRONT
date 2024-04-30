@@ -1,6 +1,7 @@
 export const privateRoutes = {
-  TASKS: "/",
+  TASKS: `/:user/:teamid`,
   ASIGNEDTASKS: "/asigned-tasks",
+  
 };
 
 export const publicRoutes = {

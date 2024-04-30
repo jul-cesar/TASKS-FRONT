@@ -1,4 +1,4 @@
-import { Calendar, PlusCircle } from "lucide-react";
+import { Bolt, BrainCircuit, PlusCircle } from "lucide-react";
 
 import {
   Command,
@@ -8,7 +8,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { useUserTeams } from "@/hooks/queries/teamsQueries/queries";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +15,9 @@ import { useContext } from "react";
 import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
 import CreateTeam from "@/components/forms/CreateTeam";
+import Navbar from "@/components/Navbar";
 
-export function SelectTeam() {
+export default function SelectTeam() {
   const { data } = useUserTeams();
   const { currentUser } = useContext(Auth);
   const { setCurrentTeam } = useContext(UiContext);
@@ -25,11 +25,12 @@ export function SelectTeam() {
 
   return (
     <section className="flex flex-col justify-center items-center p-4 h-full ">
-      <Command className="rounded-lg border shadow-md w-4/5  ">
+      <Navbar />
+      <Command className="rounded-lg border shadow-md sm:w-4/5 font-semibold leading-none tracking-tight sm:mt-16 mt-20 ">
         <CommandInput placeholder="Busca un team " />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Your teams">
+          <CommandGroup heading="Tus teams">
             {data?.map((t) => (
               <div
                 className="cursor-pointer hover:bg-accent"
@@ -46,7 +47,7 @@ export function SelectTeam() {
                 }}
               >
                 <CommandItem>
-                  <Calendar className="mr-2 h-4 w-4" />
+                  <BrainCircuit className="mr-2 h-4 w-4" />
                   <span>{t.nombre}</span>
                 </CommandItem>
               </div>
@@ -61,6 +62,10 @@ export function SelectTeam() {
                 <span>Crear team</span>
               </CommandItem>
             </CreateTeam>
+            <CommandItem>
+              <Bolt className="mr-2 h-4 w-4" />
+              <span>Gestionar teams</span>
+            </CommandItem>
           </CommandGroup>
         </CommandList>
       </Command>

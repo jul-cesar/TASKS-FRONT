@@ -1,9 +1,10 @@
 import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
 import { publicRoutes } from "@/models/routes";
+import { DashboardIcon } from "@radix-ui/react-icons";
 import { BookOpenCheck, ListTodo, LogOut, UserCircle } from "lucide-react";
 import { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -85,13 +86,13 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            {/* <a
-              href="#"
+            <Link
+              to="/"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
-              <Handshake />
-              <span className="flex-1 ms-3 whitespace-nowrap">Teams</span>
-            </a> */}
+              <DashboardIcon />
+              <span className="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
+            </Link>
           </li>
           {/* <li>
             <a
