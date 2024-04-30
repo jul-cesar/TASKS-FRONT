@@ -4,15 +4,15 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLogin from "./utils/PersistLogin";
 import { privateRoutes, publicRoutes } from "./models/routes";
 
-import { lazy, Suspense} from "react";
+import { lazy, Suspense } from "react";
 import LoaderMedium from "./components/loaders/LoaderMedium";
-import { SelectTeam } from "./pages/TeamSelectPage";
 
 const Login = lazy(() => import("./pages/LogIn"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
 const AsignedPage = lazy(() => import("./pages/AsignedPage"));
 const TasksPage = lazy(() => import("./pages/TasksPage"));
+const SelectTeam = lazy(() => import("./pages/TeamSelectPage"));
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route element={<PersistLogin />}>
           <Route element={<ProtectedRoute />}>
-            <Route path={`/:user/:teamid`} element={<TasksPage />} />
+            <Route path={privateRoutes.TASKS} element={<TasksPage />} />
             <Route
               path={privateRoutes.ASIGNEDTASKS}
               element={<AsignedPage />}

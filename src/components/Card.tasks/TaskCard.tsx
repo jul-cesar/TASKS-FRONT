@@ -12,7 +12,7 @@ import { formatCustomDate } from "@/utils/formatCustomDate";
 import { BadgeComponent } from "./BadgeComponent";
 import { format } from "date-fns";
 import { Separator } from "../ui/separator";
-import { Clock, User } from "lucide-react";
+import { Clock, TimerOffIcon, User } from "lucide-react";
 import { Label } from "../ui/label";
 import { TooltipDemo } from "./TooltipDemo";
 
@@ -35,13 +35,31 @@ const TaskCard = ({
   fechaVencimiento,
   tareaInfo,
 }: TaskCardProps) => {
+  const fechaVencimientoDate = new Date(fechaVencimiento);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  fechaVencimientoDate.setHours(0, 0, 0, 0);
+
+  const badgeVariant =
+    fechaVencimientoDate < today ? "destructive" : "secondary";
+
   return (
     <Card className="max-w-[350px]">
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between">
             {titulo}
-            <CardOptions tareaInfo={tareaInfo} />
+            <div className="flex items-center justify-center gap-2">
+              {badgeVariant === "destructive" && (
+                <TooltipDemo text="Esta tarea expiró">
+                  {" "}
+                  <TimerOffIcon />{" "}
+                </TooltipDemo>
+              )}
+              <CardOptions tareaInfo={tareaInfo} />
+            </div>
           </div>
         </CardTitle>
 
@@ -66,7 +84,7 @@ const TaskCard = ({
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col items-center space-y-2">
               <Label>Fecha de vencimiento: </Label>
-              <BadgeComponent variant="secondary">
+              <BadgeComponent variant={badgeVariant}>
                 {format(fechaVencimiento, "yyyy-MM-dd")} (
                 {formatCustomDate(fechaVencimiento)})
               </BadgeComponent>

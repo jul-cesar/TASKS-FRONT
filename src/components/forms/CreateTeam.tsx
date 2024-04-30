@@ -20,12 +20,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateTeam } from "@/hooks/queries/teamsQueries/queries";
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { Auth } from "@/context/auth";
 
 const CreateTeam = ({ children }: { children: ReactNode }) => {
-  const { mutate } = useCreateTeam();
+  const { mutate, isPending } = useCreateTeam();
   const { currentUser } = useContext(Auth);
+  const [open, setOpen] = useState(false);
+
   const formScheme = z.object({
     nombre: z.string().min(3, { message: "Minimo 3 caracteres" }),
   });
@@ -36,12 +38,15 @@ const CreateTeam = ({ children }: { children: ReactNode }) => {
       nombre: data.nombre,
       ownerId: currentUser.id,
     });
+    if (!isPending) {
+      setOpen(!open);
+    }
   };
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
   });
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogTrigger className="w-full">{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>

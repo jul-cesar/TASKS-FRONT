@@ -32,6 +32,15 @@ const AsignedCard = ({
   fechaVencimiento,
   tareaInfo,
 }: TaskCardProps) => {
+  const fechaVencimientoDate = new Date(fechaVencimiento);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  fechaVencimientoDate.setHours(0, 0, 0, 0);
+
+  const badgeVariant =
+    fechaVencimientoDate < today ? "destructive" : "secondary";
   return (
     <Card className="max-w-[350px]">
       <CardHeader>
@@ -60,7 +69,7 @@ const AsignedCard = ({
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col items-center space-y-2">
               <Label>Fecha de vencimiento: </Label>
-              <BadgeComponent variant="secondary">
+              <BadgeComponent variant={badgeVariant}>
                 {format(fechaVencimiento, "yyyy-MM-dd")} (
                 {formatCustomDate(fechaVencimiento)})
               </BadgeComponent>
