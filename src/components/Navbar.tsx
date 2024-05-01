@@ -1,6 +1,6 @@
 import { Auth } from "@/context/auth";
 import { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AvatarDemo } from "./Avatar";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser, authTok } = useContext(Auth);
   const location = useLocation();
-  const { setOpenSidebar, openSidebar } = useContext(UiContext);
+  const { setOpenSidebar, openSidebar, currentTeam } = useContext(UiContext);
+
+  const encodedName = encodeURIComponent(currentUser.nombre);
+  const matchPath = `/${encodedName}/${currentTeam.id}`;
+
+
   return (
     <nav className="fixed top-0 h-[10%] z-50 w-screen sm:px-4 px-1 bg-white border-b border-gray-200 dark:border-border dark:bg-background">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -49,9 +54,12 @@ const Navbar = () => {
                 alt="Company Logo"
                 className="max-h-14 w-20 sm:h-16 md:h-20 lg:h-20 object-cover"
               /> */}
-                <p className="font-bold text-xl underline sm:block hidden">
+                <Link
+                  to={"/"}
+                  className="font-bold text-xl underline sm:block hidden"
+                >
                   tâche
-                </p>
+                </Link>
                 {/* <img
                 src={textlogo}
                 alt="Company Text Logo"
@@ -60,7 +68,7 @@ const Navbar = () => {
               </div>
             </a>
             <div className="">
-              {location.pathname !== "/" && <ProjectsMenu />}
+              {location.pathname === matchPath && <ProjectsMenu />}
             </div>
           </div>
           <div className="flex items-center">

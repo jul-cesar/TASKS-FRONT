@@ -29,8 +29,6 @@ import { Auth } from "@/context/auth";
 export default function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const {currentUser} = React.useContext(Auth)
-  const { data } = useUserTeams();
   const { currentTeam, setCurrentTeam } = React.useContext(UiContext);
 
   if (isDesktop) {
@@ -46,43 +44,11 @@ export default function ProjectsMenu() {
         </div>
 
         <PopoverContent className="w-64">
-          <div className="grid gap-3 ">
-            <div className="flex items-center justify-center gap-3">
-              <Search size={"20"} />
-              <Input
-                type="search"
-                placeholder="Search for a team "
-                className="border-hidden "
-              />
-            </div>
-            <Separator />
-
-            <div className="grid gap-2">
-              <p className="text-neutral-500 text-sm">Teams</p>
-              {data?.map((t) => (
-                <Link to={`/${currentUser.nombre}/${t.id}`}>
-                  <div
-                    onClick={() => {
-                      const teamData = JSON.stringify(t);
-                      localStorage.setItem("currentTeam", teamData);
-                      setCurrentTeam({
-                        id: t.id || "",
-                        nombre: t.nombre,
-                        ownerId: t.ownerId,
-                        createdAt: t.createdAt || new Date(),
-                      });
-                      setOpen(!open);
-                    }}
-                    key={t.id}
-                    className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-                  >
-                    <p className="">{t.nombre}</p>
-                    {currentTeam.id === t.id && <CheckIcon size={19} />}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
+          <ProfileForm
+            setCurrentTeam={setCurrentTeam}
+            setOpen={setOpen}
+            currentTeam={currentTeam}
+          />
         </PopoverContent>
       </Popover>
     );
@@ -103,7 +69,6 @@ export default function ProjectsMenu() {
           <DrawerTitle>Cambia de team con un click!</DrawerTitle>
         </DrawerHeader>
         <ProfileForm
-          data={data ?? []}
           setCurrentTeam={setCurrentTeam}
           setOpen={setOpen}
           currentTeam={currentTeam}
@@ -119,12 +84,10 @@ export default function ProjectsMenu() {
 }
 
 function ProfileForm({
-  data,
   setCurrentTeam,
   currentTeam,
   setOpen,
 }: {
-  data: Team[];
   setCurrentTeam: React.Dispatch<
     React.SetStateAction<{
       id: string;
@@ -136,8 +99,11 @@ function ProfileForm({
   currentTeam: Team;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { currentUser } = React.useContext(Auth);
+  const { data } = useUserTeams();
+
   return (
-    <div className="grid gap-3 p-4 align-middle">
+    <div className="grid gap-3 p-4 sm:p-4 lg:p-0 ">
       <div className="flex items-center justify-center gap-3">
         <Search size={"20"} />
         <Input
@@ -148,10 +114,10 @@ function ProfileForm({
       </div>
       <Separator />
 
-      <div className="grid gap-2">
+      <ul className="grid gap-2 max-h-[500px] sm:max-h-[300px] overflow-y-auto ">
         <p className="text-neutral-500 text-sm">Teams</p>
         {data?.map((t) => (
-          <Link to={`/${location.pathname.split("/")[1]}/${t.id}`}>
+          <Link to={`/${currentUser.nombre}/${t.id}`}>
             <div
               onClick={() => {
                 const teamData = JSON.stringify(t);
@@ -167,12 +133,12 @@ function ProfileForm({
               key={t.id}
               className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
             >
-              <p className="">{t.nombre}</p>
+              <li className="">{t.nombre}</li>
               {currentTeam.id === t.id && <CheckIcon size={19} />}
             </div>
           </Link>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
