@@ -3,14 +3,14 @@ import LoaderMedium from "@/components/loaders/LoaderMedium";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useGetTeamMembers } from "@/hooks/queries/teamsQueries/queries";
+import { useGetTeamInfo } from "@/hooks/queries/teamsQueries/queries";
 import { Trash2Icon } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const TeamConfig = () => {
   const location = useLocation();
   const idTeam = location.pathname.split("/").pop();
-  const { data: members, isLoading } = useGetTeamMembers(idTeam || "");
+  const { data: members, isLoading } = useGetTeamInfo(idTeam || "");
 
   if (isLoading) {
     return (
@@ -23,7 +23,7 @@ const TeamConfig = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-2xl mx-auto px-4 sm:mt-20 mt-10">
+      <div className="max-w-2xl mx-auto  mt-20 flex item flex-col p-6 justify-center">
         <div className="items-start justify-between sm:flex">
           <div>
             <h4 className=" text-xl font-semibold">Miembros del team</h4>
@@ -53,7 +53,23 @@ const TeamConfig = () => {
           </a>
         </div>
         <ul className="mt-7 divide-y">
-          {members?.map((item, idx) => (
+          <li className="py-5 flex items-start justify-between">
+            <div className="flex gap-3">
+              <AvatarMember
+                src={members?.owner.photoURL || ""}
+                nombre={members?.owner.nombre || ""}
+              />
+              <div>
+                <span className="block text-sm  font-semibold">
+                  {members?.owner.nombre}
+                </span>
+                <span className="block text-sm ">{members?.owner.email}</span>
+                <span className="block text-sm font-bold ">Admin</span>
+              </div>
+            </div>
+            <Trash2Icon className="hover:text-red-500 hover:scale-125" />
+          </li>
+          {members?.integrantes?.map((item, idx) => (
             <li key={idx} className="py-5 flex items-start justify-between">
               <div className="flex gap-3">
                 <AvatarMember src={item.photoURL || ""} nombre={item.nombre} />

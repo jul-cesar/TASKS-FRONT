@@ -19,6 +19,8 @@ import { TooltipDemo } from "./TooltipDemo";
 import Comments from "./Comments/Comments";
 import DialogAsignUser from "./DialogAsignUser";
 import EditTaskForm from "../forms/EditTaskForm";
+import EstadoBadge from "./EstadoBadge";
+import PrioridadBadge from "./PrioridadBadge";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;
@@ -49,33 +51,33 @@ const TaskCard = ({
     <Card className="max-w-[350px]">
       <CardHeader>
         <CardTitle>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             {titulo}
-            <div className="flex items-center justify-center gap-2">
-              {badgeVariant === "destructive" && (
-                <TooltipDemo text="Esta tarea expiró">
-                  {" "}
-                  <TimerOffIcon />{" "}
-                </TooltipDemo>
-              )}
-              <CardOptions tareaInfo={tareaInfo} />
-            </div>
+            {badgeVariant === "destructive" && (
+              <TooltipDemo text="Esta tarea expiró">
+                {" "}
+                <TimerOffIcon />{" "}
+              </TooltipDemo>
+            )}
+            {asignado && (
+              <CardDescription className="font-semibold underline">
+                Asignada a: {asignado.nombre}
+              </CardDescription>
+            )}
+            <CardOptions tareaInfo={tareaInfo} />
           </div>
         </CardTitle>
 
-        {asignado && (
-          <CardDescription>Asignada a: {asignado.nombre}</CardDescription>
-        )}
         <CardDescription>{descripcion}</CardDescription>
       </CardHeader>
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
           <Label>Estado: </Label>
-          <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
+          <EstadoBadge estado={estado} />
         </div>
         <div className="p-2">
           <Label>Prioridad: </Label>
-          <BadgeComponent>{prioridad?.toUpperCase()}</BadgeComponent>
+          <PrioridadBadge prioridad={prioridad} />
         </div>
       </div>
 
