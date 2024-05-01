@@ -13,7 +13,8 @@ const Register = lazy(() => import("./pages/Register"));
 const AsignedPage = lazy(() => import("./pages/AsignedPage"));
 const TasksPage = lazy(() => import("./pages/TasksPage"));
 const SelectTeam = lazy(() => import("./pages/TeamSelectPage"));
-
+const TeamConfig = lazy(() => import("./pages/TeamConfig"));
+const Error404 = lazy(() => import("./pages/404"));
 function App() {
   return (
     <Suspense
@@ -34,13 +35,14 @@ function App() {
             />
             <Route path={"/"} element={<SelectTeam />} />
 
-            <Route path={publicRoutes.PROFILE} element={<Profile />} />
+            <Route path={privateRoutes.PROFILE} element={<Profile />} />
+            <Route path={privateRoutes.TEAMCONF} element={<TeamConfig />} />
           </Route>
         </Route>
 
         <Route path={publicRoutes.LOGIN} element={<Login />} />
         <Route path={publicRoutes.REGISTER} element={<Register />} />
-        <Route path="*" element={<>Not Found</>} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </Suspense>
   );

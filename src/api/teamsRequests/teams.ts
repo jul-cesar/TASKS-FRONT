@@ -1,5 +1,6 @@
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { Team } from "@/models/teams";
+import { user } from "@/models/User";
 import { AxiosResponse } from "axios";
 
 export const useTeamsRequest = () => {
@@ -27,8 +28,22 @@ export const useTeamsRequest = () => {
       console.error(error);
     }
   };
+
+  const getTeamMembers = async (
+    idTeam: string
+  ): Promise<user[] | undefined> => {
+    try {
+      const response: AxiosResponse<user[], Error> = await axiosInstance.get(
+        `/team?id=${idTeam}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return {
     getUserTeams,
     createTeam,
+    getTeamMembers,
   };
 };
