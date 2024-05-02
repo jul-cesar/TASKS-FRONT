@@ -1,8 +1,8 @@
 import { lazy, ReactNode, Suspense } from "react";
 
 const TasksPagesLayout = ({ children }: { children: ReactNode }) => {
-  const Navbar = lazy(() => import("@/components/Navbar"));
-  const Sidebar = lazy(() => import("@/components/Sidebar"));
+  const Navbar = lazy(() => import("@/components/Navbar/Navbar"));
+  const Sidebar = lazy(() => import("@/components/Sidebar/Sidebar"));
 
   return (
     <Suspense fallback={<span></span>}>

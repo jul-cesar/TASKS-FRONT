@@ -25,6 +25,7 @@ import { UiContext } from "@/context/ui";
 import { Link } from "react-router-dom";
 import { Team } from "@/models/teams";
 import { Auth } from "@/context/auth";
+import LoadingSmall from "./loaders/LoadingSmall";
 
 export default function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);
@@ -100,7 +101,7 @@ function ProfileForm({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { currentUser } = React.useContext(Auth);
-  const { data } = useUserTeams();
+  const { data, isLoading } = useUserTeams();
 
   return (
     <div className="grid gap-3 p-4 sm:p-4 lg:p-0 ">
@@ -114,31 +115,37 @@ function ProfileForm({
       </div>
       <Separator />
 
-      <ul className="grid gap-2 max-h-[500px] sm:max-h-[300px] overflow-y-auto ">
-        <p className="text-neutral-500 text-sm">Teams</p>
-        {data?.map((t) => (
-          <Link to={`/${currentUser.nombre}/${t.id}`}>
-            <div
-              onClick={() => {
-                const teamData = JSON.stringify(t);
-                localStorage.setItem("currentTeam", teamData);
-                setCurrentTeam({
-                  id: t.id || "",
-                  nombre: t.nombre,
-                  ownerId: t.ownerId,
-                  createdAt: t.createdAt || new Date(),
-                });
-                setOpen(!open);
-              }}
-              key={t.id}
-              className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-            >
-              <li className="">{t.nombre}</li>
-              {currentTeam.id === t.id && <CheckIcon size={19} />}
-            </div>
-          </Link>
-        ))}
-      </ul>
+      {!isLoading ? (
+        <ul className="grid gap-2 max-h-[500px] sm:max-h-[300px] overflow-y-auto ">
+          <p className="text-neutral-500 text-sm">Teams</p>
+          {data?.map((t) => (
+            <Link to={`/${currentUser.nombre}/${t.id}`}>
+              <div
+                onClick={() => {
+                  const teamData = JSON.stringify(t);
+                  localStorage.setItem("currentTeamInfo", teamData);
+                  setCurrentTeam({
+                    id: t.id || "",
+                    nombre: t.nombre,
+                    ownerId: t.ownerId,
+                    createdAt: t.createdAt || new Date(),
+                  });
+                  setOpen(!open);
+                }}
+                key={t.id}
+                className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              >
+                <li className="">{t.nombre}</li>
+                {currentTeam.id === t.id && <CheckIcon size={19} />}
+              </div>
+            </Link>
+          ))}
+        </ul>
+      ) : (
+        <div className="flex items-center justify-center h-full">
+         <LoadingSmall />  
+         </div>
+      )}
     </div>
   );
 }

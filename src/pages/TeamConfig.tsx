@@ -1,6 +1,6 @@
 import { AvatarMember } from "@/components/AvatarMember";
 import LoaderMedium from "@/components/loaders/LoaderMedium";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useGetTeamInfo } from "@/hooks/queries/teamsQueries/queries";
@@ -31,10 +31,7 @@ const TeamConfig = () => {
               Agrega o elimina miembros a tu equipo.
             </p>
           </div>
-          <a
-            href="javascript:void(0)"
-            className="inline-flex items-center justify-center gap-1 py-2 px-3 mt-4 font-medium text-sm text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg sm:mt-0"
-          >
+          <a className="inline-flex items-center justify-center gap-1 py-2 px-3 mt-4 font-medium text-sm text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg sm:mt-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -64,7 +61,7 @@ const TeamConfig = () => {
                   {members?.owner.nombre}
                 </span>
                 <span className="block text-sm ">{members?.owner.email}</span>
-                <span className="block text-sm font-bold ">Admin</span>
+                <span className="block text-sm font-bold ">Creador</span>
               </div>
             </div>
             <Trash2Icon className="hover:text-red-500 hover:scale-125" />

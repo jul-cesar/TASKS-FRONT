@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { Auth } from "@/context/auth";
 import { UiContext } from "@/context/ui";
 import CreateTeam from "@/components/forms/CreateTeam";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import { ManageTeam } from "@/components/ManageTeams";
 import LoaderMedium from "@/components/loaders/LoaderMedium";
 
