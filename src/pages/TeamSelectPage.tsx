@@ -50,7 +50,7 @@ export default function SelectTeam() {
                   localStorage.setItem("currentTeamInfo", teamData);
                   setCurrentTeam({
                     id: t.id || "",
-                    nombre: t.name,
+                    name: t.name,
                     ownerId: t.ownerId,
                     createdAt: t.createdAt || new Date(),
                   });

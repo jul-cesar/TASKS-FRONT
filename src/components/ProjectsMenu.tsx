@@ -92,7 +92,7 @@ function ProfileForm({
   setCurrentTeam: React.Dispatch<
     React.SetStateAction<{
       id: string;
-      nombre: string;
+      name: string;
       ownerId: string;
       createdAt: Date;
     }>
@@ -126,7 +126,7 @@ function ProfileForm({
                   localStorage.setItem("currentTeamInfo", teamData);
                   setCurrentTeam({
                     id: t.id || "",
-                    nombre: t.name,
+                    name: t.name,
                     ownerId: t.ownerId,
                     createdAt: t.createdAt || new Date(),
                   });
