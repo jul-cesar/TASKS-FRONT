@@ -29,15 +29,15 @@ const CommentsList = ({
             <div className="flex flex-col w-[210px] max-w-[720px] sm:w-[720px] leading-1.5 p-4 m-2 border-gray-200  rounded-e-xl rounded-es-xl bg-primary">
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
                 <span className="text-sm font-semibold text-background">
-                  {comentario.user.nombre}
+                  {comentario.user.name}
                 </span>
                 <span className="text-xs font-normal text-gray-400 ">
                   {" "}
-                  {formatCustomDate(comentario.fecha)}
+                  {formatCustomDate(comentario.createdAt)}
                 </span>
               </div>
               <p className="text-sm font-normal py-2.5 text-background max-w-[720px]  truncate">
-                {comentario.contenido}
+                {comentario.content}
               </p>
               <span className="text-sm font-normal text-gray-500 dark:text-gray-400"></span>
             </div>
@@ -48,7 +48,7 @@ const CommentsList = ({
         ))
       ) : (
         <div className="flex justify-center items-center">
-        <LoaderMedium />
+          <LoaderMedium />
         </div>
       )}
     </div>

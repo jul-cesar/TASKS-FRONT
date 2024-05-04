@@ -26,7 +26,7 @@ export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Estas seguro que deseas eliminar "{tareaInfo.titulo}"
+            Estas seguro que deseas eliminar "{tareaInfo.title}"
           </DialogTitle>
           <DialogDescription>
             Por favor, tenga en cuenta que los comentarios realizados en esta

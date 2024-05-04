@@ -75,11 +75,11 @@ export function CreateTaskForm() {
   ) => {
     try {
       mutate({
-        titulo: data.titulo,
-        descripcion: data.descripcion,
-        fechaVencimiento: data.fechaVencimiento,
-        prioridad: data.prioridad,
-        estado: "pendiente",
+        title: data.titulo,
+        description: data.descripcion,
+        expiringDate: data.fechaVencimiento,
+        priority: data.prioridad,
+        state: "pendiente",
         ownerId: currentUser.id,
         teamId: currentTeam.id,
       });

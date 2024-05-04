@@ -18,7 +18,7 @@ export const useLogIn = () => {
 };
 
 type registerData = {
-  nombre: string;
+  name: string;
   email: string;
   password: string;
 };
@@ -27,7 +27,7 @@ export const useRegister = () => {
   const { registerUser } = useContext(Auth);
   return useMutation({
     mutationFn: async (data: registerData) => {
-      await registerUser(data.nombre, data.email, data.password);
+      await registerUser(data.name, data.email, data.password);
     },
   });
 };

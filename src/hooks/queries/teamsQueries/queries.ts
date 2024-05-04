@@ -1,5 +1,6 @@
 import { useTeamsRequest } from "@/api/teamsRequests/teams";
 import { Auth } from "@/context/auth";
+import { task } from "@/models/Task";
 import { TeamInfo } from "@/models/teamInfo";
 import { Team } from "@/models/teams";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,6 +9,23 @@ import { useContext } from "react";
 import { toast } from "sonner";
 
 const KEY = "teams";
+
+export const useTeamTasks = (id: string) => {
+  const { getTeamTasks } = useTeamsRequest();
+
+  return useQuery<task[], AxiosError>({
+    queryKey: ["tasks", id],
+    queryFn: async (): Promise<task[]> => {
+      const data = await getTeamTasks(id);
+      if (!data) {
+        throw new Error("Hubo un error al traer las tareas");
+      }
+      return data;
+    },
+
+    enabled: !!id,
+  });
+};
 
 export const useUserTeams = () => {
   const { currentUser } = useContext(Auth);

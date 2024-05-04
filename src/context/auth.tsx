@@ -28,7 +28,7 @@ type AuthContextType = {
   };
   logOut: () => Promise<void>;
   registerUser: (
-    nombre: string,
+    name: string,
     email: string,
     password: string
   ) => Promise<void>;
@@ -77,13 +77,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const registerUser = async (
-    nombre: string,
+    name: string,
     email: string,
     password: string
   ) => {
     try {
       const response = await axiosInstance.post("/auth/register", {
-        nombre,
+        name,
         password,
         email,
       });

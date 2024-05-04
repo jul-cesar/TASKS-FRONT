@@ -16,7 +16,7 @@ export function AvatarComments({ src, author }: AvatarCommentsProps) {
     return (
         <Avatar>
             <AvatarImage src={src} alt="userprofile" />
-            <AvatarFallback>{author.nombre?.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{author.name?.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
     )
 }

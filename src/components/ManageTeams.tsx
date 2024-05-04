@@ -74,10 +74,10 @@ function ProfileForm({ data }: { data: Team[] | undefined }) {
       {data?.map((item) => (
         <li key={item.id} className="py-5 flex items-start justify-between">
           <div className="flex gap-3">
-            <AvatarMember nombre={item.nombre} />
+            <AvatarMember nombre={item.name} />
             <div>
               <span className="block text-sm  font-semibold">
-                {item.nombre}
+                {item.name}
               </span>
               <span className="block text-sm ">
                 Creado: {format(item.createdAt ?? new Date(), "yyyy-MM-dd")}

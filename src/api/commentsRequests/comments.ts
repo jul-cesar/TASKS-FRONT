@@ -16,7 +16,7 @@ const useCommentsRequests = () => {
   }): Promise<comment | undefined> => {
     try {
       const response: AxiosResponse<comment, Error> = await axiosInstance.post(
-        "/comentario",
+        "/comment",
         {
           contenido,
           authorId,
@@ -34,7 +34,7 @@ const useCommentsRequests = () => {
   ): Promise<comment | undefined> => {
     try {
       const response: AxiosResponse<comment, Error> =
-        await axiosInstance.delete(`/comentario/${idTarea}`);
+        await axiosInstance.delete(`/comment/${idTarea}`);
       return response.data;
     } catch (error: any) {
       console.error(error.message);
@@ -46,7 +46,7 @@ const useCommentsRequests = () => {
   ): Promise<comment[] | undefined> => {
     try {
       const response: AxiosResponse<comment[]> = await axiosInstance.get(
-        `/comentario/${idTask}`
+        `/comment/${idTask}`
       );
       return response.data;
     } catch (error: any) {

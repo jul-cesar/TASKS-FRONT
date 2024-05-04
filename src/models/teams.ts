@@ -1,6 +1,6 @@
 export interface Team {
   id?: string;
-  nombre: string;
+  name: string;
   ownerId: string;
   createdAt?: Date;
 }

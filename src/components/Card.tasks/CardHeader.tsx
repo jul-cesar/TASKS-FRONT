@@ -44,7 +44,7 @@ const CardHeaderComponent = ({
       </CardTitle>
       {asignado && (
         <CardDescription className="font-semibold underline">
-          Asignada a: {asignado.nombre}
+          Asignada a: {asignado.name}
         </CardDescription>
       )}
       <CardDescription>{descripcion}</CardDescription>

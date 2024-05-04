@@ -15,42 +15,42 @@ interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
 }
 
 const TaskCard = ({
-  titulo,
-  asignado,
-  descripcion,
-  estado,
-  prioridad,
+  title,
+  asigned,
+  description,
+  state,
+  priority,
   createdAt,
   owner,
-  fechaVencimiento,
+  expiringDate,
   tareaInfo,
 }: TaskCardProps) => {
   return (
     <Card className="max-w-[350px]">
       <CardHeaderComponent
-        fechaVencimiento={fechaVencimiento}
-        asignado={asignado}
-        descripcion={descripcion}
+        fechaVencimiento={expiringDate}
+        asignado={asigned}
+        descripcion={description}
         tareaInfo={tareaInfo}
-        titulo={titulo}
+        titulo={title}
       />
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
           <Label>Estado: </Label>
-          <EstadoBadge estado={estado} />
+          <EstadoBadge estado={state} />
         </div>
         <div className="p-2">
           <Label>Prioridad: </Label>
-          <PrioridadBadge prioridad={prioridad} />
+          <PrioridadBadge prioridad={priority} />
         </div>
       </div>
 
-      <CardContentComponent fechaVencimiento={fechaVencimiento} />
+      <CardContentComponent fechaVencimiento={expiringDate} />
       <CardFooterComponent
         createdAt={createdAt}
         owner={owner}
         tareaInfo={tareaInfo}
-        titulo={titulo}
+        titulo={title}
       />
     </Card>
   );

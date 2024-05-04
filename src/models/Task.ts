@@ -2,15 +2,15 @@ import { user } from "./User";
 
 export interface task {
   id: string;
-  titulo: string;
-  descripcion: string;
-  estado: string;
-  prioridad: string;
-  fechaVencimiento: string;
+  title: string;
+  description: string;
+  state: string;
+  priority: string;
+  expiringDate: string;
   ownerId: string;
   createdAt: Date;
-  asignadoId?: string;
-  asignado?: user;
+  asignedId?: string;
+  asigned?: user;
   owner?: user;
   teamId?: string;
 }

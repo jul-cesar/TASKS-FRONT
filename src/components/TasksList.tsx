@@ -3,16 +3,16 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { useLocation } from "react-router-dom";
 import { Label } from "./ui/label";
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, useMemo } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useTasks } from "@/hooks/queries/taskQueries/queries";
+import { useTeamTasks } from "@/hooks/queries/teamsQueries/queries";
 
 const TaskCard = lazy(() => import("./Card.tasks/TaskCard"));
 
 const TasksList = () => {
   const location = useLocation();
   const idTeam = location.pathname.split("/").pop();
-  const { data: taskList, status } = useTasks(idTeam ?? "");
+  const { data: taskList, status } = useTeamTasks(idTeam ?? "");
 
   const queryParams = new URLSearchParams(location.search);
   const titleFilter = queryParams.get("q");
@@ -21,7 +21,7 @@ const TasksList = () => {
   const filtered = useMemo(() => {
     return debounceValue
       ? taskList?.filter((x) =>
-          x.titulo
+          x.title
             .toLocaleLowerCase()
             .includes(debounceValue.toLocaleLowerCase())
         )
@@ -57,22 +57,20 @@ const TasksList = () => {
           <Label>Crea una nueva tarea</Label>
         </div>
       )}
-      <Suspense fallback={<span></span>}>
-        {filtered?.map((tarea) => (
-          <TaskCard
-            tareaInfo={tarea}
-            key={tarea.id}
-            createdAt={tarea.createdAt}
-            titulo={tarea.titulo}
-            descripcion={tarea.descripcion}
-            prioridad={tarea.prioridad}
-            fechaVencimiento={tarea.fechaVencimiento}
-            estado={tarea.estado}
-            owner={tarea.owner}
-            asignado={tarea.asignado}
-          />
-        ))}
-      </Suspense>
+      {filtered?.map((tarea) => (
+        <TaskCard
+          tareaInfo={tarea}
+          key={tarea.id}
+          createdAt={tarea.createdAt}
+          title={tarea.title}
+          description={tarea.description}
+          priority={tarea.priority}
+          expiringDate={tarea.expiringDate}
+          state={tarea.state}
+          owner={tarea.owner}
+          asigned={tarea.asigned}
+        />
+      ))}
     </div>
   );
 };

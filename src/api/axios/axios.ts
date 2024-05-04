@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASEURL = "https://tasks-api-bxyq.onrender.com";
-// const BASEURL = "http://localhost:3001";
+// const BASEURL = "https://tasks-api-bxyq.onrender.com";
+const apiUrl = import.meta.env.VITE_API;
 
 export const axiosIn = axios.create({
-  baseURL: BASEURL,
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,7 +12,7 @@ export const axiosIn = axios.create({
 });
 
 const axiosInstance = axios.create({
-  baseURL: BASEURL,
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },

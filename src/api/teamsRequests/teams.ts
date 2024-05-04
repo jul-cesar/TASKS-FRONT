@@ -1,4 +1,5 @@
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { task } from "@/models/Task";
 import { TeamInfo } from "@/models/teamInfo";
 import { Team } from "@/models/teams";
 import { AxiosResponse } from "axios";
@@ -29,6 +30,16 @@ export const useTeamsRequest = () => {
     }
   };
 
+  const getTeamTasks = async (id: string): Promise<task[] | undefined> => {
+    try {
+      const response: AxiosResponse<task[]> = await axiosInstance.get(
+        `/team/tasks/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const getTeamInfo = async (idTeam: string): Promise<TeamInfo | undefined> => {
     try {
       const response: AxiosResponse<TeamInfo, Error> = await axiosInstance.get(
@@ -43,5 +54,6 @@ export const useTeamsRequest = () => {
     getUserTeams,
     createTeam,
     getTeamInfo,
+    getTeamTasks,
   };
 };
