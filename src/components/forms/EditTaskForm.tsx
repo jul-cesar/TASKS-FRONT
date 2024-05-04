@@ -64,7 +64,7 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
   const { data: newTaskData, isLoading } = useQuery<task, Error>({
     queryKey: ["tasks", taskInfo.id, open],
     queryFn: () =>
-      axiosInstance.get(`/tarea/byid/${taskInfo.id}`).then((res) => res.data),
+      axiosInstance.get(`/task/byid/${taskInfo.id}`).then((res) => res.data),
     enabled: !!open,
   });
 
@@ -77,11 +77,11 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
   React.useEffect(() => {
     if (newTaskData) {
       form.reset({
-        titulo: newTaskData.titulo,
-        descripcion: newTaskData.descripcion,
-        fechaVencimiento: newTaskData.fechaVencimiento,
-        prioridad: newTaskData.prioridad,
-        estado: newTaskData.estado,
+        titulo: newTaskData.title,
+        descripcion: newTaskData.description,
+        fechaVencimiento: newTaskData.expiringDate,
+        prioridad: newTaskData.priority,
+        estado: newTaskData.state,
       });
     }
   }, [newTaskData, form]);
@@ -96,11 +96,11 @@ const EditTaskForm = ({ taskInfo }: EditTaskFormProps) => {
   ) => {
     try {
       await mutateAsync({
-        titulo: data.titulo,
-        descripcion: data.descripcion,
-        prioridad: data.prioridad,
-        estado: data.estado,
-        fechaVencimiento: data.fechaVencimiento,
+        title: data.titulo,
+        description: data.descripcion,
+        priority: data.prioridad,
+        state: data.estado,
+        expiringDate: data.fechaVencimiento,
         ownerId: currentUser.id,
       });
       if (!isPending) {

@@ -2,6 +2,6 @@ import { Team } from "./teams";
 import { user } from "./User";
 
 export interface TeamInfo extends Team {
-  integrantes: user[];
+  members: user[];
   owner: user;
 }

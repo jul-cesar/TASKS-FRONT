@@ -1,27 +1,10 @@
 import useTaskRequest from "@/api/tasksRequests/tasks";
 import { task } from "@/models/Task";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { toast } from "sonner";
 
 const KEY: string = "tasks";
-
-export const useTasks = (id: string) => {
-  const { getUserTasks } = useTaskRequest();
-
-  return useQuery<task[], AxiosError>({
-    queryKey: [KEY, id],
-    queryFn: async (): Promise<task[]> => {
-      const data = await getUserTasks(id);
-      if (!data) {
-        throw new Error("Hubo un error al traer las tareas");
-      }
-      return data;
-    },
-
-    enabled: !!id,
-  });
-};
 
 export const useCreateTask = () => {
   const { createTask } = useTaskRequest();

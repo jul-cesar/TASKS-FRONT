@@ -10,7 +10,7 @@ const useAsignedTasksRequests = () => {
   ): Promise<task[] | undefined> => {
     try {
       const response: AxiosResponse<task[]> = await axiosInstance.get(
-        `/tarea/asigned/${idUser}`
+        `/task/asigned/${idUser}`
       );
       return response.data;
     } catch (error: any) {

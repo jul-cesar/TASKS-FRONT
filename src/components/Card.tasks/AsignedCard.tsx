@@ -22,17 +22,17 @@ interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
 }
 
 const AsignedCard = ({
-  titulo,
-  asignado,
-  descripcion,
-  estado,
-  prioridad,
+  title,
+  asigned,
+  description,
+  state,
+  priority,
   createdAt,
   owner,
-  fechaVencimiento,
+  expiringDate,
   tareaInfo,
 }: TaskCardProps) => {
-  const fechaVencimientoDate = new Date(fechaVencimiento);
+  const fechaVencimientoDate = new Date(expiringDate);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -45,22 +45,22 @@ const AsignedCard = ({
     <Card className="max-w-[350px]">
       <CardHeader>
         <CardTitle>
-          <div className="flex justify-between">{titulo}</div>
+          <div className="flex justify-between">{title}</div>
         </CardTitle>
 
-        {asignado && (
-          <CardDescription>Asignada a: {asignado.nombre}</CardDescription>
+        {asigned && (
+          <CardDescription>Asignada a: {asigned?.name}</CardDescription>
         )}
-        <CardDescription>{descripcion}</CardDescription>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
           <Label>Estado: </Label>
-          <BadgeComponent>{estado?.toUpperCase()}</BadgeComponent>
+          <BadgeComponent>{state?.toUpperCase()}</BadgeComponent>
         </div>
         <div className="p-2">
           <Label>Prioridad: </Label>
-          <BadgeComponent>{prioridad?.toUpperCase()}</BadgeComponent>
+          <BadgeComponent>{priority?.toUpperCase()}</BadgeComponent>
         </div>
       </div>
 
@@ -70,8 +70,8 @@ const AsignedCard = ({
             <div className="flex flex-col items-center space-y-2">
               <Label>Fecha de vencimiento: </Label>
               <BadgeComponent variant={badgeVariant}>
-                {format(fechaVencimiento, "yyyy-MM-dd")} (
-                {formatCustomDate(fechaVencimiento)})
+                {format(expiringDate, "yyyy-MM-dd")} (
+                {formatCustomDate(expiringDate)})
               </BadgeComponent>
             </div>
           </div>
@@ -79,7 +79,7 @@ const AsignedCard = ({
       </CardContent>
       <CardFooter className="flex justify-center">
         <TooltipDemo text="Ver Comentarios">
-          <Comments tareaInfo={tareaInfo} namet={titulo} />
+          <Comments tareaInfo={tareaInfo} namet={title} />
         </TooltipDemo>
       </CardFooter>
       <Separator className="my-3" />
@@ -87,7 +87,7 @@ const AsignedCard = ({
         <TooltipDemo text="Tarea creada por">
           <div className="flex justify-center items-center gap-1 mt-1">
             <User />
-            <p className="font-bold text-xs"> {owner?.nombre} </p>
+            <p className="font-bold text-xs"> {owner?.name} </p>
           </div>
         </TooltipDemo>
         <TooltipDemo text="Tarea creada hace">

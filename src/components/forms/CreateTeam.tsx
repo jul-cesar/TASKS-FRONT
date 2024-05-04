@@ -35,7 +35,7 @@ const CreateTeam = ({ children }: { children: ReactNode }) => {
     data: z.infer<typeof formScheme>
   ) => {
     mutate({
-      nombre: data.nombre,
+      name: data.nombre,
       ownerId: currentUser.id,
     });
     if (!isPending) {

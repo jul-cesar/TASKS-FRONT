@@ -42,7 +42,7 @@ const Register = () => {
   const onSubmit = async (data: z.infer<typeof formScheme>) => {
     try {
       await mutateAsync({
-        nombre: data.name,
+        name: data.name,
         email: data.email,
         password: data.password,
       });

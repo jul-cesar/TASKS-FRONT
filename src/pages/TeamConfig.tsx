@@ -11,6 +11,7 @@ const TeamConfig = () => {
   const location = useLocation();
   const idTeam = location.pathname.split("/").pop();
   const { data: members, isLoading } = useGetTeamInfo(idTeam || "");
+  console.log(members);
 
   if (isLoading) {
     return (
@@ -54,11 +55,11 @@ const TeamConfig = () => {
             <div className="flex gap-3">
               <AvatarMember
                 src={members?.owner.photoURL || ""}
-                nombre={members?.owner.nombre || ""}
+                nombre={members?.owner.name || ""}
               />
               <div>
                 <span className="block text-sm  font-semibold">
-                  {members?.owner.nombre}
+                  {members?.owner.name}
                 </span>
                 <span className="block text-sm ">{members?.owner.email}</span>
                 <span className="block text-sm font-bold ">Creador</span>
@@ -66,13 +67,13 @@ const TeamConfig = () => {
             </div>
             <Trash2Icon className="hover:text-red-500 hover:scale-125" />
           </li>
-          {members?.integrantes?.map((item, idx) => (
+          {members?.members?.map((item, idx) => (
             <li key={idx} className="py-5 flex items-start justify-between">
               <div className="flex gap-3">
-                <AvatarMember src={item.photoURL || ""} nombre={item.nombre} />
+                <AvatarMember src={item.photoURL || ""} nombre={item.name} />
                 <div>
                   <span className="block text-sm  font-semibold">
-                    {item.nombre}
+                    {item.name}
                   </span>
                   <span className="block text-sm ">{item.email}</span>
                 </div>

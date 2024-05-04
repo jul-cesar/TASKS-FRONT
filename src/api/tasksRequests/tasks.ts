@@ -7,7 +7,7 @@ const useTaskRequest = () => {
   const createTask = async (data: Partial<task>): Promise<task | undefined> => {
     try {
       const response: AxiosResponse<task, Error> = await axiosInstance.post(
-        "/tarea",
+        "/task",
         data
       );
       return response.data;
@@ -19,7 +19,7 @@ const useTaskRequest = () => {
   const deleteTask = async (idTask: string): Promise<task | undefined> => {
     try {
       const response: AxiosResponse<task> = await axiosInstance.delete(
-        `/tarea/${idTask}`
+        `/task/${idTask}`
       );
       return response.data;
     } catch (error: any) {
@@ -27,16 +27,7 @@ const useTaskRequest = () => {
     }
   };
 
-  const getUserTasks = async (id: string): Promise<task[] | undefined> => {
-    try {
-      const response: AxiosResponse<task[]> = await axiosInstance.get(
-        `/tarea/team/${id}`
-      );
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   const editTask = async (
     idTask: string,
@@ -44,7 +35,7 @@ const useTaskRequest = () => {
   ): Promise<task | undefined> => {
     try {
       const response: AxiosResponse<task> = await axiosInstance.put(
-        `/tarea/${idTask}`,
+        `/task/${idTask}`,
         data
       );
       return response.data;
@@ -53,7 +44,6 @@ const useTaskRequest = () => {
     }
   };
 
-  
-  return { createTask, deleteTask, getUserTasks, editTask };
+  return { createTask, deleteTask, editTask };
 };
 export default useTaskRequest;

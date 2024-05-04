@@ -3,10 +3,10 @@ import { user } from './User';
 
 export interface comment {
     id: string
-    tareaId: string
+    taskId: string
     authorId: string
-    contenido: string
+    content: string
     user: user
-    tarea: task
-    fecha: Date
+    task: task
+    createdAt: Date
 }

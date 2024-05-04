@@ -28,11 +28,11 @@ export const useCreateComment = () => {
 
   return useMutation({
     mutationFn: async (
-      newComentario: Omit<comment, "id" | "user" | "tarea" | "fecha">
+      newComentario: Omit<comment, "id" | "user" | "task" | "createdAt">
     ) => {
       await createComment({
-        contenido: newComentario.contenido,
-        tareaId: newComentario.tareaId,
+        contenido: newComentario.content,
+        tareaId: newComentario.content,
         authorId: newComentario.authorId,
       });
     },

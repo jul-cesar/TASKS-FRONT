@@ -39,7 +39,7 @@ const CardFooterComponent = ({
         <TooltipDemo text="Tarea creada por">
           <div className="flex justify-center items-center gap-1 mt-1">
             <User />
-            <p className="font-bold text-xs"> {owner?.nombre} </p>
+            <p className="font-bold text-xs"> {owner?.name} </p>
           </div>
         </TooltipDemo>
         <TooltipDemo text="Tarea creada hace">

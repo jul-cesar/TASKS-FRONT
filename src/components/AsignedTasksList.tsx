@@ -1,6 +1,7 @@
+import { lazy } from "react";
 import CardSkeleton from "./loaders/CardSkeleton";
-import AsignedCard from "./Card.tasks/AsignedCard";
 import { useAsignedTask } from "@/hooks/queries/asignedTaskQueries/queries";
+const AsignedCard = lazy(() => import("./Card.tasks/AsignedCard"));
 
 const AsignedTasksList = () => {
   const { data: AsignsList, status } = useAsignedTask();
@@ -29,13 +30,13 @@ const AsignedTasksList = () => {
             tareaInfo={tarea}
             key={tarea.id}
             createdAt={tarea.createdAt}
-            titulo={tarea.titulo}
-            descripcion={tarea.descripcion}
-            prioridad={tarea.prioridad}
-            fechaVencimiento={tarea.fechaVencimiento}
-            estado={tarea.estado}
+            title={tarea.title}
+            description={tarea.description}
+            priority={tarea.priority}
+            expiringDate={tarea.expiringDate}
+            state={tarea.state}
             owner={tarea.owner}
-            asignado={tarea.asignado}
+            asigned={tarea.asigned}
           />
         ))}
     </div>

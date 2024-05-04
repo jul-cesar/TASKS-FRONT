@@ -50,7 +50,7 @@ export default function SelectTeam() {
                   localStorage.setItem("currentTeamInfo", teamData);
                   setCurrentTeam({
                     id: t.id || "",
-                    nombre: t.nombre,
+                    nombre: t.name,
                     ownerId: t.ownerId,
                     createdAt: t.createdAt || new Date(),
                   });
@@ -59,7 +59,7 @@ export default function SelectTeam() {
               >
                 <CommandItem>
                   <BrainCircuit className="mr-2 h-4 w-4" />
-                  <span>{t.nombre}</span>
+                  <span>{t.name}</span>
                 </CommandItem>
               </div>
             ))}
