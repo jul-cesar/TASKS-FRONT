@@ -48,12 +48,12 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     mutate({
       ownerId: currentTarea.ownerId,
-      titulo: currentTarea.titulo,
-      fechaVencimiento: currentTarea.fechaVencimiento,
-      descripcion: currentTarea.descripcion,
-      estado: currentTarea.estado,
-      prioridad: currentTarea.prioridad,
-      asignadoId: data.userAsignado,
+      title: currentTarea.title,
+      expiringDate: currentTarea.expiringDate,
+      description: currentTarea.description,
+      state: currentTarea.state,
+      priority: currentTarea.priority,
+      asignedId: data.userAsignado
     });
     setIsOpenDialog(false);
   }

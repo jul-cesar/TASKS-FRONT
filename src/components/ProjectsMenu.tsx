@@ -36,7 +36,7 @@ export default function ProjectsMenu() {
     return (
       <Popover open={open} onOpenChange={(open) => setOpen(open)}>
         <div className="flex gap-2 items-center justify-center ">
-          <Label className="text-center text-base">{currentTeam.nombre}</Label>
+          <Label className="text-center text-base">{currentTeam.name}</Label>
           <PopoverTrigger asChild>
             <Button variant={"outline"} className="p-1 m-1">
               <ArrowDown size={"20px"} />
@@ -58,7 +58,7 @@ export default function ProjectsMenu() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <div className="flex gap-1 items-center justify-center">
-        <Label className="text-center text-base">{currentTeam.nombre}</Label>
+        <Label className="text-center text-base">{currentTeam.name}</Label>
         <DrawerTrigger>
           <Button variant={"outline"} className="p-1 m-1">
             <ArrowDown size={"20px"} />
@@ -126,7 +126,7 @@ function ProfileForm({
                   localStorage.setItem("currentTeamInfo", teamData);
                   setCurrentTeam({
                     id: t.id || "",
-                    nombre: t.nombre,
+                    nombre: t.name,
                     ownerId: t.ownerId,
                     createdAt: t.createdAt || new Date(),
                   });
@@ -135,7 +135,7 @@ function ProfileForm({
                 key={t.id}
                 className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
               >
-                <li className="">{t.nombre}</li>
+                <li className="">{t.name}</li>
                 {currentTeam.id === t.id && <CheckIcon size={19} />}
               </div>
             </Link>
@@ -143,8 +143,8 @@ function ProfileForm({
         </ul>
       ) : (
         <div className="flex items-center justify-center h-full">
-         <LoadingSmall />  
-         </div>
+          <LoadingSmall />
+        </div>
       )}
     </div>
   );

@@ -18,7 +18,7 @@ type UiContextType = {
   setCurrentTeam: React.Dispatch<
     SetStateAction<{
       id: string;
-      nombre: string;
+      name: string;
       ownerId: string;
       createdAt: Date;
     }>
@@ -32,7 +32,7 @@ const UiContext = createContext<UiContextType>({
   tareasLength: { myTasks: 0, asignedTasks: 0 },
   currentTeam: {
     id: "",
-    nombre: "",
+    name: "",
     ownerId: "",
     createdAt: new Date(),
   },
@@ -43,7 +43,7 @@ export const UiContextProvider = ({ children }: { children: ReactNode }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [currentTeam, setCurrentTeam] = useState({
     id: "",
-    nombre: "",
+    name: "",
     ownerId: "",
     createdAt: new Date(),
   });
