@@ -1,3 +1,4 @@
+import AddMember from "@/components/addMember";
 import { AvatarMember } from "@/components/AvatarMember";
 import LoaderMedium from "@/components/loaders/LoaderMedium";
 import Navbar from "@/components/Navbar/Navbar";
@@ -11,7 +12,6 @@ const TeamConfig = () => {
   const location = useLocation();
   const idTeam = location.pathname.split("/").pop();
   const { data: members, isLoading } = useGetTeamInfo(idTeam || "");
-  console.log(members);
 
   if (isLoading) {
     return (
@@ -27,28 +27,32 @@ const TeamConfig = () => {
       <div className="max-w-2xl mx-auto  mt-20 flex item flex-col p-6 justify-center">
         <div className="items-start justify-between sm:flex">
           <div>
-            <h4 className=" text-xl font-semibold">Miembros del team</h4>
+            <h4 className=" text-xl font-semibold underline">
+              {members?.name}
+            </h4>
             <p className="mt-2  text-base sm:text-sm">
               Agrega o elimina miembros a tu equipo.
             </p>
           </div>
-          <a className="inline-flex items-center justify-center gap-1 py-2 px-3 mt-4 font-medium text-sm text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg sm:mt-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v12m6-6H6"
-              />
-            </svg>
-            Agregar miembro
-          </a>
+          <AddMember>
+            <a className="inline-flex items-center justify-center gap-1 py-2 px-3 mt-4 font-medium text-sm text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg sm:mt-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v12m6-6H6"
+                />
+              </svg>
+              Agregar miembro
+            </a>
+          </AddMember>
         </div>
         <ul className="mt-7 divide-y">
           <li className="py-5 flex items-start justify-between">

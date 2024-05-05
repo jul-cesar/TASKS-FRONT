@@ -6,15 +6,17 @@ import { privateRoutes, publicRoutes } from "./models/routes";
 
 import { lazy, Suspense } from "react";
 import LoaderMedium from "./components/loaders/LoaderMedium";
+import TasksPage from "./pages/TasksPage";
+import AsignedPage from "./pages/AsignedPage";
 
 const Login = lazy(() => import("./pages/LogIn"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Register = lazy(() => import("./pages/Register"));
-const AsignedPage = lazy(() => import("./pages/AsignedPage"));
-const TasksPage = lazy(() => import("./pages/TasksPage"));
+
 const SelectTeam = lazy(() => import("./pages/TeamSelectPage"));
 const TeamConfig = lazy(() => import("./pages/TeamConfig"));
 const Error404 = lazy(() => import("./pages/404"));
+
 function App() {
   return (
     <Suspense

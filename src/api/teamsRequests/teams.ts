@@ -7,11 +7,12 @@ import { AxiosResponse } from "axios";
 export const useTeamsRequest = () => {
   const axiosInstance = useAxiosPrivate();
 
-  const getUserTeams = async (idUser: string): Promise<Team[] | undefined> => {
+  const getUserTeams = async (
+    idUser: string
+  ): Promise<TeamInfo[] | undefined> => {
     try {
-      const response: AxiosResponse<Team[], Error> = await axiosInstance.get(
-        `/team/${idUser}`
-      );
+      const response: AxiosResponse<TeamInfo[], Error> =
+        await axiosInstance.get(`/team/${idUser}`);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -50,7 +51,28 @@ export const useTeamsRequest = () => {
       console.error(error);
     }
   };
+  interface responseI {
+    success: boolean;
+    message: string;
+  }
+  const addMemberToTeam = async (
+    idTeam: string,
+    emailUser: string
+  ): Promise<responseI> => {
+    try {
+      const response = await axiosInstance.put(
+        `/team/addmember/${emailUser}/${idTeam}`
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   return {
+    addMemberToTeam,
     getUserTeams,
     createTeam,
     getTeamInfo,

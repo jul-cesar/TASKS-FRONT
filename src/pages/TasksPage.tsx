@@ -1,12 +1,16 @@
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
 import SearchTasks from "@/components/SearchTasks";
-import TasksList from "@/components/TasksList";
+import { lazy, Suspense } from "react";
+
+const TasksList = lazy(() => import("@/components/TasksList"));
 
 const TasksPage = () => {
   return (
     <TasksPagesLayout>
       <SearchTasks />
-      <TasksList />
+      <Suspense fallback={<span></span>}>
+        <TasksList />
+      </Suspense>
     </TasksPagesLayout>
   );
 };
