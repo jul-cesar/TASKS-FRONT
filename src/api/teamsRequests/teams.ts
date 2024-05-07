@@ -71,7 +71,20 @@ export const useTeamsRequest = () => {
     }
   };
 
+  const deleteMember = async (
+    idUser: string,
+    idTeam: string
+  ): Promise<Team | undefined> => {
+    try {
+      const response: AxiosResponse<Team, Error> = await axiosInstance.put(
+        `/team/delmember/${idUser}/${idTeam}`
+      );
+      return response.data;
+    } catch (error) {}
+  };
+
   return {
+    deleteMember,
     addMemberToTeam,
     getUserTeams,
     createTeam,

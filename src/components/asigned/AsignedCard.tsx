@@ -8,14 +8,14 @@ import {
 } from "../ui/card";
 import { task } from "@/models/Task";
 import { formatCustomDate } from "@/utils/formatCustomDate";
-import { BadgeComponent } from "./BadgeComponent";
-import Comments from "./Comments/Comments";
+import { BadgeComponent } from "../Card.tasks/BadgeComponent";
+import Comments from "../Card.tasks/Comments/Comments";
 
 import { format } from "date-fns";
 import { Separator } from "../ui/separator";
 import { Clock, User } from "lucide-react";
 import { Label } from "../ui/label";
-import { TooltipDemo } from "./TooltipDemo";
+import { TooltipDemo } from "../Card.tasks/TooltipDemo";
 
 interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
   tareaInfo: task;

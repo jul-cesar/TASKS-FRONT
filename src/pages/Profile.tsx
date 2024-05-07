@@ -1,4 +1,4 @@
-import AvatarUserProfile from "@/components/AvatarUserProfile";
+import AvatarUserProfile from "@/AvatarUserProfile";
 import InfoCard from "@/components/InfoCard";
 import { useGetUserInfo } from "@/hooks/queries/userQueries/queries";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";

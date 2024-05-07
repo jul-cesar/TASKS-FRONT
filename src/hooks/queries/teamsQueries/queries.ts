@@ -113,3 +113,33 @@ export const useAddMemberToTeam = () => {
     },
   });
 };
+
+interface deleteMemberInfo {
+  idUser: string;
+  idTeam: string;
+}
+
+export const useDeleteMember = () => {
+  const queryClient = useQueryClient();
+
+  const { deleteMember } = useTeamsRequest();
+  return useMutation<Team, Error, deleteMemberInfo>({
+    mutationFn: async (info) => {
+      const data = await deleteMember(info.idUser, info.idTeam);
+      if (!data) {
+        throw new Error("Error al eliminar usuario");
+      }
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.success("Usuario eliminado del team");
+    },
+    onError: () => {
+      toast.error(`Hubo un error al eliminar el usuario`);
+    },
+    onMutate: () => {
+      toast.info("Eliminando usuario..");
+    },
+  });
+};

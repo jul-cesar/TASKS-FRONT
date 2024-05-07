@@ -22,8 +22,9 @@ import {
 import { task } from "@/models/Task";
 import { user } from "@/models/User";
 import { Auth } from "@/context/auth";
-import { useGetAllUsers } from "@/hooks/queries/userQueries/queries";
 import { useEditTask } from "@/hooks/queries/taskQueries/queries";
+import { useGetTeamInfo } from "@/hooks/queries/teamsQueries/queries";
+import { useLocation } from "react-router-dom";
 
 type SelectUserProps = {
   setIsOpenDialog: React.Dispatch<SetStateAction<boolean>>;
@@ -36,8 +37,11 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
       required_error: "Por favor, selecciona un usuario",
     }),
   });
+  const location = useLocation();
+  const idTeam = location.pathname.split("/").pop();
 
-  const { data: listaUsuarios } = useGetAllUsers();
+  const { data } = useGetTeamInfo(idTeam || "");
+  const listaUsuarios = data?.members;
   const { mutate } = useEditTask(currentTarea.id);
   const { currentUser } = useContext(Auth);
 
@@ -53,7 +57,7 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
       description: currentTarea.description,
       state: currentTarea.state,
       priority: currentTarea.priority,
-      asignedId: data.userAsignado
+      asignedId: data.userAsignado,
     });
     setIsOpenDialog(false);
   }
@@ -74,9 +78,9 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Array.isArray(listaUsuarios) &&
+                  {listaUsuarios?.length ?? 0 > 0 ? (
                     listaUsuarios
-                      .filter(
+                      ?.filter(
                         (x: user) =>
                           x.email?.toLowerCase() !==
                           currentUser.email?.toLowerCase()
@@ -85,7 +89,12 @@ const SelectUser = ({ setIsOpenDialog, currentTarea }: SelectUserProps) => {
                         <SelectItem key={user.id} value={user.id || ""}>
                           {user.email}
                         </SelectItem>
-                      ))}
+                      ))
+                  ) : (
+                    <div className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md  px-3 py-2 text-sm shadow-sm  placeholder:text-muted-foreground ">
+                      No hay usuarios en el team actual
+                    </div>
+                  )}
                 </SelectContent>
               </Select>
               <FormDescription>

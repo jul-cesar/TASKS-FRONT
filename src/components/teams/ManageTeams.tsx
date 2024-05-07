@@ -22,7 +22,7 @@ import {
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { AvatarMember } from "./AvatarMember";
-import { Clock, FlagIcon } from "lucide-react";
+import { FlagIcon } from "lucide-react";
 import { TeamInfo } from "@/models/teamInfo";
 
 export function ManageTeam({
@@ -78,12 +78,9 @@ function ProfileForm({ data }: { data: TeamInfo[] | undefined }) {
             <AvatarMember nombre={item.name} />
             <div className="flex flex-col justify-center gap-1">
               <span className="block text-base font-semibold">{item.name}</span>
-              <span className="text-sm flex  items-center gap-1">
-                <FlagIcon size={17} /> {item.owner.name}
-              </span>
-              <span className="text-sm flex items-center gap-1">
-                <Clock size={17} />{" "}
-                {format(item.createdAt ?? new Date(), "yyyy-MM-dd")}s
+              <span className="text-sm flex  gap-1">
+                <FlagIcon size={17} />{" "}
+                {format(item.createdAt ?? new Date(), "yyyy-MM-dd")}
               </span>
             </div>
           </div>

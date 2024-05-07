@@ -23,7 +23,7 @@ const useAxiosPrivate = () => {
       async (error) => {
         const prevRequest = error?.config;
         if (error?.response?.status === 403 && !prevRequest?.sent) {
-          if (prevRequest.retryCount && prevRequest.retryCount >= 2) {
+          if (prevRequest.retryCount && prevRequest.retryCount >= 4) {
             return Promise.reject(error);
           }
           prevRequest.sent = true;

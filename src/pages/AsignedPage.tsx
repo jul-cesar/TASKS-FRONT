@@ -1,4 +1,4 @@
-import AsignedTasksList from "../components/AsignedTasksList";
+import AsignedTasksList from "../components/asigned/AsignedTasksList";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
 
 const AsignedPage = () => {

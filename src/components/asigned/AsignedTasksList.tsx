@@ -1,7 +1,7 @@
 import { lazy } from "react";
-import CardSkeleton from "./loaders/CardSkeleton";
+import CardSkeleton from "../loaders/CardSkeleton";
 import { useAsignedTask } from "@/hooks/queries/asignedTaskQueries/queries";
-const AsignedCard = lazy(() => import("./Card.tasks/AsignedCard"));
+const AsignedCard = lazy(() => import("./AsignedCard"));
 
 const AsignedTasksList = () => {
   const { data: AsignsList, status } = useAsignedTask();

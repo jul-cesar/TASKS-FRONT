@@ -1,10 +1,13 @@
-import AddMember from "@/components/addMember";
-import { AvatarMember } from "@/components/AvatarMember";
+import AddMember from "@/components/teams/addMember";
+import { AvatarMember } from "@/components/teams/AvatarMember";
 import LoaderMedium from "@/components/loaders/LoaderMedium";
 import Navbar from "@/components/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useGetTeamInfo } from "@/hooks/queries/teamsQueries/queries";
+import {
+  useDeleteMember,
+  useGetTeamInfo,
+} from "@/hooks/queries/teamsQueries/queries";
 import { Trash2Icon } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
@@ -12,6 +15,8 @@ const TeamConfig = () => {
   const location = useLocation();
   const idTeam = location.pathname.split("/").pop();
   const { data: members, isLoading } = useGetTeamInfo(idTeam || "");
+
+  const { mutateAsync } = useDeleteMember();
 
   if (isLoading) {
     return (
@@ -35,7 +40,7 @@ const TeamConfig = () => {
             </p>
           </div>
           <AddMember>
-            <a className="inline-flex items-center justify-center gap-1 py-2 px-3 mt-4 font-medium text-sm text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg sm:mt-0">
+            <Button variant={"outline"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -51,7 +56,7 @@ const TeamConfig = () => {
                 />
               </svg>
               Agregar miembro
-            </a>
+            </Button>
           </AddMember>
         </div>
         <ul className="mt-7 divide-y">
@@ -69,7 +74,6 @@ const TeamConfig = () => {
                 <span className="block text-sm font-bold ">Creador</span>
               </div>
             </div>
-            <Trash2Icon className="hover:text-red-500 hover:scale-125" />
           </li>
           {members?.members?.map((item, idx) => (
             <li key={idx} className="py-5 flex items-start justify-between">
@@ -82,7 +86,15 @@ const TeamConfig = () => {
                   <span className="block text-sm ">{item.email}</span>
                 </div>
               </div>
-              <Trash2Icon className="hover:text-red-500 hover:scale-125" />
+              <Trash2Icon
+                className="hover:text-red-500 hover:scale-125"
+                onClick={async () => {
+                  await mutateAsync({
+                    idUser: item.id ?? "",
+                    idTeam: idTeam ?? "",
+                  });
+                }}
+              />
             </li>
           ))}
         </ul>
