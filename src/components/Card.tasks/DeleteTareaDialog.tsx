@@ -17,7 +17,7 @@ import { useDeleteTask } from "@/hooks/queries/taskQueries/queries";
 export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { mutate, isPending } = useDeleteTask(tareaInfo.id);
+  const { mutateAsync, isPending } = useDeleteTask(tareaInfo.id);
   return (
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
       <DialogTrigger asChild className="cursor-pointer">
@@ -37,7 +37,7 @@ export function DeleteTareaDialog({ tareaInfo }: { tareaInfo: task }) {
         <div className="grid gap-4 py-4"></div>
         <DialogFooter className={"gap-2"}>
           {!isPending ? (
-            <Button type="submit" onClick={() => mutate()}>
+            <Button type="submit" onClick={async () => await mutateAsync()}>
               Si
             </Button>
           ) : (

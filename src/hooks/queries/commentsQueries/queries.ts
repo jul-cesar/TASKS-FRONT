@@ -31,8 +31,8 @@ export const useCreateComment = () => {
       newComentario: Omit<comment, "id" | "user" | "task" | "createdAt">
     ) => {
       await createComment({
-        contenido: newComentario.content,
-        tareaId: newComentario.content,
+        content: newComentario.content,
+        taskId: newComentario.taskId,
         authorId: newComentario.authorId,
       });
     },

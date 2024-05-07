@@ -3,9 +3,10 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { CreateTaskForm } from "./forms/CreateTaskForm";
 import { useLocation } from "react-router-dom";
 import { Label } from "./ui/label";
-import { lazy, useMemo } from "react";
+import { lazy } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useTeamTasks } from "@/hooks/queries/teamsQueries/queries";
+import useSearch from "@/hooks/useSearch";
 
 const TaskCard = lazy(() => import("./Card.tasks/TaskCard"));
 
@@ -18,15 +19,7 @@ const TasksList = () => {
   const titleFilter = queryParams.get("q");
   const debounceValue = useDebounce(titleFilter);
 
-  const filtered = useMemo(() => {
-    return debounceValue
-      ? taskList?.filter((x) =>
-          x.title
-            .toLocaleLowerCase()
-            .includes(debounceValue.toLocaleLowerCase())
-        )
-      : taskList;
-  }, [debounceValue, taskList]);
+  const filtered = useSearch(taskList, debounceValue);
 
   const [parent] = useAutoAnimate();
 

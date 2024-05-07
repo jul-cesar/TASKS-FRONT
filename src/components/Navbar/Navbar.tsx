@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 
 import { UiContext } from "@/context/ui";
-import ProjectsMenu from "../ProjectsMenu";
+import ProjectsMenu from "../teams/ProjectsMenu";
 import BurgerButtonNavbar from "./BurgerButtonNavbar";
 
 import NavbarOptions from "./NavbarOptions";

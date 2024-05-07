@@ -83,8 +83,8 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
     mode: "onChange",
   });
 
-  const OnSubmit = (data: z.infer<typeof formScheme>) => {
-    mutateAsync({
+  const OnSubmit = async (data: z.infer<typeof formScheme>) => {
+    await mutateAsync({
       taskId: tareaInfo.id,
       authorId: currentUser.id,
       content: data.contenido,

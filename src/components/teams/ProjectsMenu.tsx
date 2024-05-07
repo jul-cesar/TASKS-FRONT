@@ -19,13 +19,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowDown, CheckIcon, Search } from "lucide-react";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { useUserTeams } from "@/hooks/queries/teamsQueries/queries";
 import { UiContext } from "@/context/ui";
 import { Link } from "react-router-dom";
 import { Team } from "@/models/teams";
 import { Auth } from "@/context/auth";
-import LoadingSmall from "./loaders/LoadingSmall";
+import LoadingSmall from "../loaders/LoadingSmall";
 
 export default function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);

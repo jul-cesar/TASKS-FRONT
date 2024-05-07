@@ -6,21 +6,21 @@ const useCommentsRequests = () => {
   const axiosInstance = useAxiosPrivate();
 
   const createComment = async ({
-    contenido,
+    content,
     authorId,
-    tareaId,
+    taskId,
   }: {
-    contenido: string;
+    content: string;
     authorId: string;
-    tareaId: string;
+    taskId: string;
   }): Promise<comment | undefined> => {
     try {
       const response: AxiosResponse<comment, Error> = await axiosInstance.post(
         "/comment",
         {
-          contenido,
+          content,
           authorId,
-          tareaId,
+          taskId,
         }
       );
       return response.data;

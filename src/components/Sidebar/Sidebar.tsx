@@ -15,7 +15,7 @@ const Sidebar = () => {
       id="logo-sidebar"
       className={`fixed top-0 left-0 z-40 w-64 h-screen pt-12 transition-transform ${
         !openSidebar && "-translate-x-full"
-      } bg-white border-r sm:translate-x-1 lg:translate-x-0`}
+      } bg-white  sm:translate-x-1 lg:translate-x-0`}
       aria-label="Sidebar"
     >
       <div className="h-full px-3 sm:py-8 py-11 overflow-y-auto bg-background border-border border-r-2">

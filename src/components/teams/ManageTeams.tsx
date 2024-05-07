@@ -19,17 +19,18 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { Team } from "@/models/teams";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { AvatarMember } from "./AvatarMember";
+import { FlagIcon } from "lucide-react";
+import { TeamInfo } from "@/models/teamInfo";
 
 export function ManageTeam({
   children,
   data,
 }: {
   children: React.ReactNode;
-  data: Team[] | undefined;
+  data: TeamInfo[] | undefined;
 }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -68,19 +69,18 @@ export function ManageTeam({
   );
 }
 
-function ProfileForm({ data }: { data: Team[] | undefined }) {
+function ProfileForm({ data }: { data: TeamInfo[] | undefined }) {
   return (
     <ul className=" divide-y max-h-[500px] overflow-y-auto p-4">
       {data?.map((item) => (
         <li key={item.id} className="py-5 flex items-start justify-between">
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             <AvatarMember nombre={item.name} />
-            <div>
-              <span className="block text-sm  font-semibold">
-                {item.name}
-              </span>
-              <span className="block text-sm ">
-                Creado: {format(item.createdAt ?? new Date(), "yyyy-MM-dd")}
+            <div className="flex flex-col justify-center gap-1">
+              <span className="block text-base font-semibold">{item.name}</span>
+              <span className="text-sm flex  gap-1">
+                <FlagIcon size={17} />{" "}
+                {format(item.createdAt ?? new Date(), "yyyy-MM-dd")}
               </span>
             </div>
           </div>
