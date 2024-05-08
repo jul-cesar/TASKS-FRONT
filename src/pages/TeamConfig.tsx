@@ -11,6 +11,7 @@ import {
 import { Trash2Icon } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import DeleteTeam from "@/components/teams/deleteTeam";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 const TeamConfig = () => {
   const location = useLocation();
@@ -30,7 +31,8 @@ const TeamConfig = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-2xl mx-auto  mt-20 flex item flex-col p-6 justify-center">
+      <Sidebar />
+      <div className="max-w-2xl sm:ml-[260px]  lg:ml-[450px] mr-auto  mt-20 flex item flex-col p-6 justify-center">
         <div className="items-start justify-between sm:flex">
           <div>
             <h4 className=" text-xl font-semibold underline">
@@ -41,7 +43,7 @@ const TeamConfig = () => {
             </p>
           </div>
           <AddMember>
-            <Button variant={"outline"} className="m-3">
+            <Button variant={"outline"} className="mt-3 bg-purple-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

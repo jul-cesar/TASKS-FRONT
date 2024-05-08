@@ -1,5 +1,6 @@
 import AvatarUserProfile from "@/AvatarUserProfile";
 import InfoCard from "@/components/InfoCard";
+import LoaderMedium from "@/components/loaders/LoaderMedium";
 import { useGetUserInfo } from "@/hooks/queries/userQueries/queries";
 import TasksPagesLayout from "@/layout/TasksPagesLayout";
 
@@ -9,12 +10,19 @@ import { useLocation } from "react-router-dom";
 const Profile = () => {
   const location = useLocation();
   const idProfile = location.pathname.split("/").pop();
-  const { data, refetch } = useGetUserInfo(idProfile ?? "");
+  const { data, refetch, isLoading } = useGetUserInfo(idProfile ?? "");
 
   useEffect(() => {
     refetch();
-  }, [idProfile, refetch]); // D
+  }, [idProfile, refetch]);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <LoaderMedium />
+      </div>
+    );
+  }
   return (
     <TasksPagesLayout>
       <div className="flex justify-center mt-20">
