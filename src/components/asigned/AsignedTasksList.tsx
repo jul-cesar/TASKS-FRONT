@@ -26,18 +26,7 @@ const AsignedTasksList = () => {
     <div className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 mt-20 ">
       {Array.isArray(AsignsList) &&
         AsignsList.map((tarea) => (
-          <AsignedCard
-            tareaInfo={tarea}
-            key={tarea.id}
-            createdAt={tarea.createdAt}
-            title={tarea.title}
-            description={tarea.description}
-            priority={tarea.priority}
-            expiringDate={tarea.expiringDate}
-            state={tarea.state}
-            owner={tarea.owner}
-            asigned={tarea.asigned}
-          />
+          <AsignedCard taskInfo={tarea} key={tarea.id} />
         ))}
     </div>
   );

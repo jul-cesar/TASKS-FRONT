@@ -10,48 +10,29 @@ import CardContentComponent from "./CardContent";
 
 import CardHeaderComponent from "./CardHeader";
 
-interface TaskCardProps extends Omit<task, "ownerId" | "id"> {
-  tareaInfo: task;
-}
-
-const TaskCard = ({
-  title,
-  asigned,
-  description,
-  state,
-  priority,
-  createdAt,
-  owner,
-  expiringDate,
-  tareaInfo,
-}: TaskCardProps) => {
+const TaskCard = ({ tareaInfo }: { tareaInfo: task }) => {
   return (
     <Card className="max-w-[350px]">
       <CardHeaderComponent
-        fechaVencimiento={expiringDate}
-        asignado={asigned}
-        descripcion={description}
+        fechaVencimiento={tareaInfo.expiringDate}
+        asignado={tareaInfo.asigned}
+        descripcion={tareaInfo.description}
         tareaInfo={tareaInfo}
-        titulo={title}
+        titulo={tareaInfo.title}
       />
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
           <Label>Estado: </Label>
-          <EstadoBadge estado={state} />
+          <EstadoBadge estado={tareaInfo.state} />
         </div>
         <div className="p-2">
           <Label>Prioridad: </Label>
-          <PrioridadBadge prioridad={priority} />
+          <PrioridadBadge prioridad={tareaInfo.priority} />
         </div>
       </div>
 
-      <CardContentComponent fechaVencimiento={expiringDate} />
-      <CardFooterComponent
-        createdAt={createdAt}
-        owner={owner}
-        tareaInfo={tareaInfo}
-        titulo={title}
-      />
+      <CardContentComponent fechaVencimiento={tareaInfo.expiringDate} />
+      <CardFooterComponent tareaInfo={tareaInfo} />
     </Card>
   );
 };

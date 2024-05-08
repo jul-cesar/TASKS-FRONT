@@ -36,11 +36,10 @@ import {
 } from "@/hooks/queries/commentsQueries/queries";
 
 type CommentsProps = {
-  namet: string;
   tareaInfo: task;
 };
 
-function Comments({ namet, tareaInfo }: CommentsProps) {
+function Comments({ tareaInfo }: CommentsProps) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -58,13 +57,13 @@ function Comments({ namet, tareaInfo }: CommentsProps) {
             Agrega notas o comentarios sobre el progreso de esta tarea
           </DialogDescription>
         </DialogHeader>
-        <CommentsSection namet={namet} tareaInfo={tareaInfo} />
+        <CommentsSection tareaInfo={tareaInfo} />
       </DialogContent>
     </Dialog>
   );
 }
 
-function CommentsSection({ namet, tareaInfo }: CommentsProps) {
+function CommentsSection({ tareaInfo }: CommentsProps) {
   const idTarea = tareaInfo.id;
   const { mutateAsync } = useCreateComment();
   const { currentUser } = React.useContext(Auth);
@@ -104,7 +103,10 @@ function CommentsSection({ namet, tareaInfo }: CommentsProps) {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel> Haz un comentario para "{namet}" </FormLabel>
+                  <FormLabel>
+                    {" "}
+                    Haz un comentario para "{tareaInfo.title}"{" "}
+                  </FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>

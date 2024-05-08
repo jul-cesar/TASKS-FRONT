@@ -1,4 +1,5 @@
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { responseI } from "@/models/genericApiResponse";
 import { task } from "@/models/Task";
 import { TeamInfo } from "@/models/teamInfo";
 import { Team } from "@/models/teams";
@@ -51,10 +52,6 @@ export const useTeamsRequest = () => {
       console.error(error);
     }
   };
-  interface responseI {
-    success: boolean;
-    message: string;
-  }
   const addMemberToTeam = async (
     idTeam: string,
     emailUser: string
@@ -80,10 +77,23 @@ export const useTeamsRequest = () => {
         `/team/delmember/${idUser}/${idTeam}`
       );
       return response.data;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteTeam = async (idTeam: string): Promise<responseI | undefined> => {
+    try {
+      const response: AxiosResponse<responseI, Error> =
+        await axiosInstance.delete(`/team/${idTeam}`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return {
+    deleteTeam,
     deleteMember,
     addMemberToTeam,
     getUserTeams,

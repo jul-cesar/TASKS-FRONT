@@ -109,7 +109,7 @@ function ProfileForm({
         <Search size={"20"} />
         <Input
           type="search"
-          placeholder="Search for a team "
+          placeholder="Busca un team"
           className="border-hidden "
         />
       </div>

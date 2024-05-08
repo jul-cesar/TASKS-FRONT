@@ -51,18 +51,7 @@ const TasksList = () => {
         </div>
       )}
       {filtered?.map((tarea) => (
-        <TaskCard
-          tareaInfo={tarea}
-          key={tarea.id}
-          createdAt={tarea.createdAt}
-          title={tarea.title}
-          description={tarea.description}
-          priority={tarea.priority}
-          expiringDate={tarea.expiringDate}
-          state={tarea.state}
-          owner={tarea.owner}
-          asigned={tarea.asigned}
-        />
+        <TaskCard tareaInfo={tarea} key={tarea.id} />
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, useState } from "react";
+import { Dispatch, ReactNode, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -55,15 +55,20 @@ function ProfileForm({
   const idTeam = location.pathname.split("/").pop();
   const { mutateAsync, data: response, isPending } = useAddMemberToTeam();
 
+  useEffect(() => {
+    if (response) {
+      if (response?.success) {
+        setOpen(!open);
+      }
+    }
+  }, [response]);
+
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
     mode: "onChange",
   });
   const OnSubmit = async (data: z.infer<typeof formScheme>) => {
     await mutateAsync({ emailUser: data.email, idTeam: idTeam ?? "" });
-    if (response?.success) {
-      setOpen(!open);
-    }
   };
   return (
     <div className="p-2">
