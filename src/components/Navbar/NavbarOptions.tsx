@@ -5,7 +5,6 @@ import { Auth } from "@/context/auth";
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "../ui/button";
 import { publicRoutes } from "@/models/routes";
-import { Bell } from "lucide-react";
 
 const NavbarOptions = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
@@ -19,9 +18,9 @@ const NavbarOptions = () => {
         <ModeToggle />
       </div>
       <div>
-        <Button variant="outline" size="icon">
+        {/* <Button variant="outline" size="icon">
           <Bell />
-        </Button>
+        </Button> */}
       </div>
       <div>
         {authTok.token !== "" ? (

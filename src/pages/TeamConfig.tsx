@@ -10,6 +10,7 @@ import {
 } from "@/hooks/queries/teamsQueries/queries";
 import { Trash2Icon } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import DeleteTeam from "@/components/teams/deleteTeam";
 
 const TeamConfig = () => {
   const location = useLocation();
@@ -40,7 +41,7 @@ const TeamConfig = () => {
             </p>
           </div>
           <AddMember>
-            <Button variant={"outline"}>
+            <Button variant={"outline"} className="m-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -100,7 +101,9 @@ const TeamConfig = () => {
         </ul>
         <section className="flex flex-col items-end justify-center gap-4 mt-4">
           <Label>Eliminar team</Label>
-          <Button variant="destructive">Eliminar</Button>
+          <DeleteTeam>
+            <Button variant="destructive">Eliminar</Button>
+          </DeleteTeam>
         </section>
       </div>
     </div>

@@ -5,26 +5,15 @@ import DialogAsignUser from "./DialogAsignUser";
 import { TooltipDemo } from "./TooltipDemo";
 import { formatCustomDate } from "@/utils/formatCustomDate";
 import { task } from "@/models/Task";
-import { user } from "@/models/User";
 import { CardFooter } from "../ui/card";
 import { Separator } from "../ui/separator";
 
-const CardFooterComponent = ({
-  tareaInfo,
-  titulo,
-  owner,
-  createdAt,
-}: {
-  tareaInfo: task;
-  titulo: string;
-  owner: user | undefined;
-  createdAt: Date;
-}) => {
+const CardFooterComponent = ({ tareaInfo }: { tareaInfo: task }) => {
   return (
     <>
       <CardFooter className="flex justify-evenly">
         <TooltipDemo text="Ver Comentarios">
-          <Comments tareaInfo={tareaInfo} namet={titulo} />
+          <Comments tareaInfo={tareaInfo}/>
         </TooltipDemo>
 
         <TooltipDemo text="Asignar un usuario">
@@ -39,13 +28,15 @@ const CardFooterComponent = ({
         <TooltipDemo text="Tarea creada por">
           <div className="flex justify-center items-center gap-1 mt-1">
             <User />
-            <p className="font-bold text-xs"> {owner?.name} </p>
+            <p className="font-bold text-xs"> {tareaInfo.owner?.name} </p>
           </div>
         </TooltipDemo>
         <TooltipDemo text="Tarea creada hace">
           <div className="flex justify-center items-center gap-1 mt-1">
             <Clock />
-            <p className="font-bold text-xs">{formatCustomDate(createdAt)} </p>
+            <p className="font-bold text-xs">
+              {formatCustomDate(tareaInfo.createdAt)}{" "}
+            </p>
           </div>
         </TooltipDemo>
       </CardFooter>

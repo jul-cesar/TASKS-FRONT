@@ -68,7 +68,7 @@ export const useCreateTeam = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [KEY] }),
-        toast.success("Team creada con exito!");
+        toast.success("Team creado con exito!");
     },
     onError: (error) => {
       toast.error(`Hubo un error al crear el team: ${error.message}`);
@@ -98,16 +98,15 @@ export const useAddMemberToTeam = () => {
     },
     onSuccess: (data) => {
       if (
-        data.message ===
-        "the user you are trying to add to this team does not exist"
+        data.message === "El usuario que intentas agregar a este team no existe"
       ) {
         toast.error("Usuario no existente", { position: "top-center" });
       }
-      if (data.message === "user added") {
+      if (data.message === "Usuario agregado") {
         queryClient.invalidateQueries({ queryKey: [KEY] }),
           toast.success(data.message);
       }
-      if (data.message === "user already on this team") {
+      if (data.message === "Este usuario ya se encuentra en el team") {
         toast.info("usario ya en el team");
       }
     },
@@ -140,6 +139,29 @@ export const useDeleteMember = () => {
     },
     onMutate: () => {
       toast.info("Eliminando usuario..");
+    },
+  });
+};
+
+export const useDeleteTeam = () => {
+  const queryClient = useQueryClient();
+
+  const { deleteTeam } = useTeamsRequest();
+  return useMutation<responseI, Error, string>({
+    mutationFn: async (idTeam) => {
+      const data = await deleteTeam(idTeam);
+      if (!data) {
+        throw new Error("Error deleting team");
+      }
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [KEY] }),
+        toast.success("Team eliminado");
+    },
+
+    onMutate: () => {
+      toast.info("Eliminando team..");
     },
   });
 };

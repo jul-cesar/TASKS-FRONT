@@ -41,7 +41,7 @@ export function ManageTeam({
         <DialogTrigger>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-screen-lg">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Administra tus teams</DialogTitle>
           </DialogHeader>
           <ProfileForm data={data} />
         </DialogContent>
@@ -54,14 +54,14 @@ export function ManageTeam({
       <DrawerTrigger>{children}</DrawerTrigger>
       <DrawerContent className="p-4">
         <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
+          <DrawerTitle>Administra tus teams</DrawerTitle>
         </DrawerHeader>
 
         <ProfileForm data={data} />
 
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">Cancelar</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
