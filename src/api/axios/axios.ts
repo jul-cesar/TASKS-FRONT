@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiUrl = "https://tasks-api-bxyq.onrender.com";
-// const apiUrl = "http://localhost:3001";
+// const apiUrl = "https://tasks-api-bxyq.onrender.com";
+const apiUrl = "http://localhost:3001";
 
 export const axiosIn = axios.create({
   baseURL: apiUrl,
