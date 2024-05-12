@@ -1,4 +1,4 @@
-import { axiosIn } from "@/api/axios/axios";
+import axiosInstance from "@/api/axios/axios";
 import { Auth } from "@/context/auth";
 import { useContext } from "react";
 
@@ -6,7 +6,7 @@ const useRefreshToken = () => {
   const { setAuthTok } = useContext(Auth);
 
   const refresh = async () => {
-    const response = await axiosIn.get("/refresh");
+    const response = await axiosInstance.get("/refresh");
     setAuthTok((prev) => {
       return { ...prev, token: response.data.accessToken };
     });
