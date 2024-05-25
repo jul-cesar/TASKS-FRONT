@@ -68,7 +68,10 @@ function ProfileForm({
     mode: "onChange",
   });
   const OnSubmit = async (data: z.infer<typeof formScheme>) => {
-    await mutateAsync({ emailUser: data.email, idTeam: idTeam ?? "" });
+    await mutateAsync({
+      emailUser: data.email.toLocaleLowerCase(),
+      idTeam: idTeam ?? "",
+    });
   };
   return (
     <div className="p-2">

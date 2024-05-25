@@ -3,7 +3,7 @@ import { publicRoutes } from "@/models/routes";
 import { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const ProtectedRoute = () => {
+const   ProtectedRoute = () => {
   const { authTok } = useContext(Auth);
   const location = useLocation();
   return authTok.token !== "" ? (

@@ -24,10 +24,13 @@ const AsignedTasksList = () => {
   }
   return (
     <div className="flex gap-4  flex-wrap sm:justify-center  justify-center m-4 mt-20 ">
-      {Array.isArray(AsignsList) &&
-        AsignsList.map((tarea) => (
+      {AsignsList.length > 1 ? (
+        AsignsList?.map((tarea) => (
           <AsignedCard taskInfo={tarea} key={tarea.id} />
-        ))}
+        ))
+      ) : (
+        <p className="text-black">No tienes tareas asignadas</p>
+      )}
     </div>
   );
 };
