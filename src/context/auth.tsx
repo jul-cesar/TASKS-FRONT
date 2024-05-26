@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthTok(response.data);
     } catch (error: any) {
       console.error(error.message);
-      if (error.message.includes(403)) {
+      if (error.message.includes(401)) {
         toast.error("Correo o contraseña incorrecta");
       }
     }
