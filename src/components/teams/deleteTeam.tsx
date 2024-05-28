@@ -28,9 +28,9 @@ const DeleteTeam = ({ children }: { children: ReactNode }) => {
         <DialogHeader>
           <DialogTitle>Estas seguro que deseas eliminar este team</DialogTitle>
           <DialogDescription>
-            Por favor, tenga en cuenta que los comentarios realizados en esta
-            tarea serán eliminados. Una vez que se proceda con esta acción, no
-            será posible recuperar dicha información
+            Por favor, tenga en cuenta que las tareas creadas en este team serán
+            eliminadas. Una vez que se proceda con esta acción, no será posible
+            recuperar dicha información
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4"></div>

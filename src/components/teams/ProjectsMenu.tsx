@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowDown, CheckIcon, Search } from "lucide-react";
+import { ArrowDown, CheckIcon, Plus, Search } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { useUserTeams } from "@/hooks/queries/teamsQueries/queries";
 import { UiContext } from "@/context/ui";
@@ -26,6 +26,8 @@ import { Link } from "react-router-dom";
 import { Team } from "@/models/teams";
 import { Auth } from "@/context/auth";
 import LoadingSmall from "../loaders/LoadingSmall";
+import { TeamInfo } from "@/models/teamInfo";
+import CreateTeam from "../forms/CreateTeam";
 
 export default function ProjectsMenu() {
   const [open, setOpen] = React.useState(false);
@@ -103,11 +105,31 @@ function ProfileForm({
   const { currentUser } = React.useContext(Auth);
   const { data, isLoading } = useUserTeams();
 
+  const [query, setQuery] = React.useState("");
+  const [filteredTeams, setFilteredTeams] = React.useState<
+    TeamInfo[] | undefined
+  >([]);
+
+  React.useEffect(() => {
+    const filtered =
+      query !== ""
+        ? data?.filter((team) => {
+            return team.name.toLowerCase().includes(query.toLowerCase());
+          })
+        : data;
+
+    setFilteredTeams(filtered);
+  }, [query, data]);
+
   return (
     <div className="grid gap-3 p-4 sm:p-4 lg:p-0 ">
       <div className="flex items-center justify-center gap-3">
         <Search size={"20"} />
         <Input
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
           type="search"
           placeholder="Busca un team"
           className="border-hidden "
@@ -118,34 +140,48 @@ function ProfileForm({
       {!isLoading ? (
         <ul className="grid gap-2 max-h-[500px] sm:max-h-[300px] overflow-y-auto ">
           <p className="text-neutral-500 text-sm">Teams</p>
-          {data?.map((t) => (
-            <Link to={`/${currentUser.nombre}/${t.id}`}>
-              <div
-                onClick={() => {
-                  const teamData = JSON.stringify(t);
-                  localStorage.setItem("currentTeamInfo", teamData);
-                  setCurrentTeam({
-                    id: t.id || "",
-                    name: t.name,
-                    ownerId: t.ownerId,
-                    createdAt: t.createdAt || new Date(),
-                  });
-                  setOpen(!open);
-                }}
-                key={t.id}
-                className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-              >
-                <li className="">{t.name}</li>
-                {currentTeam.id === t.id && <CheckIcon size={19} />}
-              </div>
-            </Link>
-          ))}
+          {filteredTeams?.length ? (
+            filteredTeams?.map((t) => (
+              <Link to={`/${currentUser.nombre}/${t.id}`}>
+                <div
+                  onClick={() => {
+                    const teamData = JSON.stringify(t);
+                    localStorage.setItem("currentTeamInfo", teamData);
+                    setCurrentTeam({
+                      id: t.id || "",
+                      name: t.name,
+                      ownerId: t.ownerId,
+                      createdAt: t.createdAt || new Date(),
+                    });
+                    setOpen(!open);
+                  }}
+                  key={t.id}
+                  className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                >
+                  <li className="">{t.name}</li>
+                  {currentTeam.id === t.id && <CheckIcon size={19} />}
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="flex items-center flex-col justify-center gap-4 overflow-hidden">
+              <Label>No perteneces a ningun team llamado: {query} </Label>
+              
+            </div>
+          )}
         </ul>
       ) : (
         <div className="flex items-center justify-center h-full">
           <LoadingSmall />
         </div>
       )}
+      <Separator/>
+      <CreateTeam>
+                <Button size={"sm"} variant={"outline"} className="gap-1">
+                  Crear team
+                  <Plus size={17} />
+                </Button>
+              </CreateTeam>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Bolt, BrainCircuit, PlusCircle } from "lucide-react";
+import { Bolt, PlusCircle, Users2Icon } from "lucide-react";
 
 import {
   Command,
@@ -39,7 +39,7 @@ export default function SelectTeam() {
       <Command className="rounded-lg border shadow-md sm:w-4/5 font-semibold leading-none tracking-tight sm:mt-16 mt-20 ">
         <CommandInput placeholder="Busca un team " />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>No se encontro ningun team.</CommandEmpty>
           <CommandGroup heading="Tus teams">
             {data?.map((t) => (
               <div
@@ -58,7 +58,7 @@ export default function SelectTeam() {
                 }}
               >
                 <CommandItem>
-                  <BrainCircuit className="mr-2 h-4 w-4" />
+                  <Users2Icon className="mr-2 h-4 w-4" />
                   <span>{t.name}</span>
                 </CommandItem>
               </div>
