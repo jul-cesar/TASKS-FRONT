@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import LoadingSmall from "../loaders/LoadingSmall";
 import { Button } from "../ui/button";
 import {
@@ -11,26 +11,29 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 
-import { useDeleteTeam } from "@/hooks/queries/teamsQueries/queries";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDeleteMember } from "@/hooks/queries/teamsQueries/queries";
+import { Auth } from "@/context/auth";
 
-const DeleteTeam = ({ children }: { children: ReactNode }) => {
+const LeaveTeam = ({ children }: { children: ReactNode }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const idTeam = location.pathname.split("/").pop();
-  const { mutateAsync, isPending } = useDeleteTeam();
+  const { currentUser } = useContext(Auth);
+
+  const idTeam = location.pathname.split("/").pop() || "";
+  const idUser = currentUser.id;
+  const { mutateAsync, isPending } = useDeleteMember();
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
       <DialogTrigger className="cursor-pointer">{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Estas seguro que deseas eliminar este team</DialogTitle>
+          <DialogTitle>Estas seguro que deseas dejar este team?</DialogTitle>
           <DialogDescription>
-            Por favor, tenga en cuenta que las tareas creadas en este team serán
-            eliminadas. Una vez que se proceda con esta acción, no será posible
-            recuperar dicha información
+            Por favor, tenga en cuenta que dejar este team significa perder
+            acceso a sus tareas
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4"></div>
@@ -40,7 +43,7 @@ const DeleteTeam = ({ children }: { children: ReactNode }) => {
               <Button
                 type="submit"
                 onClick={async () => {
-                  await mutateAsync(idTeam || "");
+                  await mutateAsync({ idUser, idTeam });
                   navigate("/");
                 }}
               >
@@ -59,4 +62,4 @@ const DeleteTeam = ({ children }: { children: ReactNode }) => {
     </Dialog>
   );
 };
-export default DeleteTeam;
+export default LeaveTeam;

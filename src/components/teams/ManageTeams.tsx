@@ -24,6 +24,8 @@ import { Link } from "react-router-dom";
 import { AvatarMember } from "./AvatarMember";
 import { FlagIcon } from "lucide-react";
 import { TeamInfo } from "@/models/teamInfo";
+import { Auth } from "@/context/auth";
+import CreateTeam from "../forms/CreateTeam";
 
 export function ManageTeam({
   children,
@@ -70,6 +72,16 @@ export function ManageTeam({
 }
 
 function ProfileForm({ data }: { data: TeamInfo[] | undefined }) {
+  const { currentUser } = React.useContext(Auth);
+  if (!data?.length)
+    return (
+      <div>
+        <p className="text-primary">No tienes teams para administrar</p>
+        <CreateTeam>
+          <Button variant={"outline"}>Crear team</Button>
+        </CreateTeam>
+      </div>
+    );
   return (
     <ul className=" divide-y max-h-[500px] overflow-y-auto p-4">
       {data?.map((item) => (
@@ -82,6 +94,9 @@ function ProfileForm({ data }: { data: TeamInfo[] | undefined }) {
                 <FlagIcon size={17} />{" "}
                 {format(item.createdAt ?? new Date(), "yyyy-MM-dd")}
               </span>
+              <p className="text-secondary-foreground">
+                {item.ownerId === currentUser.id && "Admin"}
+              </p>
             </div>
           </div>
           <Link

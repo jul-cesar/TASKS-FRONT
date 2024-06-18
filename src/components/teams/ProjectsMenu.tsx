@@ -142,7 +142,7 @@ function ProfileForm({
           <p className="text-neutral-500 text-sm">Teams</p>
           {filteredTeams?.length ? (
             filteredTeams?.map((t) => (
-              <Link to={`/${currentUser.nombre}/${t.id}`}>
+              <Link to={`/${currentUser.nombre}/${t.id}`} >
                 <div
                   onClick={() => {
                     const teamData = JSON.stringify(t);
@@ -159,14 +159,17 @@ function ProfileForm({
                   className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                 >
                   <li className="">{t.name}</li>
+                  <li className="text-secondary-foreground">
+                    {t.ownerId === currentUser.id ? "Admin" : "Miembro"}
+                  </li>
                   {currentTeam.id === t.id && <CheckIcon size={19} />}
                 </div>
               </Link>
+              
             ))
           ) : (
             <div className="flex items-center flex-col justify-center gap-4 overflow-hidden">
               <Label>No perteneces a ningun team llamado: {query} </Label>
-              
             </div>
           )}
         </ul>
@@ -175,13 +178,13 @@ function ProfileForm({
           <LoadingSmall />
         </div>
       )}
-      <Separator/>
+      <Separator />
       <CreateTeam>
-                <Button size={"sm"} variant={"outline"} className="gap-1">
-                  Crear team
-                  <Plus size={17} />
-                </Button>
-              </CreateTeam>
+        <Button size={"sm"} variant={"outline"} className="gap-1">
+          Crear team
+          <Plus size={17} />
+        </Button>
+      </CreateTeam>
     </div>
   );
 }
