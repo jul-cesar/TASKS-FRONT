@@ -1,21 +1,16 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import { task } from "@/models/Task";
 import { formatCustomDate } from "@/utils/formatCustomDate";
-import { BadgeComponent } from "../Card.tasks/BadgeComponent";
 import Comments from "../Card.tasks/Comments/Comments";
 
-import { format } from "date-fns";
 import { Separator } from "../ui/separator";
 import { Clock, User } from "lucide-react";
 import { Label } from "../ui/label";
 import { TooltipDemo } from "../Card.tasks/TooltipDemo";
+import CardHeaderComponent from "../Card.tasks/CardHeader";
+import { Card, CardFooter } from "../ui/card";
+import EstadoBadge from "../Card.tasks/EstadoBadge";
+import PrioridadBadge from "../Card.tasks/PrioridadBadge";
+import CardContentComponent from "../Card.tasks/CardContent";
 
 const AsignedCard = ({ taskInfo }: { taskInfo: task }) => {
   const fechaVencimientoDate = new Date(taskInfo.expiringDate);
@@ -25,46 +20,26 @@ const AsignedCard = ({ taskInfo }: { taskInfo: task }) => {
 
   fechaVencimientoDate.setHours(0, 0, 0, 0);
 
-  const badgeVariant =
-    fechaVencimientoDate < today ? "destructive" : "secondary";
   return (
     <Card className="max-w-[350px]">
-      <CardHeader>
-        <CardTitle>
-          <div className="flex justify-between">{taskInfo.title}</div>
-        </CardTitle>
-
-        {taskInfo.asigned && (
-          <CardDescription>
-            Asignada a: {taskInfo.asigned?.name}
-          </CardDescription>
-        )}
-        <CardDescription>{taskInfo.description}</CardDescription>
-      </CardHeader>
+      <CardHeaderComponent
+        fechaVencimiento={taskInfo.expiringDate}
+        asignado={taskInfo.asigned}
+        descripcion={taskInfo.description}
+        tareaInfo={taskInfo}
+        titulo={taskInfo.title}
+      />
       <div className="flex items-center justify-between gap-2 m-4">
         <div className="p-2">
           <Label>Estado: </Label>
-          <BadgeComponent>{taskInfo.state?.toUpperCase()}</BadgeComponent>
+          <EstadoBadge estado={taskInfo.state} />
         </div>
         <div className="p-2">
           <Label>Prioridad: </Label>
-          <BadgeComponent>{taskInfo.priority?.toUpperCase()}</BadgeComponent>
+          <PrioridadBadge prioridad={taskInfo.priority} />
         </div>
       </div>
-
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col items-center space-y-2">
-              <Label>Fecha de vencimiento: </Label>
-              <BadgeComponent variant={badgeVariant}>
-                {format(taskInfo.expiringDate, "yyyy-MM-dd")} (
-                {formatCustomDate(taskInfo.expiringDate)})
-              </BadgeComponent>
-            </div>
-          </div>
-        </form>
-      </CardContent>
+      <CardContentComponent fechaVencimiento={taskInfo.expiringDate} />
       <CardFooter className="flex justify-center">
         <TooltipDemo text="Ver Comentarios">
           <Comments tareaInfo={taskInfo} />
@@ -86,7 +61,7 @@ const AsignedCard = ({ taskInfo }: { taskInfo: task }) => {
             </p>
           </div>
         </TooltipDemo>
-      </CardFooter>
+      </CardFooter>{" "}
     </Card>
   );
 };

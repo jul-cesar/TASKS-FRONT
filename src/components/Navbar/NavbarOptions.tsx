@@ -5,6 +5,7 @@ import { Auth } from "@/context/auth";
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "../ui/button";
 import { publicRoutes } from "@/models/routes";
+import { NotificationsDropdown } from "../notifications/NotificationsDropdown";
 
 const NavbarOptions = () => {
   const [openMenuProfile, setOpenMenuProfile] = useState<boolean>(false);
@@ -18,9 +19,7 @@ const NavbarOptions = () => {
         <ModeToggle />
       </div>
       <div>
-        {/* <Button variant="outline" size="icon">
-          <Bell />
-        </Button> */}
+        <NotificationsDropdown />
       </div>
       <div>
         {authTok.token !== "" ? (

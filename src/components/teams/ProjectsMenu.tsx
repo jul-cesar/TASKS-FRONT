@@ -159,9 +159,7 @@ function ProfileForm({
                   className=" hover:bg-accent flex  justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                 >
                   <li className="">{t.name}</li>
-                  <li className="text-secondary-foreground">
-                    {t.ownerId === currentUser.id ? "Admin" : "Miembro"}
-                  </li>
+                
                   {currentTeam.id === t.id && <CheckIcon size={19} />}
                 </div>
               </Link>

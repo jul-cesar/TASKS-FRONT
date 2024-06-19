@@ -43,7 +43,9 @@ const TeamConfig = () => {
               {members?.name}
             </h4>
             <p className="mt-2  text-base sm:text-sm">
-             {members?.ownerId === currentUser.id  ? 'Agrega o elimina miembros a tu equipo.' : "" }
+              {members?.ownerId === currentUser.id
+                ? "Agrega o elimina miembros a tu equipo."
+                : ""}
             </p>
           </div>
 

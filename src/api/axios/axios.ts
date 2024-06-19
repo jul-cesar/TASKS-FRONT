@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiUrl = "https://tasks-api-lyart.vercel.app";
-// const apiUrl = "http://localhost:3001";
+// const apiUrl = "https://tasks-api-lyart.vercel.app";
+const apiUrl = "http://localhost:3000";
 
 const axiosInstance = axios.create({
   baseURL: apiUrl,
